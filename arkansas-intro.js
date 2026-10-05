@@ -124,8 +124,12 @@
     // outline and nothing else moves.
     release() {
       clearInterval(this._holdBail); this._holdBail = null;
+      clearInterval(this._holdWatch); this._holdWatch = null;
       if (!this._held) return;
       this._held = false;
+      // a reparent marks the loop dead; a parked loop that is still on the page
+      // has to be allowed to run again or the release is a no-op
+      if (this.isConnected) this._dead = false;
       // Only shift the downstream timeline if the sequence actually parked on
       // the outline. Released before it ever built, it should just play normally.
       if (this._resume) { this._off = HOLD_OFF; this._resume(); }
@@ -134,6 +138,10 @@
       // A remount (React reparenting the host) used to leave the element booted but
       // dead, so nothing ever drew. If we come back without having built, build.
       if (this._booted) {
+        // A reparent drops the gate listener (disconnect removes it). If the gate
+        // opened while we were detached, nothing would ever release us.
+        if (this._onGate) document.addEventListener('ns-gate-passed', this._onGate);
+        if (this._held) { if (window.__nsGatePassed) this.release(); else this._watchHold(); }
         if (!this._plate && !this._cream) {
           this._dead = false;
           requestAnimationFrame(() => this._build());
@@ -156,18 +164,7 @@
       // If the gate never arrives (script blocked, load error), do not strand the
       // page on a frozen outline. Presence of the element is the signal, not
       // elapsed time: a visitor may sit on the question for a minute.
-      if (this._held) {
-        let tries = 0;
-        this._holdBail = setInterval(() => {
-          // A gate tag alone proves nothing: it may be an inert one that already
-          // passed. Only an upgraded, unpassed gate is actually holding the door.
-          var el = document.querySelector('ns-age-gate');
-          if (el && el._up && !el._passed) {
-            clearInterval(this._holdBail); this._holdBail = null; return;
-          }
-          if (++tries > 6) { clearInterval(this._holdBail); this._holdBail = null; this.release(); }
-        }, 500);
-      }
+      if (this._held) this._watchHold();
       this.style.cssText = 'display:block;position:absolute;inset:0;overflow:hidden;pointer-events:none';
       requestAnimationFrame(() => this._build());
       // A remount can kill the first attempt between the frame and the build, so
@@ -176,7 +173,23 @@
         if (!this._plate && !this._cream && this.isConnected) { this._dead = false; this._build(); }
       }, 400);
     }
-    disconnectedCallback() { this._dead = true; clearTimeout(this._buildGuard); clearInterval(this._holdBail);
+    // While parked, keep checking that a door is actually shut. The gate can pass,
+    // be replaced, or vanish by paths that never reach this element (a remount
+    // between its release() and its event). Any of those would strand the page on
+    // a glowing outline while the logo animates in over it.
+    _watchHold() {
+      clearInterval(this._holdWatch);
+      let tries = 0;
+      this._holdWatch = setInterval(() => {
+        if (!this._held) { clearInterval(this._holdWatch); this._holdWatch = null; return; }
+        if (window.__nsGatePassed) { this.release(); return; }
+        // only an upgraded, unpassed gate is holding the door
+        const el = document.querySelector('ns-age-gate');
+        if (el && el._up && !el._passed && document.documentElement.classList.contains('ns-gated')) { tries = 0; return; }
+        if (++tries > 4) this.release();
+      }, 500);
+    }
+    disconnectedCallback() { this._dead = true; clearTimeout(this._buildGuard); clearInterval(this._holdBail); clearInterval(this._holdWatch);
       if (this._onGate) document.removeEventListener('ns-gate-passed', this._onGate); if (this._raf) cancelAnimationFrame(this._raf); }
 
     // fires once, whenever the hero has come to rest (normal end, skip, or reduced motion)
