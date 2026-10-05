@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="../_ds/overbuilt-design-system-3b590326-9189-43e6-8372-d3f6399c38de/tokens/spacing.css">
 <link rel="stylesheet" href="../_ds/overbuilt-design-system-3b590326-9189-43e6-8372-d3f6399c38de/tokens/base.css">
 <script src="guide-data.js"></script>
+<script src="topo-paper.js"></script>
 <style>
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   :root { color-scheme: light only; --text-scale: 1; }
@@ -844,7 +845,7 @@
   </section>
 
   <!-- ============ 07 · PLANT TO PRODUCT ============ -->
-  <section id="chap-process" data-cnum="08" data-clabel="Plant to Product" style="position:relative;background:var(--ns-arctic);padding:64px 22px 68px;overflow:hidden;">
+  <section id="chap-process" data-cnum="08" data-clabel="Plant to Product" style="position:relative;background:var(--ns-arctic);padding:64px 22px 68px;overflow:clip;">
     <div style="position:relative;max-width:560px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--ns-bronze);padding-bottom:16px;">
@@ -880,31 +881,52 @@
         <div>
           <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
             <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ns-bronze);">From harvest to jar</span>
-            <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:var(--text-on-dark-mut);">Play, then pick a jar.</span>
+            <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:var(--text-on-dark-mut);">Scroll to watch both.</span>
           </div>
-          <div style="display:block;margin-bottom:20px;">
-            <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px;">
-              <button onClick="{{ lc.togglePlay }}" aria-label="{{ lc.playAria }}" style="flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1.5px solid var(--ns-bronze);background:{{ lc.playBg }};cursor:pointer;transition:background .22s ease;" style-hover="background:rgba(183,149,80,0.22);">
-                <sc-if value="{{ lc.playing }}" hint-placeholder-val="{{ false }}">
-                  <span aria-hidden="true" style="display:flex;gap:5px;"><span style="width:4px;height:15px;background:var(--ns-arctic);"></span><span style="width:4px;height:15px;background:var(--ns-arctic);"></span></span>
-                </sc-if>
-                <sc-if value="{{ lc.paused }}" hint-placeholder-val="{{ true }}">
-                  <span aria-hidden="true" style="display:block;width:0;height:0;margin-left:4px;border-style:solid;border-width:8px 0 8px 14px;border-color:transparent transparent transparent var(--ns-arctic);"></span>
-                </sc-if>
-              </button>
-              <div style="display:flex;flex-direction:column;gap:5px;min-width:130px;">
-                <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--ns-bronze);">{{ lc.phase }}</span>
-                <span aria-live="polite" style="font-family:var(--font-display);font-weight:400;font-size:calc(30px * var(--text-scale));line-height:1;letter-spacing:-0.01em;color:var(--ns-arctic);">{{ lc.dayLabel }}</span>
+          <div data-lc-track="" style="position:relative;height:calc(100svh + 360px);margin:0 -18px;">
+            <div style="position:sticky;top:54px;box-sizing:border-box;padding:12px 18px 16px;background:var(--ns-midnight);display:flex;flex-direction:column;gap:12px;">
+              <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;">
+                <div style="display:flex;flex-direction:column;gap:5px;">
+                  <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--ns-bronze);" data-lc-k="phase">{{ lc.phase }}</span>
+                  <span data-lc-k="day" aria-live="polite" style="font-family:var(--font-display);font-weight:400;font-size:calc(30px * var(--text-scale));line-height:1;letter-spacing:-0.01em;color:var(--ns-arctic);">{{ lc.dayLabel }}</span>
+                </div>
+                <button onClick="{{ lc.replay }}" aria-label="Replay the 30 days" style="flex:none;display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid rgba(183,149,80,0.6);background:transparent;cursor:pointer;font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ns-arctic);" style-hover="background:rgba(183,149,80,0.18);"><span aria-hidden="true" style="color:var(--ns-bronze);font-size:calc(14px * var(--text-scale));line-height:1;">&#8635;</span>Replay</button>
               </div>
-            </div>
-            <div>
-              <div style="position:relative;height:44px;">
-                <span aria-hidden="true" style="position:absolute;left:0;right:0;top:18px;height:8px;border-radius:999px;background:rgba(245,244,225,0.1);overflow:hidden;"><span class="nsm-lc-dayfill" style="position:absolute;left:0;top:0;bottom:0;width:calc(13px + (100% - 26px) * {{ lc.dayFrac }});background:var(--ns-bronze);border-radius:999px;"></span></span>
-                <input type="range" class="nsm-lc-range" min="0" max="30" step="1" value="{{ lc.day }}" onChange="{{ lc.onDay }}" aria-label="Days after harvest" aria-valuetext="{{ lc.dayAria }}">
+              <div>
+                <span aria-hidden="true" style="position:relative;display:block;height:6px;border-radius:999px;background:rgba(245,244,225,0.1);overflow:hidden;"><span data-lc-k="bar" style="position:absolute;left:0;top:0;bottom:0;width:{{ lc.dayPct }};background:var(--ns-bronze);border-radius:999px;"></span></span>
+                <div style="display:flex;justify-content:space-between;margin-top:6px;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));color:var(--text-on-dark-mut);"><span>Harvest</span><span>Day 14</span><span>Day 30</span></div>
               </div>
-              <div style="display:flex;justify-content:space-between;margin:2px 13px 0;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:var(--text-on-dark-mut);"><span>Harvest</span><span>Day 30</span></div>
+              <sc-for list="{{ lc.rlanes }}" as="r" hint-placeholder-count="2">
+                <div data-lc-lane="" data-lc-paintbox="" style="box-sizing:border-box;border:1px solid {{ r.bd }};background:{{ r.bg }};border-radius:4px;padding:12px 12px 12px;display:flex;flex-direction:column;gap:12px;transition:border-color .3s ease, background .3s ease;">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;">
+                    <span style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--ns-bronze);">{{ r.eyebrow }}</span><span style="font-family:var(--font-display);font-weight:400;font-size:calc(17px * var(--text-scale));line-height:1;color:var(--ns-arctic);">{{ r.title }}</span></span>
+                    <span style="font-family:var(--font-sans);font-size:calc(11.5px * var(--text-scale));font-weight:600;color:{{ r.stColor }};text-align:right;" data-lc-k="status">{{ r.status }}</span>
+                  </div>
+                  <div style="display:flex;width:100%;">
+                    <sc-for list="{{ r.steps }}" as="s" hint-placeholder-count="3">
+                      <div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px;position:relative;">
+                        <span data-lc-k="ln" aria-hidden="true" style="position:absolute;top:6px;left:50%;width:100%;height:2px;background:{{ s.lineBg }};display:{{ s.lineDisp }};transition:background .3s ease;"></span>
+                        <span data-lc-k="dot" aria-hidden="true" style="position:relative;z-index:1;display:block;width:14px;height:14px;border-radius:50%;border:2px solid var(--ns-bronze);background:{{ s.dotBg }};box-shadow:{{ s.dotSh }};box-sizing:border-box;transition:background .3s ease, box-shadow .3s ease;"></span>
+                        <span style="font-family:var(--font-sans);font-size:calc(11.5px * var(--text-scale));font-weight:600;line-height:1.2;color:{{ s.tColor }};transition:color .3s ease;" data-lc-k="st">{{ s.title }}</span>
+                        <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));line-height:1.25;color:var(--text-on-dark-mut);">{{ s.note }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:10px;">
+                    <span style="flex:none;width:76px;font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-on-dark-mut);">Aroma kept</span>
+                    <span aria-hidden="true" style="position:relative;flex:1;height:6px;border-radius:999px;background:rgba(245,244,225,0.1);overflow:hidden;"><span data-lc-k="fill" style="position:absolute;left:0;top:0;bottom:0;width:{{ r.fill }};background:var(--ns-bronze);border-radius:999px;transition:width .2s linear;"></span></span>
+                    <span style="flex:none;min-width:74px;text-align:right;font-family:var(--font-display);font-weight:400;font-size:calc(15px * var(--text-scale));line-height:1;color:var(--ns-arctic);" data-lc-k="kept">{{ r.kept }}</span>
+                  </div>
+                </div>
+              </sc-for>
             </div>
           </div>
+          <div style="display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--ns-bronze);padding-top:16px;margin:4px 0 26px;">
+            <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ns-bronze);">The difference</span>
+            <p style="margin:0;font-family:var(--font-display);font-weight:400;font-size:calc(19px * var(--text-scale));line-height:1.25;color:var(--ns-arctic);">Live: in the jar on day one, with nearly all of its aroma.</p>
+            <p style="margin:0;font-family:var(--font-display);font-weight:400;font-size:calc(19px * var(--text-scale));line-height:1.25;color:rgba(245,244,225,0.72);">Cured: in the jar around day 30, with about half.</p>
+          </div>
+          <span style="display:block;margin:0 0 12px;font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ns-bronze);">Now pick a jar</span>
           <div class="nsm-lc-fork">
             <div style="display:flex;flex-direction:column;align-items:center;text-align:center;">
               <span data-step="" style="--d:0ms;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;border:1.5px solid var(--ns-bronze);background:rgba(183,149,80,0.12);"><img src="../assets/brand/leaf-glyph-bronze.png" alt="" style="width:26px;height:26px;object-fit:contain;"></span>
@@ -927,26 +949,6 @@
             <sc-for list="{{ lc.lanes }}" as="l" hint-placeholder-count="1">
               <sc-if value="{{ l.on }}" hint-placeholder-val="{{ false }}">
                 <div style="box-sizing:border-box;border:1px solid rgba(183,149,80,0.6);background:rgba(183,149,80,0.06);padding:18px 14px;display:flex;flex-direction:column;align-items:center;gap:16px;">
-                <div style="display:flex;width:100%;">
-                  <sc-for list="{{ l.steps }}" as="s" hint-placeholder-count="3">
-                    <div style="flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;position:relative;">
-                      <span aria-hidden="true" style="position:absolute;top:7px;left:50%;width:100%;height:2px;background:{{ s.lineBg }};display:{{ s.lineDisp }};transition:background .4s ease;"></span>
-                      <span aria-hidden="true" style="position:relative;z-index:1;display:block;width:16px;height:16px;border-radius:50%;border:2px solid var(--ns-bronze);background:{{ s.dotBg }};box-shadow:{{ s.dotSh }};box-sizing:border-box;transition:background .3s ease, box-shadow .3s ease;"></span>
-                      <span style="font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));font-weight:600;line-height:1.2;color:{{ s.tColor }};transition:color .3s ease;">{{ s.title }}</span>
-                      <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));line-height:1.3;color:var(--text-on-dark-mut);">{{ s.note }}</span>
-                    </div>
-                  </sc-for>
-                </div>
-                <div style="display:flex;align-items:center;gap:14px;">
-                  <span aria-hidden="true" style="display:flex;flex-direction:column;align-items:center;">
-                    <span style="display:block;width:30px;height:7px;border-radius:2px;background:rgba(183,149,80,0.6);"></span>
-                    <span style="position:relative;display:block;width:40px;height:58px;margin-top:-2px;border:1.5px solid rgba(245,244,225,0.45);border-radius:4px 4px 10px 10px;overflow:hidden;box-sizing:border-box;"><span class="nsm-lc-fill" style="position:absolute;left:0;right:0;bottom:0;height:{{ l.fill }};background:var(--ns-bronze);"></span></span>
-                  </span>
-                  <span style="display:flex;flex-direction:column;gap:4px;">
-                    <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-on-dark-mut);">Aroma kept</span>
-                    <span style="font-family:var(--font-display);font-weight:400;font-size:calc(20px * var(--text-scale));line-height:1;color:var(--ns-arctic);">{{ l.kept }}</span>
-                  </span>
-                </div>
                 <div style="width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
                   <sc-for list="{{ l.leaves }}" as="f" hint-placeholder-count="2">
                     <button onClick="{{ f.onClick }}" aria-pressed="{{ f.sel }}" aria-label="{{ f.aria }}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;width:100%;min-height:64px;text-align:center;cursor:pointer;padding:10px 8px;border-radius:4px;border:1px solid {{ f.bd }};background:{{ f.bg }};box-shadow:{{ f.sh }};transition:background .25s ease, border-color .25s ease, box-shadow .25s ease;" style-hover="border-color:var(--ns-bronze);">
@@ -2167,15 +2169,90 @@ class Component extends DCLogic {
     if (pop) pop.remove();
   }
   _lcStop() { if (this._lcTimer) { clearInterval(this._lcTimer); this._lcTimer = null; } }
-  lcTogglePlay() {
-    if (this._lcTimer) { this._lcStop(); this.setState({ lcPlaying: false }); return; }
-    const start = (this.state.lcDay || 0) >= 30 ? 0 : (this.state.lcDay || 0);
-    this.setState({ lcDay: start, lcPlaying: true });
-    this._lcTimer = setInterval(() => {
-      const d = (this.state.lcDay || 0) + 1;
-      if (d >= 30) { this._lcStop(); this.setState({ lcDay: 30, lcPlaying: false }); }
-      else this.setState({ lcDay: d });
-    }, 210);
+  // one clock, two lanes; pure so the scroll handler can paint without a render
+  _lcModel(dayF) {
+    const BRZ = 'var(--ns-bronze)';
+    const N = [[0.05, 0.16], [0.055, 0.14], [0.04, 0.22], [0.032, 0.3], [0.014, 0.6], [0, 1], [0, 1]];
+    const lane = (live) => {
+      const src = live
+        ? [['Harvest', 'Day one'], ['Freeze', 'Within hours'], ['Extract', 'Day one']]
+        : [['Harvest', 'Day one'], ['Hang dry', 'Days 1 to 14'], ['Cure', 'Days 15 to 30'], ['Extract', 'Day 30']];
+      const ai = live ? (dayF < 0.3 ? 0 : dayF < 0.7 ? 1 : 2) : (dayF < 0.5 ? 0 : dayF <= 14 ? 1 : dayF < 29.5 ? 2 : 3);
+      const done = live ? dayF >= 0.7 : dayF >= 29.5;
+      const dry = Math.min(dayF, 14), cure = Math.max(0, dayF - 14);
+      const vs = N.map(n => live ? (dayF < 0.3 || n[0] === 0 ? 1 : 0.96) : Math.max(n[1], 1 - n[0] * dry - n[0] * 0.35 * cure));
+      const avg = vs.reduce((a, v) => a + v, 0) / vs.length;
+      return { key: live ? 'live' : 'cured', eyebrow: live ? 'Live' : 'Cured', title: live ? 'Frozen at harvest' : 'Dried and cured',
+        status: done ? (live ? 'In the jar, day one' : 'In the jar, day 30') : ai === 0 ? 'Harvest day' : live ? 'Freezing' : ai === 1 ? 'Hanging to dry' : 'Sealed to cure',
+        stColor: done ? BRZ : 'rgba(245,244,225,0.7)',
+        kept: avg > 0.9 ? 'Nearly all' : avg > 0.75 ? 'Most' : avg > 0.62 ? 'Fading' : 'About half',
+        fill: Math.round(avg * 100) + '%',
+        bd: done ? 'rgba(183,149,80,0.6)' : 'var(--border-on-dark)', bg: done ? 'rgba(183,149,80,0.07)' : 'rgba(245,244,225,0.02)',
+        steps: src.map((s, i) => ({ key: i, title: s[0], note: s[1],
+          dotBg: i < ai || done ? BRZ : i === ai ? 'var(--ns-arctic)' : 'var(--ns-midnight)',
+          dotSh: i === ai && !done ? '0 0 0 4px rgba(183,149,80,0.25)' : 'none',
+          tColor: i <= ai ? 'var(--ns-arctic)' : 'rgba(245,244,225,0.5)',
+          lineBg: i < ai || done ? BRZ : 'rgba(183,149,80,0.28)', lineDisp: i === src.length - 1 ? 'none' : 'block' })) };
+    };
+    const day = Math.round(dayF);
+    return { lanes: [lane(true), lane(false)], frac: (dayF / 30).toFixed(4), pct: (dayF / 30 * 100).toFixed(2) + '%',
+      dayLabel: day === 0 ? 'Harvest' : 'Day ' + day, phase: day === 0 ? 'Day one' : day <= 14 ? 'Hang dry' : 'Sealed cure' };
+  }
+  _lcPaint(dayF) {
+    const tr = document.querySelector('[data-lc-track]');
+    if (!tr) return;
+    const M = this._lcModel(dayF);
+    const k = (root, n) => root.querySelectorAll('[data-lc-k="' + n + '"]');
+    k(tr, 'phase').forEach(e => { e.textContent = M.phase; });
+    k(tr, 'day').forEach(e => { e.textContent = M.dayLabel; });
+    k(tr, 'bar').forEach(e => { e.style.width = e.hasAttribute('data-lc-calc') ? 'calc(13px + (100% - 26px) * ' + M.frac + ')' : M.pct; });
+    tr.querySelectorAll('[data-lc-lane]').forEach((ln, i) => {
+      const L = M.lanes[i]; if (!L) return;
+      if (ln.hasAttribute('data-lc-paintbox')) { ln.style.borderColor = L.bd; ln.style.background = L.bg; }
+      k(ln, 'status').forEach(e => { e.textContent = L.status; e.style.color = L.stColor; });
+      k(ln, 'kept').forEach(e => { e.textContent = L.kept; });
+      k(ln, 'fill').forEach(e => { e.style[e.hasAttribute('data-lc-h') ? 'height' : 'width'] = L.fill; });
+      const dots = k(ln, 'dot'), tts = k(ln, 'st'), lns = k(ln, 'ln');
+      L.steps.forEach((s, j) => {
+        if (dots[j]) { dots[j].style.background = s.dotBg; dots[j].style.boxShadow = s.dotSh; }
+        if (tts[j]) tts[j].style.color = s.tColor;
+        if (lns[j]) lns[j].style.background = s.lineBg;
+      });
+    });
+  }
+  // scroll position through the pinned track is the clock; painted straight to the DOM
+  _lcBind() {
+    if (this._lcOnScroll) return;
+    let raf = 0;
+    this._lcOnScroll = () => {
+      if (raf || this._lcAuto) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const tr = document.querySelector('[data-lc-track]');
+        if (!tr || !tr.firstElementChild) return;
+        const r = tr.getBoundingClientRect(), pin = tr.firstElementChild.offsetHeight;
+        const top = parseFloat(getComputedStyle(tr.firstElementChild).top) || 0;
+        const span = Math.max(1, r.height - pin - 40);
+        const p = Math.max(0, Math.min(1, (top + 20 - r.top) / span));
+        const d = Math.round(p * 300) / 10;
+        if (d !== this._lcDayF) { this._lcDayF = d; this._lcPaint(d); }
+      });
+    };
+    window.addEventListener('scroll', this._lcOnScroll, { passive: true });
+    setTimeout(this._lcOnScroll, 80);
+  }
+  _lcReplay() {
+    if (this._lcAutoRaf) cancelAnimationFrame(this._lcAutoRaf);
+    this._lcAuto = true;
+    const dur = matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : 3000, t0 = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      this._lcDayF = Math.round(p * 300) / 10;
+      this._lcPaint(this._lcDayF);
+      if (p < 1) this._lcAutoRaf = requestAnimationFrame(tick);
+      else { this._lcAutoRaf = 0; setTimeout(() => { this._lcAuto = false; }, 600); }
+    };
+    this._lcAutoRaf = requestAnimationFrame(tick);
   }
   _lcVals() {
     const st = this.state;
@@ -2243,7 +2320,9 @@ class Component extends DCLogic {
         aria: c.name + (f ? ', showing how it is made. Tap to turn back.' : '. Tap to see how it is made.'),
         onClick: () => this.setState(p => ({ lcFlip: Object.assign({}, p.lcFlip, { [c.k]: !(p.lcFlip || {})[c.k] }) })) });
     });
-    const day = Math.max(0, Math.min(30, Math.round(st.lcDay || 0)));
+    this._lcBind();
+    const dayF = Math.max(0, Math.min(30, +(this._lcDayF || 0)));
+    const day = Math.max(0, Math.min(30, Math.round(dayF)));
     const dry = Math.min(day, 14), cure = Math.max(0, day - 14);
     const NOTES = [
       { k: 'citrus', name: 'Citrus', terp: 'Limonene', rate: 0.05, floor: 0.16, info: 'A light monoterpene that lifts off fast. One of the first notes to fade in the drying room.' },
@@ -2276,6 +2355,7 @@ class Component extends DCLogic {
         border: active && live ? 'rgba(183,149,80,0.55)' : 'var(--border-on-dark)', bg: active && live ? 'rgba(183,149,80,0.06)' : 'transparent' };
     };
     const lanes = [lane(true), lane(false)];
+    const rlanes = this._lcModel(dayF).lanes;
     const pick = ['lres', 'lros', 'cres', 'cros'].indexOf(st.lcPick) >= 0 ? st.lcPick : 'lres';
     const pickLive = pick[0] === 'l';
     const BRZ = 'var(--ns-bronze)', DIM = 'rgba(183,149,80,0.32)';
@@ -2313,7 +2393,7 @@ class Component extends DCLogic {
     const leftLine = pickLive ? BRZ : DIM, rightLine = pickLive ? DIM : BRZ;
     const sn = NOTES.find(n => n.k === selNote);
     const playing = !!st.lcPlaying;
-    return { branches, cards, combos, lanes, day, d, leftLine, rightLine, dayFrac: (day / 30).toFixed(4),
+    return { branches, cards, combos, lanes, rlanes, day, d, dayPct: (dayF / 30 * 100).toFixed(2) + '%', replay: () => this._lcReplay(), leftLine, rightLine, dayFrac: (day / 30).toFixed(4),
       dayLabel: day === 0 ? 'Harvest' : 'Day ' + day, dayAria: day === 0 ? 'Harvest day' : 'Day ' + day + ' after harvest',
       phase: day === 0 ? 'Day one' : day <= 14 ? 'Hang dry' : 'Sealed cure',
       playing, paused: !playing, playBg: playing ? 'rgba(183,149,80,0.22)' : 'transparent',
@@ -2469,7 +2549,7 @@ class Component extends DCLogic {
       terpenes:[['The terpene explorer','chap-terpenes'],['Found in these strains','sec-terp-strains']],
       flower:[['The strain library','chap-flower']],
       grow:[['It starts with a cutting','sec-grow-clone'],['Harvest, by hand','sec-grow-harvest'],['Tested, then finished','sec-grow-finished']],
-      process:[['It all starts as resin','chap-process'],['01 Start with the plant','sec-livecured'],['02 Get the resin out','sec-extract'],['03 See what it becomes','sec-texture'],['04 Choose how you take it','sec-formats'],['05 Build your pick','sec-pick']],
+      process:[['It all starts as resin','chap-process'],['Start with the plant','sec-livecured'],['Get the resin out','sec-extract'],['See what it becomes','sec-texture'],['Choose how you take it','sec-formats'],['Build your pick','sec-pick']],
       practice:[['Onset explorer','sec-onset'],['Good to know','sec-goodtoknow']],
       journal:[['Choose what you track','sec-journal-fields']],
       recipes:[['Before you cook','sec-decarb'],['Edible milligram calculator','sec-calculator']]
