@@ -80,8 +80,12 @@
   css.id = 'nsm-topo-css';
   document.head.appendChild(css);
   var rules = {};
-  function setRule(id, url) {
-    rules[id] = url ? '[data-topo-id="' + id + '"]{background-image:url(' + url + ') !important;background-size:100% 100% !important;background-repeat:no-repeat !important;background-position:0 0 !important;}' : '';
+  function setRule(id, urls, tiles, h) {
+    var ok = (urls || []).map(function (u, i) { return u ? i : -1; }).filter(function (i) { return i >= 0; });
+    rules[id] = ok.length ? '[data-topo-id="' + id + '"]{background-image:' + ok.map(function (i) { return 'url(' + urls[i] + ')'; }).join(',') +
+      ' !important;background-size:' + ok.map(function (i) { return '100% ' + (tiles[i][1] - tiles[i][0]) + 'px'; }).join(',') +
+      ' !important;background-position:' + ok.map(function (i) { return '0 ' + tiles[i][0] + 'px'; }).join(',') +
+      ' !important;background-repeat:no-repeat !important;}' : '';
     css.textContent = Object.keys(rules).map(function (k) { return rules[k]; }).join('\n');
   }
 
@@ -93,10 +97,9 @@
     var cs = getComputedStyle(el);
     if (SURFACES.indexOf(cs.backgroundColor) < 0) return false;
     if (cs.backgroundImage !== 'none' && !el.hasAttribute('data-topo-id')) return false;
-    // page-length wrappers are covered by their own sections; painting one would
-    // mean a canvas taller than the browser allows
+    // tall sections are painted in stacked tiles; only whole-page wrappers are skipped
     var hh = el.offsetHeight;
-    return el.offsetWidth >= Math.min(innerWidth * 0.7, 900) && hh >= 240 && hh <= 9000;
+    return el.offsetWidth >= Math.min(innerWidth * 0.7, 900) && hh >= 240 && hh <= 40000;
   }
 
   function rootOf(el) {
@@ -161,32 +164,39 @@
     // which sheets this box needs, stacked down the root
     var need = [], y = 0, k = 0;
     var guessH = Math.max(PX_PER_KM, rootW / 11.4) * 13.9;
-    while (y < oy + h) { need.push(SHEETS[(start + k) % SHEETS.length]); y += guessH - OVERLAP; k++; if (k > 12) break; }
+    while (y < oy + h) { need.push(SHEETS[(start + k) % SHEETS.length]); y += guessH - OVERLAP; k++; if (k > 40) break; }
     Promise.all(need.map(sheet)).then(function (qs) {
       if (st.token !== token) return;
       qs = qs.filter(Boolean); if (!qs.length) return;
       var dpr = Math.min(2, window.devicePixelRatio || 1);
-      while (dpr > 1 && (w * h * dpr * dpr > 2.4e7 || h * dpr > 16000)) dpr -= 0.25;
-      var cv = document.createElement('canvas');
-      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-      var ctx = cv.getContext('2d');
-      var top = 0;
-      for (var b = 0; b < qs.length; b++) {
-        var Q = qs[b];
-        var scale = Math.max(PX_PER_KM, rootW / Q.kmW);
-        var bw = Q.kmW * scale, bh = Q.kmH * scale;
-        var bx = (rootW - bw) / 2;
-        var y0 = top - oy, y1 = y0 + bh;
-        if (y1 > 0 && y0 < h) band(ctx, dpr, Q, bx - ox, y0, bw, bh, w, h, b > 0, b < qs.length - 1);
-        top += bh - OVERLAP;
-        if (top - oy > h) break;
-      }
-      cv.toBlob(function (blob) {
-        if (!blob || st.token !== token) return;
-        if (st.url) URL.revokeObjectURL(st.url);
-        st.url = URL.createObjectURL(blob); st.done = true;
-        setRule(st.id, st.url);
-      }, 'image/png');
+      var CH = 3000, tiles = [];
+      for (var cy = 0; cy < h; cy += CH) tiles.push([cy, Math.min(h, cy + CH)]);
+      var urls = new Array(tiles.length), left = tiles.length;
+      tiles.forEach(function (tl, ti) {
+        var th = tl[1] - tl[0];
+        var cv = document.createElement('canvas');
+        cv.width = Math.round(w * dpr); cv.height = Math.round(th * dpr);
+        var ctx = cv.getContext('2d');
+        var top = 0;
+        for (var b = 0; b < qs.length; b++) {
+          var Q = qs[b];
+          var scale = Math.max(PX_PER_KM, rootW / Q.kmW);
+          var bw = Q.kmW * scale, bh = Q.kmH * scale;
+          var bx = (rootW - bw) / 2;
+          var y0 = top - oy - tl[0], y1 = y0 + bh;
+          if (y1 > 0 && y0 < th) band(ctx, dpr, Q, bx - ox, y0, bw, bh, w, th, b > 0, b < qs.length - 1);
+          top += bh - OVERLAP;
+          if (top - oy > tl[1]) break;
+        }
+        cv.toBlob(function (blob) {
+          if (st.token !== token) return;
+          urls[ti] = blob ? URL.createObjectURL(blob) : null;
+          if (--left) return;
+          (st.urls || []).forEach(function (u) { if (u) URL.revokeObjectURL(u); });
+          st.urls = urls; st.done = true;
+          setRule(st.id, urls, tiles, h);
+        }, 'image/png');
+      });
     });
   }
 

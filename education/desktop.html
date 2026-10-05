@@ -1058,7 +1058,7 @@
         <span style="display:inline-flex;align-items:center;gap:7px;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.14em;color:var(--ns-bronze);"><span style="font-size:calc(13px * var(--text-scale));">↓</span> Click any terpene to see more</span>
         <div class="nsm-terp-tabs" style="display:flex;flex-wrap:wrap;gap:8px;">
           <sc-for list="{{ terps }}" as="t" hint-placeholder-count="17">
-            <button onClick="{{ t.onClick }}" style="background:{{ t.tabBg }};color:{{ t.tabColor }};border:1px solid {{ t.tabBorder }};border-radius:999px;padding:9px 16px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));letter-spacing:0.02em;transition:background .2s ease,color .2s ease,border-color .2s ease;">{{ t.name }}</button>
+            <button onClick="{{ t.onClick }}" style="background:{{ t.tabBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ t.tabColor }};border:1px solid {{ t.tabBorder }};border-radius:999px;padding:9px 16px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));letter-spacing:0.02em;transition:background .2s ease,color .2s ease,border-color .2s ease;">{{ t.name }}</button>
           </sc-for>
         </div>
         </div>
@@ -1160,7 +1160,7 @@
       <div data-reveal="" data-rd="100" style="opacity:0;transform:translateY(22px);display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between;margin-bottom:8px;">
         <div class="nsm-chiprow" style="display:flex;flex-wrap:wrap;gap:9px;">
           <sc-for list="{{ strainFilters }}" as="f" hint-placeholder-count="4">
-            <button onClick="{{ f.onClick }}" style="display:flex;align-items:center;gap:9px;background:{{ f.chipBg }};color:{{ f.chipColor }};border:1px solid {{ f.chipBorder }};border-radius:999px;padding:10px 18px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));letter-spacing:0.04em;transition:background .2s ease,color .2s ease,border-color .2s ease;">
+            <button onClick="{{ f.onClick }}" style="display:flex;align-items:center;gap:9px;background:{{ f.chipBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ f.chipColor }};border:1px solid {{ f.chipBorder }};border-radius:999px;padding:10px 18px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));letter-spacing:0.04em;transition:background .2s ease,color .2s ease,border-color .2s ease;">
               <img src="{{ f.leafSrc }}" loading="lazy" alt="" style="width:18px;height:16px;object-fit:contain;flex:none;">
               <span>{{ f.label }}</span>
               <span style="opacity:0.6;font-size:calc(12px * var(--text-scale));">{{ f.count }}</span>
@@ -1177,7 +1177,7 @@
         <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.18em;color:var(--ns-bronze);white-space:nowrap;">Filter by effect</span>
         <div class="nsm-chiprow" style="display:flex;flex-wrap:wrap;gap:8px;">
           <sc-for list="{{ effectFilters }}" as="t" hint-placeholder-count="6">
-            <button onClick="{{ t.onClick }}" style="display:inline-flex;align-items:baseline;gap:7px;background:{{ t.chipBg }};color:{{ t.chipColor }};border:1px solid {{ t.chipBorder }};border-radius:999px;padding:8px 15px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));letter-spacing:0.03em;transition:background .2s ease,color .2s ease,border-color .2s ease;">
+            <button onClick="{{ t.onClick }}" style="display:inline-flex;align-items:baseline;gap:7px;background:{{ t.chipBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ t.chipColor }};border:1px solid {{ t.chipBorder }};border-radius:999px;padding:8px 15px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));letter-spacing:0.03em;transition:background .2s ease,color .2s ease,border-color .2s ease;">
               <span>{{ t.label }}</span>
               <span style="opacity:0.55;font-size:calc(11px * var(--text-scale));">{{ t.sub }}</span>
             </button>
@@ -3173,7 +3173,7 @@
         <sc-if value="{{ glBrowseShown }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;flex-wrap:wrap;gap:5px;">
           <sc-for list="{{ glossLetters }}" as="l" hint-placeholder-count="20">
-            <button onClick="{{ l.onClick }}" style="background:{{ l.chipBg }};color:{{ l.chipColor }};border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;transition:background .2s ease,color .2s ease;">{{ l.label }}</button>
+            <button onClick="{{ l.onClick }}" style="background:{{ l.chipBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ l.chipColor }};border:none;border-radius:50%;width:34px;height:34px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;transition:background .2s ease,color .2s ease;">{{ l.label }}</button>
           </sc-for>
         </div>
         <div style="display:flex;align-items:center;gap:16px;">
@@ -4972,7 +4972,7 @@ class Component extends DCLogic {
     const effectFilters = effectOpts.map(e => ({
       key: e, label: e === 'All' ? 'All effects' : e, sub: e === 'All' ? '' : (effectDesc[e] || ''),
       active: ef === e, count: e === 'All' ? '' : (effectCount[e] || 0),
-      chipBg: ef === e ? 'var(--ns-bronze)' : 'transparent',
+      chipBg: ef === e ? 'var(--ns-bronze)' : 'var(--ns-arctic)',
       chipColor: ef === e ? 'var(--ns-midnight)' : 'var(--text-strong)',
       chipBorder: ef === e ? 'var(--ns-bronze)' : 'rgba(32,37,58,0.24)',
       onClick: () => this.setState({ effectFilter: e, expanded: null })
@@ -4983,7 +4983,7 @@ class Component extends DCLogic {
     const strainFilters = ['All', 'Sativa', 'Hybrid', 'Indica'].map(f => ({
       key: f, label: f, count: cnt[f], active: st.strainFilter === f, dotColor: fcolor[f],
       leafSrc: (() => { const c = f === 'Hybrid' ? 'hybrid' : f === 'Sativa' ? 'sativa' : 'indica'; const lf = '../assets/brand/leaf-' + c + '.png'; return (window.__resources && window.__resources[lf]) || lf; })(),
-      chipBg: st.strainFilter === f ? 'var(--ns-midnight)' : 'transparent',
+      chipBg: st.strainFilter === f ? 'var(--ns-midnight)' : 'var(--ns-arctic)',
       chipColor: st.strainFilter === f ? 'var(--ns-arctic)' : 'var(--text-strong)',
       chipBorder: st.strainFilter === f ? 'var(--ns-midnight)' : 'rgba(32,37,58,0.24)',
       onClick: () => this.setState({ strainFilter: f, expanded: null })
@@ -4993,7 +4993,7 @@ class Component extends DCLogic {
       const ac = this._terpAccent(t.name);
       return {
       ...t, idx: i, active: i === st.terpActive, accent: ac,
-      tabBg: i === st.terpActive ? ac : 'transparent',
+      tabBg: i === st.terpActive ? ac : 'var(--ns-arctic)',
       tabColor: i === st.terpActive ? 'var(--ns-arctic)' : 'var(--text-body)',
       tabBorder: i === st.terpActive ? ac : 'rgba(32,37,58,0.16)',
       onClick: () => { this.setState({ terpActive: i, terpExpanded: false }); this._retrigger('nsm-terp-panelbody', 'nsm-tabfade'); }
@@ -5048,7 +5048,7 @@ class Component extends DCLogic {
     });
     const glossLetters = letters.map(l => ({
       label: l, active: st.glLetter === l,
-      chipBg: st.glLetter === l ? 'var(--ns-bronze)' : 'transparent',
+      chipBg: st.glLetter === l ? 'var(--ns-bronze)' : 'var(--ns-arctic)',
       chipColor: st.glLetter === l ? '#FFFFFF' : 'rgba(32,37,58,0.6)',
       onClick: () => this.setState({ glLetter: l })
     }));

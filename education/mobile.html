@@ -603,7 +603,7 @@
       </div>
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .6s ease .05s,transform .6s cubic-bezier(.2,.7,.25,1) .05s;margin-top:22px;display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;">
         <sc-for list="{{ terpTabs }}" as="t" hint-placeholder-count="8">
-          <button onClick="{{ t.onClick }}" style="flex:none;background:{{ t.tabBg }};color:{{ t.tabColor }};border:1px solid {{ t.tabBorder }};border-radius:999px;padding:9px 16px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;letter-spacing:0.02em;">{{ t.name }}</button>
+          <button onClick="{{ t.onClick }}" style="flex:none;background:{{ t.tabBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ t.tabColor }};border:1px solid {{ t.tabBorder }};border-radius:999px;padding:9px 16px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;letter-spacing:0.02em;">{{ t.name }}</button>
         </sc-for>
       </div>
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease;margin-top:16px;background:var(--ns-arctic);border:1px solid var(--border-hairline);border-top:3px solid var(--ns-bronze);padding:22px 20px;">
@@ -675,14 +675,14 @@
       <div style="position:sticky;top:46px;z-index:20;background:var(--ns-arctic);padding:12px 2px 10px;margin-top:8px;border-bottom:1px solid var(--border-hairline);">
         <div style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;">
           <sc-for list="{{ strainFilters }}" as="f" hint-placeholder-count="4">
-            <button onClick="{{ f.onClick }}" style="flex:none;display:flex;align-items:center;gap:8px;background:{{ f.chipBg }};color:{{ f.chipColor }};border:1px solid {{ f.chipBorder }};border-radius:999px;padding:9px 15px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;">
+            <button onClick="{{ f.onClick }}" style="flex:none;display:flex;align-items:center;gap:8px;background:{{ f.chipBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ f.chipColor }};border:1px solid {{ f.chipBorder }};border-radius:999px;padding:9px 15px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;">
               <img data-src="{{ f.leafSrc }}" alt="" style="width:16px;height:16px;object-fit:contain;"><span>{{ f.label }}</span><span style="opacity:0.6;font-weight:400;">{{ f.count }}</span>
             </button>
           </sc-for>
         </div>
         <div style="display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-top:8px;">
           <sc-for list="{{ effectFilters }}" as="e" hint-placeholder-count="6">
-            <button onClick="{{ e.onClick }}" style="flex:none;display:flex;align-items:center;gap:6px;background:{{ e.chipBg }};color:{{ e.chipColor }};border:1px solid {{ e.chipBorder }};border-radius:999px;padding:7px 13px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;">{{ e.label }}<span style="opacity:0.55;font-weight:400;">{{ e.count }}</span></button>
+            <button onClick="{{ e.onClick }}" style="flex:none;display:flex;align-items:center;gap:6px;background:{{ e.chipBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ e.chipColor }};border:1px solid {{ e.chipBorder }};border-radius:999px;padding:7px 13px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;">{{ e.label }}<span style="opacity:0.55;font-weight:400;">{{ e.count }}</span></button>
           </sc-for>
         </div>
         <div style="padding-top:8px;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));letter-spacing:0.04em;color:var(--text-muted);">Showing {{ shownCount }} of {{ strainCount }} cultivars</div>
@@ -1892,7 +1892,7 @@
         </div>
         <div style="display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-top:10px;">
           <sc-for list="{{ glossLetters }}" as="l" hint-placeholder-count="12">
-            <button onClick="{{ l.onClick }}" style="flex:none;min-width:34px;background:{{ l.chipBg }};color:{{ l.chipColor }};border:1px solid {{ l.chipBorder }};border-radius:999px;padding:7px 11px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;">{{ l.label }}</button>
+            <button onClick="{{ l.onClick }}" style="flex:none;min-width:34px;background:{{ l.chipBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ l.chipColor }};border:1px solid {{ l.chipBorder }};border-radius:999px;padding:7px 11px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;">{{ l.label }}</button>
           </sc-for>
         </div>
       </div>
@@ -2632,7 +2632,7 @@ class Component extends DCLogic {
     // ---- Terpenes ----
     const tl=this._terpList();
     const terpTabs=tl.map((t,i)=>({ name:t.name, onClick:()=>{ this.setState({terpActive:i, terpAll:false}); },
-      tabBg: i===st.terpActive?'var(--ns-bronze)':'transparent',
+      tabBg: i===st.terpActive?'var(--ns-bronze)':'var(--ns-arctic)',
       tabColor: i===st.terpActive?'var(--ns-arctic)':'var(--text-body)',
       tabBorder: i===st.terpActive?'var(--ns-bronze)':'rgba(32,37,58,0.18)' }));
     const aT=tl[st.terpActive]||{name:'',flavor:'',medical:'',example:'',foundIn:[]};
@@ -2650,7 +2650,7 @@ class Component extends DCLogic {
     D.strains.forEach(s=>{ if(counts[s.cat]!==undefined) counts[s.cat]++; });
     const fcolor={ All:'var(--ns-midnight)', Sativa:'var(--ns-bronze)', Hybrid:'#1faa6b', Indica:'var(--ns-midnight)' };
     const strainFilters=['All','Sativa','Hybrid','Indica'].map(f=>({ label:f, count:counts[f], leafSrc: f==='All'?'../assets/brand/leaf-glyph-bronze.png':this._leaf(f),
-      chipBg: st.strainFilter===f?'var(--ns-midnight)':'transparent',
+      chipBg: st.strainFilter===f?'var(--ns-midnight)':'var(--ns-arctic)',
       chipColor: st.strainFilter===f?'var(--ns-arctic)':'var(--text-strong)',
       chipBorder: st.strainFilter===f?'var(--ns-midnight)':'rgba(32,37,58,0.22)',
       onClick:()=>this.setState({strainFilter:f, expandedStrain:null}) }));
@@ -2659,7 +2659,7 @@ class Component extends DCLogic {
     const effCounts={}; D.strains.forEach(s=>(s.effects||[]).forEach(e=>{ effCounts[e]=(effCounts[e]||0)+1; }));
     const activeEff=st.strainEffect||'';
     const effectFilters=[{label:'Any effect',val:''}].concat(effOrder.filter(e=>effCounts[e]).map(e=>({label:e,val:e}))).map(f=>({ label:f.label, count:f.val?effCounts[f.val]:'',
-      chipBg: activeEff===f.val?'var(--ns-bronze)':'transparent',
+      chipBg: activeEff===f.val?'var(--ns-bronze)':'var(--ns-arctic)',
       chipColor: activeEff===f.val?'var(--ns-midnight)':'var(--text-body)',
       chipBorder: activeEff===f.val?'var(--ns-bronze)':'rgba(32,37,58,0.18)',
       onClick:()=>this.setState({strainEffect:f.val, expandedStrain:null}) }));
@@ -2968,7 +2968,7 @@ class Component extends DCLogic {
     const gq=(st.glQuery||'').trim().toLowerCase();
     const lettersSet=Array.from(new Set((D.glossary||[]).map(g=>{ const c=(g.term[0]||'').toUpperCase(); return /[A-Z]/.test(c)?c:'#'; }))).sort();
     const glossLetters=['All',...lettersSet].map(l=>({ label:l, active: st.glLetter===l,
-      chipBg: st.glLetter===l?'var(--ns-bronze)':'transparent', chipColor: st.glLetter===l?'#fff':'var(--text-muted)',
+      chipBg: st.glLetter===l?'var(--ns-bronze)':'var(--ns-arctic)', chipColor: st.glLetter===l?'#fff':'var(--text-muted)',
       chipBorder: st.glLetter===l?'var(--ns-bronze)':'rgba(32,37,58,0.18)', onClick:()=>this.setState({glLetter:l}) }));
     const glossary=(D.glossary||[]).filter(g=>{ const t0=(g.term[0]||'').toUpperCase(); const lk=/[A-Z]/.test(t0)?t0:'#'; const okL=st.glLetter==='All'||lk===st.glLetter; const okQ=!gq||g.term.toLowerCase().includes(gq)||g.def.toLowerCase().includes(gq); return okL&&okQ; }).map(g=>({ term:g.term, def:g.def, pron:g.pron||'', hasPron:!!g.pron,
       img:g.img||'', hasImg:!!g.img, bubbles:g.bubbles||[], hasBubbles:(g.bubbles||[]).length>0,
