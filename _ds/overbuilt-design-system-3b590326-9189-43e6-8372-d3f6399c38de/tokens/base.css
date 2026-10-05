@@ -1,0 +1,62 @@
+/* ============================================================
+   BASE — light element defaults built on the tokens.
+   Opt-in: only affects .ns-* utility classes; components style themselves.
+   ============================================================ */
+
+.ns-prose, .ns-root {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-body);
+  font-weight: var(--fw-regular);
+}
+
+/* Display headings — Burford caps, widely tracked */
+.ns-display, .ns-h1, .ns-h2 {
+  font-family: var(--font-display);
+  color: var(--text-strong);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  text-transform: uppercase;
+  margin: 0;
+}
+.ns-display { font-size: var(--fs-display); }
+.ns-h1 { font-size: var(--fs-h1); }
+.ns-h2 { font-size: var(--fs-h2); }
+
+/* Long-form headings — Esther serif, sentence case */
+.ns-h3, .ns-h4, .ns-h5 {
+  font-family: var(--font-heading);
+  color: var(--text-strong);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  margin: 0;
+}
+.ns-h3 { font-size: var(--fs-h3); }
+.ns-h4 { font-size: var(--fs-h4); }
+.ns-h5 { font-size: var(--fs-h5); }
+
+/* Overline / label — Caligor sans, tracked small-caps */
+.ns-overline {
+  font-family: var(--font-sans);
+  font-size: var(--fs-overline);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-overline);
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+
+/* Pull quote — Esther serif italic */
+.ns-accent {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-snug);
+  color: var(--text-strong);
+}
+
+a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { color: var(--link-hover); }

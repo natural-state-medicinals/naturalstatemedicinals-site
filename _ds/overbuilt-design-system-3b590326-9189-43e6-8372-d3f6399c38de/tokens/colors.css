@@ -1,0 +1,81 @@
+/* ============================================================
+   COLOR — Natural State Medicinals
+   "Midnight on cream, bronze for accent." Apothecary-elegant.
+   Strict 5-color palette; warm neutrals derived from cream/haze.
+   ============================================================ */
+:root {
+  /* ---- Brand palette (the only five hues) ---- */
+  --ns-arctic:   #F5F4E1;  /* primary surface — warm off-white "paper" */
+  --ns-midnight: #20253A;  /* primary ink / inverse surface */
+  --ns-bronze:   #B79550;  /* signature accent — glyph, CTAs, dividers */
+  --ns-cream:    #F6E7D7;  /* secondary surface — warmer card fill */
+  --ns-haze:     #EFD7C5;  /* tertiary surface — dusty pink-tan, sparing */
+
+  /* ---- Bronze states (derived) ---- */
+  --ns-bronze-dark:  #97793c;  /* hover / press */
+  --ns-bronze-light: #cdb074;
+  --ns-bronze-soft:  rgba(183,149,80,0.14);
+
+  /* ---- Midnight depth ramp (derived, for ink & inverse layers) ---- */
+  --midnight-900: #161a2b;
+  --midnight-800: #20253A;
+  --midnight-700: #2c3147;
+  --midnight-600: #3a4058;
+  --midnight-500: #4c5270;
+
+  /* ---- Warm neutrals derived from cream/haze (hover/focus only) ---- */
+  --warm-100: #faf6ec;
+  --warm-200: #efe9d8;
+  --warm-300: #e4dcc6;
+
+  /* ---- Strain-type coding (from packaging) ----
+     Sativa = gold/cream band + open ring icon
+     Indica = midnight + gold-leaf + filled gold dot icon
+     Hybrid = spring green band */
+  --strain-sativa: var(--ns-bronze);   /* warm gold/tan band */
+  --strain-indica: var(--ns-midnight); /* navy + gold leaf */
+  --strain-hybrid: #1faa6b;            /* spring green band */
+
+  /* ---- Flavor accent tabs (gummies/edibles; sparing, 1 per SKU) ---- */
+  --flavor-blueberry: #5a2e8c;   /* blueberry açaí — violet tab */
+  --flavor-ginger:    var(--ns-bronze);
+
+  /* ---- Gold keyline (the foil border around labels/lockups) ---- */
+  --gold-keyline: var(--ns-bronze);
+
+  /* ============ SEMANTIC ALIASES ============ */
+  /* Surfaces */
+  --surface-base:     var(--ns-arctic);   /* default page — never #FFF */
+  --surface-card:     var(--ns-cream);    /* standard card on arctic */
+  --surface-raised:   #FFFFFF;            /* elevated / featured card */
+  --surface-tertiary: var(--ns-haze);     /* product moments, sparing */
+  --surface-inverse:  var(--ns-midnight); /* hero / dramatic */
+
+  /* Text */
+  --text-strong:   var(--ns-midnight);                 /* default ink — never #000 */
+  --text-body:     rgba(32,37,58,0.88);
+  --text-muted:    rgba(32,37,58,0.60);
+  --text-faint:    rgba(32,37,58,0.42);
+  --text-on-dark:     var(--ns-arctic);
+  --text-on-dark-mut: rgba(245,244,225,0.66);
+  --text-accent:   var(--ns-bronze);
+
+  /* Lines & borders */
+  --border-hairline: rgba(32,37,58,0.12);  /* the workhorse divider */
+  --border-strong:   rgba(32,37,58,0.24);
+  --border-bronze:   var(--ns-bronze);
+  --border-on-dark:  rgba(245,244,225,0.16);
+
+  /* Interactive / brand */
+  --brand:        var(--ns-midnight);
+  --brand-accent: var(--ns-bronze);
+  --link:         var(--ns-bronze);
+  --link-hover:   var(--ns-bronze-dark);
+  --focus-ring:   var(--ns-bronze);
+
+  /* Status (warm-shifted, used quietly) */
+  --success: #5b7a4f;
+  --warning: #b8862f;
+  --danger:  #9c4a3a;
+  --info:    var(--ns-midnight);
+}

@@ -1,0 +1,10 @@
+/* Shared styles for preview cards. Each card is ~700px wide. */
+@import url('../colors_and_type.css');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg-primary); color: var(--fg-primary); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+body { padding: 24px; }
+.card { width: 700px; min-height: 100px; background: var(--bg-primary); }
+.row { display: flex; gap: 12px; align-items: stretch; }
+.col { display: flex; flex-direction: column; gap: 12px; }
+.eyebrow { font-family: var(--font-sans); font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-secondary); }

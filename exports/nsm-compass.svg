@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="4 44 116 116" width="134" height="134">
+  <title>NSM compass emblem — Brunton M2 pocket transit</title>
+  
+  <g id="body">
+    <path d="M 25.60 50.00 L 98.40 50.00 L 114.00 65.60 L 114.00 138.40 L 98.40 154.00 L 25.60 154.00 L 10.00 138.40 L 10.00 65.60 Z" fill="#22283C" stroke="#22283C" stroke-width="1.6"></path>
+  </g>
+  <g id="bezel">
+    <circle cx="62" cy="102" r="47" fill="#CFCBB4" stroke="#22283C" stroke-width="1.2"></circle>
+    <circle cx="62" cy="102" r="47" fill="none" stroke="#22283C" stroke-width="0.5" opacity="0.35" stroke-dasharray="1.2 2.2"></circle>
+  </g>
+  <circle id="dial" cx="62" cy="102" r="42.5" fill="#22283C"></circle>
+  <g id="graduations">
+    <line x1="62.00" y1="59.50" x2="62.00" y2="64.50" stroke="#F0F0DC" stroke-width="0.8" opacity="0.85"></line>
+    <text x="62.00" y="69.10" font-family="Arial" font-size="3.9" font-weight="700" text-anchor="middle" fill="#F0F0DC" opacity="0.8">0</text>
+    <line x1="53.71" y1="60.32" x2="54.20" y2="62.77" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="45.74" y1="62.74" x2="46.69" y2="65.04" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="38.39" y1="66.66" x2="39.78" y2="68.74" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="31.95" y1="71.95" x2="35.48" y2="75.48" stroke="#F0F0DC" stroke-width="0.8" opacity="0.85"></line>
+    <text x="37.60" y="79.20" font-family="Arial" font-size="3.9" font-weight="700" text-anchor="middle" fill="#F0F0DC" opacity="0.8">8</text>
+    <line x1="26.66" y1="78.39" x2="28.74" y2="79.78" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="22.74" y1="85.74" x2="25.04" y2="86.69" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="20.32" y1="93.71" x2="22.77" y2="94.20" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="19.50" y1="102.00" x2="24.50" y2="102.00" stroke="#F0F0DC" stroke-width="0.8" opacity="0.85"></line>
+    <text x="27.50" y="103.60" font-family="Arial" font-size="3.9" font-weight="700" text-anchor="middle" fill="#F0F0DC" opacity="0.8">16</text>
+    <line x1="20.32" y1="110.29" x2="22.77" y2="109.80" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="22.74" y1="118.26" x2="25.04" y2="117.31" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="26.66" y1="125.61" x2="28.74" y2="124.22" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="31.95" y1="132.05" x2="35.48" y2="128.52" stroke="#F0F0DC" stroke-width="0.8" opacity="0.85"></line>
+    <text x="37.60" y="128.00" font-family="Arial" font-size="3.9" font-weight="700" text-anchor="middle" fill="#F0F0DC" opacity="0.8">24</text>
+    <line x1="38.39" y1="137.34" x2="39.78" y2="135.26" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="45.74" y1="141.26" x2="46.69" y2="138.96" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="53.71" y1="143.68" x2="54.20" y2="141.23" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="62.00" y1="144.50" x2="62.00" y2="139.50" stroke="#F0F0DC" stroke-width="0.8" opacity="0.85"></line>
+    <text x="62.00" y="138.10" font-family="Arial" font-size="3.9" font-weight="700" text-anchor="middle" fill="#F0F0DC" opacity="0.8">32</text>
+    <line x1="70.29" y1="143.68" x2="69.80" y2="141.23" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="78.26" y1="141.26" x2="77.31" y2="138.96" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="85.61" y1="137.34" x2="84.22" y2="135.26" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="92.05" y1="132.05" x2="88.52" y2="128.52" stroke="#F0F0DC" stroke-width="0.8" opacity="0.85"></line>
+    <text x="86.40" y="128.00" font-family="Arial" font-size="3.9" font-weight="700" text-anchor="middle" fill="#F0F0DC" opacity="0.8">40</text>
+    <line x1="97.34" y1="125.61" x2="95.26" y2="124.22" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="101.26" y1="118.26" x2="98.96" y2="117.31" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="103.68" y1="110.29" x2="101.23" y2="109.80" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="104.50" y1="102.00" x2="99.50" y2="102.00" stroke="#F0F0DC" stroke-width="0.8" opacity="0.85"></line>
+    <text x="96.50" y="103.60" font-family="Arial" font-size="3.9" font-weight="700" text-anchor="middle" fill="#F0F0DC" opacity="0.8">48</text>
+    <line x1="103.68" y1="93.71" x2="101.23" y2="94.20" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="101.26" y1="85.74" x2="98.96" y2="86.69" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="97.34" y1="78.39" x2="95.26" y2="79.78" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="92.05" y1="71.95" x2="88.52" y2="75.48" stroke="#F0F0DC" stroke-width="0.8" opacity="0.85"></line>
+    <text x="86.40" y="79.20" font-family="Arial" font-size="3.9" font-weight="700" text-anchor="middle" fill="#F0F0DC" opacity="0.8">56</text>
+    <line x1="85.61" y1="66.66" x2="84.22" y2="68.74" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="78.26" y1="62.74" x2="77.31" y2="65.04" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+    <line x1="70.29" y1="60.32" x2="69.80" y2="62.77" stroke="#F0F0DC" stroke-width="0.4" opacity="0.5"></line>
+  </g>
+  <line id="index-w" x1="98" y1="102" x2="106" y2="102" stroke="#F0F0DC" stroke-width="1.1"></line>
+  <g id="clinometer-hatch">
+    <line x1="80.02" y1="73.17" x2="77.37" y2="77.41" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="81.50" y1="74.15" x2="78.63" y2="78.24" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="82.93" y1="75.21" x2="79.85" y2="79.15" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="84.31" y1="76.34" x2="81.03" y2="80.11" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="85.62" y1="77.54" x2="82.15" y2="81.14" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="86.87" y1="78.81" x2="83.21" y2="82.22" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="88.05" y1="80.15" x2="84.22" y2="83.36" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="89.15" y1="81.54" x2="85.16" y2="84.55" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="90.19" y1="82.99" x2="86.04" y2="85.78" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="91.14" y1="84.49" x2="86.86" y2="87.06" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="92.02" y1="86.04" x2="87.61" y2="88.39" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="92.81" y1="87.63" x2="88.28" y2="89.74" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="93.52" y1="89.26" x2="88.89" y2="91.14" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="94.15" y1="90.93" x2="89.42" y2="92.56" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="94.68" y1="92.63" x2="89.88" y2="94.01" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="94.99" y1="110.23" x2="90.14" y2="109.02" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="94.51" y1="111.94" x2="89.73" y2="110.48" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="93.95" y1="113.63" x2="89.25" y2="111.92" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="93.30" y1="115.28" x2="88.69" y2="113.33" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="92.56" y1="116.90" x2="88.07" y2="114.71" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="91.74" y1="118.48" x2="87.36" y2="116.06" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="90.83" y1="120.02" x2="86.59" y2="117.37" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="89.85" y1="121.50" x2="85.76" y2="118.63" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="88.79" y1="122.93" x2="84.85" y2="119.85" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="87.66" y1="124.31" x2="83.89" y2="121.03" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="86.46" y1="125.62" x2="82.86" y2="122.15" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="85.19" y1="126.87" x2="81.78" y2="123.21" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="83.85" y1="128.05" x2="80.64" y2="124.22" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="82.46" y1="129.15" x2="79.45" y2="125.16" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+    <line x1="81.01" y1="130.19" x2="78.22" y2="126.04" stroke="#F0F0DC" stroke-width="0.35" opacity="0.45"></line>
+  </g>
+  <g id="cardinals" font-family="Georgia,&#39;Times New Roman&#39;,serif" font-weight="700" text-anchor="middle" fill="#F0F0DC">
+    <text x="46" y="120" font-size="8.5">E</text>
+    <text x="82" y="107" font-size="8.5">W</text>
+  </g>
+  <g id="star-mark" transform="translate(74,80)" fill="#F0F0DC">
+    <polygon points="0,-3.6 0.9,-1.1 3.6,-1.1 1.4,0.6 2.3,3.3 0,1.6 -2.3,3.3 -1.4,0.6 -3.6,-1.1 -0.9,-1.1"></polygon>
+  </g>
+  <path id="vane" d="M 62 102 L 76 100.3 L 76 103.7 Z" fill="#0D1019" stroke="#F0F0DC" stroke-width="0.4" stroke-opacity="0.45"></path>
+  <g id="level-bullseye">
+    <circle cx="47" cy="86" r="5" fill="#CFCBB4" stroke="#141826" stroke-width="0.6"></circle>
+    <circle cx="47.7" cy="85.3" r="1.5" fill="#C29A3B"></circle>
+  </g>
+  <g id="level-tube">
+    <rect x="44.9" y="93" width="4.2" height="13" rx="2.1" fill="#CFCBB4" stroke="#141826" stroke-width="0.6"></rect>
+    <rect x="45.7" y="98.4" width="2.6" height="2.6" rx="1.1" fill="#C29A3B"></rect>
+  </g>
+  <g id="needle" transform="rotate(180 62 102)">
+    <line x1="62" y1="72" x2="62" y2="132" stroke="#F0F0DC" stroke-width="1.3"></line>
+    <polygon points="62,72 60.1,80 63.9,80" fill="#F0F0DC"></polygon>
+    <polygon points="62,132 60.4,125 63.6,125" fill="#F0F0DC"></polygon>
+    <text x="62" y="78" font-family="Georgia,serif" font-size="4.4" font-weight="700" text-anchor="middle" fill="#22283C">N</text>
+    <text x="62" y="130.5" font-family="Georgia,serif" font-size="4.4" font-weight="700" text-anchor="middle" fill="#22283C">S</text>
+  </g>
+  <g id="boss">
+    <circle cx="62" cy="102" r="8" fill="#1A1F30" stroke="#141826" stroke-width="0.8"></circle>
+    <circle cx="62" cy="102" r="7" fill="none" stroke="#F0F0DC" stroke-width="0.4" opacity="0.4"></circle>
+    <circle cx="62" cy="102" r="2.4" fill="#CFCBB4"></circle>
+    <circle cx="62" cy="102" r="1" fill="#22283C"></circle>
+  </g>
+  <g id="lock-button">
+    <circle cx="103" cy="128" r="3.8" fill="#C29A3B" stroke="#22283C" stroke-width="1"></circle>
+    <circle cx="103" cy="128" r="1.4" fill="#F0F0DC"></circle>
+    <circle cx="103" cy="139" r="1.7" fill="#22283C"></circle>
+  </g>
+</svg>

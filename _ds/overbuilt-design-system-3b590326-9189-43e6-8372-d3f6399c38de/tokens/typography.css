@@ -1,0 +1,59 @@
+/* ============================================================
+   TYPOGRAPHY — Natural State Medicinals
+   3-family system:
+     Burford  — display / wordmark (all-caps, tracked)
+     Caligor  — subheaders, labels, UI  (sans + serif cuts)
+     Esther   — body, long-form, quotes (classical serif)
+   ============================================================ */
+:root {
+  /* ---- Burford (display) ---- */
+  --font-display:         'Burford', 'Playfair Display', Georgia, serif;
+  --font-display-outline: 'Burford Outline', 'Playfair Display', Georgia, serif;
+  --font-display-line:    'Burford Line', Georgia, serif;
+  --font-display-rustic:  'Burford Rustic', Georgia, serif;
+
+  /* ---- Caligor (UI / labels) ---- */
+  --font-sans:       'Caligor Sans Clean', 'Work Sans', system-ui, sans-serif;
+  --font-sans-edge:  'Caligor Sans Edge', system-ui, sans-serif;
+  /* Pending OTF upload — re-enable when the Caligor serif file arrives. Documented in readme.
+  --font-serif-sans: 'Caligor', 'Spectral', Georgia, serif;
+  */
+
+  /* ---- Esther (body / headings in long-form) ---- */
+  --font-heading: 'Esther', 'EB Garamond', Georgia, serif;
+  --font-body:    'Esther', 'EB Garamond', Georgia, serif;
+
+  /* Weights */
+  --fw-light: 300;    /* @kind font */
+  --fw-regular: 400;  /* @kind font */
+  --fw-medium: 500;   /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold: 700;     /* @kind font */
+
+  /* Type scale */
+  --fs-overline: 0.75rem;   /* 12px */
+  --fs-caption:  0.8125rem; /* 13px */
+  --fs-small:    0.875rem;  /* 14px */
+  --fs-body:     1.0625rem; /* 17px — serif body wants a touch more */
+  --fs-body-lg:  1.25rem;   /* 20px */
+  --fs-h6:       1.25rem;   /* 20px */
+  --fs-h5:       1.5rem;    /* 24px */
+  --fs-h4:       2rem;      /* 32px */
+  --fs-h3:       2.625rem;  /* 42px */
+  --fs-h2:       3.5rem;    /* 56px */
+  --fs-h1:       4.75rem;   /* 76px */
+  --fs-display:  6.5rem;    /* 104px */
+
+  /* Line heights */
+  --lh-tight: 1.05;  /* @kind other */
+  --lh-snug:  1.2;   /* @kind other */
+  --lh-body:  1.65;  /* @kind other */
+  --lh-loose: 1.8;   /* @kind other */
+
+  /* Tracking */
+  --ls-display:  0.04em;   /* @kind other */ /* all-caps display caps are widely tracked */
+  --ls-tight:    -0.01em;  /* @kind other */
+  --ls-normal:   0;        /* @kind other */
+  --ls-wide:     0.06em;   /* @kind other */
+  --ls-overline: 0.2em;    /* @kind other */
+}

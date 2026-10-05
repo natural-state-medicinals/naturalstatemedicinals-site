@@ -1,0 +1,5 @@
+*.html linguist-vendored=false
+Natural?State?Medicinals?-?*.html linguist-generated=true
+*.jpg binary
+*.png binary
+*.pdf binary

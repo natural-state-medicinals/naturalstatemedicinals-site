@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<link rel="stylesheet" href="ns-tokens.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap">
+<style>
+  :root {
+    --ns-arctic:#F5F4E1; --ns-midnight:#20253A; --ns-bronze:#B79550;
+    --font-display:'Burford','Playfair Display',Georgia,serif;
+    --font-sans:'Work Sans',system-ui,sans-serif;
+    --font-label:'Caligor Sans','Work Sans',sans-serif;
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; background:var(--ns-arctic); }
+  a { color:#7A5F28; }
+  a:hover { color:#20253A; }
+
+  /* A. Pressed in. The paper catches light on the lower edge of each stroke,
+     so a pale highlight sits below the glyph and a soft ink shade above it. */
+  .lp-deboss {
+    color:#20253A;
+    text-shadow:
+      0 1px 0 rgba(255,255,255,0.85),
+      0 2px 1px rgba(255,255,255,0.5),
+      0 -1px 1px rgba(32,37,58,0.22);
+  }
+
+  /* B. Raised. The same two lights, flipped: highlight above, shade below. */
+  .lp-emboss {
+    color:#20253A;
+    text-shadow:
+      0 -1px 0 rgba(255,255,255,0.8),
+      0 1px 1px rgba(32,37,58,0.3),
+      0 3px 5px rgba(32,37,58,0.14);
+  }
+
+  /* C. Pressed in, with the ink laid unevenly the way a platen leaves it:
+     a fibre texture masked to the glyphs, plus the same paper lighting. */
+  .lp-inked {
+    position:relative;
+    color:#20253A;
+    text-shadow:
+      0 1px 0 rgba(255,255,255,0.85),
+      0 -1px 1px rgba(32,37,58,0.2);
+  }
+  .lp-inked::after {
+    content:attr(data-text);
+    position:absolute;
+    left:0; top:0;
+    color:transparent;
+    -webkit-background-clip:text;
+    background-clip:text;
+    background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIj48ZmlsdGVyIGlkPSJwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC43NSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIiBmaWx0ZXI9InVybCgjcCkiIG9wYWNpdHk9IjAuMDkiLz48L3N2Zz4=");
+    mix-blend-mode:screen;
+    opacity:0.3;
+    pointer-events:none;
+  }
+
+  /* The sheet. Two layers make it read as stock rather than a flat fill: a fine
+     fibre tooth at grain scale, and a much larger, softer cloudiness for the
+     unevenness handmade paper has. Both are black at low opacity, so the palette
+     is untouched. */
+  body::before, body::after { content:""; position:fixed; inset:0; pointer-events:none; z-index:0; }
+  body::before {
+    background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIj48ZmlsdGVyIGlkPSJwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC43NSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIiBmaWx0ZXI9InVybCgjcCkiIG9wYWNpdHk9IjAuMDkiLz48L3N2Zz4=");
+    opacity:0.085;
+    mix-blend-mode:multiply;
+  }
+  body::after {
+    background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIj48ZmlsdGVyIGlkPSJtIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC4wMTIiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsdGVyPSJ1cmwoI20pIiBvcGFjaXR5PSIwLjA1Ii8+PC9zdmc+");
+    opacity:0.055;
+    mix-blend-mode:multiply;
+  }
+  .lp-paper::before {
+    content:"";
+    position:absolute; inset:0;
+    background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIj48ZmlsdGVyIGlkPSJwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC43NSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIiBmaWx0ZXI9InVybCgjcCkiIG9wYWNpdHk9IjAuMDkiLz48L3N2Zz4=");
+    opacity:0.05;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+</style>
+</helmet>
+
+<div style="min-height:100vh; padding:clamp(28px,5vw,72px) clamp(20px,5vw,56px) clamp(60px,8vw,110px); font-family:var(--font-sans); color:#20253A">
+  <div style="max-width:1120px; margin:0 auto">
+
+    <span style="font-family:var(--font-label); font-size:11px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:#7A5F28">Letterpress study</span>
+    <h1 style="margin:14px 0 0; font-family:var(--font-display); font-weight:400; font-size:clamp(30px,4vw,52px); line-height:1.04; letter-spacing:-.01em">Pressed into the stock</h1>
+    <p style="margin:16px 0 0; max-width:62ch; font-size:16px; line-height:1.65; color:rgba(32,37,58,.78); text-wrap:pretty">Two treatments now, on paper rather than on a plate. The sheet carries a fibre tooth and a slower cloudiness under everything, both black at low opacity, so the palette is untouched. Look at it full size, then tell me which press goes on the hero.</p>
+
+    <div style="display:grid; gap:clamp(20px,3vw,34px); margin-top:clamp(34px,5vw,60px)">
+
+      <section class="lp-paper" style="position:relative; overflow:hidden; background:#F5F4E1; border:1px solid rgba(32,37,58,.12); padding:clamp(28px,4vw,52px)">
+        <div style="position:relative; display:flex; align-items:baseline; gap:14px; margin-bottom:clamp(20px,3vw,32px)">
+          <span style="font-family:var(--font-label); font-size:11px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--ns-bronze)">A</span>
+          <span style="font-family:var(--font-label); font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(32,37,58,.66)">Pressed in</span>
+        </div>
+        <p class="lp-deboss" style="position:relative; margin:0; font-family:var(--font-display); font-weight:400; font-size:clamp(38px,7vw,96px); line-height:1; letter-spacing:.01em">Find your natural state</p>
+        <p class="lp-deboss" style="position:relative; margin:clamp(22px,3vw,36px) 0 0; font-family:var(--font-display); font-weight:400; font-size:clamp(26px,3vw,44px); line-height:1; letter-spacing:.02em; text-transform:uppercase">Education</p>
+        <p style="position:relative; margin:clamp(20px,3vw,30px) 0 0; max-width:56ch; font-size:15px; line-height:1.6; color:rgba(32,37,58,.7)">The safest of the three. Reads as stamped into the sheet at any size and stays legible on a phone.</p>
+      </section>
+
+
+      <section class="lp-paper" style="position:relative; overflow:hidden; background:#F5F4E1; border:1px solid rgba(32,37,58,.12); padding:clamp(28px,4vw,52px)">
+        <div style="position:relative; display:flex; align-items:baseline; gap:14px; margin-bottom:clamp(20px,3vw,32px)">
+          <span style="font-family:var(--font-label); font-size:11px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--ns-bronze)">C</span>
+          <span style="font-family:var(--font-label); font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:rgba(32,37,58,.66)">Pressed in, uneven ink</span>
+        </div>
+        <p class="lp-inked" data-text="Find your natural state" style="position:relative; margin:0; font-family:var(--font-display); font-weight:400; font-size:clamp(38px,7vw,96px); line-height:1; letter-spacing:.01em">Find your natural state</p>
+        <p class="lp-inked" data-text="Education" style="position:relative; margin:clamp(22px,3vw,36px) 0 0; font-family:var(--font-display); font-weight:400; font-size:clamp(26px,3vw,44px); line-height:1; letter-spacing:.02em; text-transform:uppercase">Education</p>
+        <p style="position:relative; margin:clamp(20px,3vw,30px) 0 0; max-width:56ch; font-size:15px; line-height:1.6; color:rgba(32,37,58,.7)">The same press as A, with the ink mottled inside the strokes. Best at large sizes. It disappears on small type, so it would go on the hero only.</p>
+      </section>
+
+    </div>
+
+    <p style="margin:clamp(34px,5vw,56px) 0 0; max-width:62ch; font-size:15px; line-height:1.65; color:rgba(32,37,58,.7)">The texture is two layers: a fine grain at roughly nine percent, and a much larger, softer mottling at five. On the landing it would sit under the topo lines, not replace them.</p>
+  </div>
+</div>
+
+</x-dc>
+</body>
+</html>

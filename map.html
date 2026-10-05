@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Natural State — Dispensary Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
+<style>
+  html, body { margin:0; height:100%; background:#F5F4E1; }
+  #map { position:absolute; inset:0; background:#F5F4E1; }
+  .leaflet-tile-pane { filter: saturate(0.45) sepia(0.20) brightness(1.04) contrast(0.95); }
+  .leaflet-container { font-family: 'Outfit', system-ui, sans-serif; background:#F5F4E1; }
+  .ns-pin { width:18px; height:18px; border-radius:50%; background:#B79550; border:2px solid #20253A;
+            box-shadow:0 2px 6px rgba(32,37,58,0.35); transition: transform 220ms cubic-bezier(0.2,0.7,0.25,1); }
+  .ns-pin.active { transform: scale(1.5); background:#20253A; border-color:#B79550; }
+  .leaflet-popup-content-wrapper { border-radius:4px; background:#F5F4E1; color:#20253A; box-shadow:0 6px 18px rgba(32,37,58,0.18); }
+  .leaflet-popup-tip { background:#F5F4E1; }
+  .leaflet-popup-content { margin:14px 16px; }
+  .pop-name { font-family:'Outfit',system-ui,sans-serif; font-weight:600; font-size:14px; letter-spacing:0.04em; text-transform:uppercase; color:#20253A; }
+  .pop-addr { font-family:'Outfit',system-ui,sans-serif; font-size:12px; color:#4a4f63; margin-top:6px; line-height:1.5; }
+  .leaflet-control-attribution { background:rgba(245,244,225,0.85); font-size:10px; }
+  .leaflet-bar a { background:#F5F4E1; color:#20253A; border-bottom-color:rgba(32,37,58,0.12); }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+const PARTNERS = [
+  { id:'releaf',    name:'The Releaf Center',        city:'Bentonville',        lat:36.3728, lng:-94.2088 },
+  { id:'acanza',    name:'Acanza Health Group',      city:'Fayetteville',       lat:36.0626, lng:-94.1574 },
+  { id:'purspirit', name:'Purspirit Cannabis Co.',   city:'Fayetteville',       lat:36.0764, lng:-94.2088 },
+  { id:'plantfam',  name:'Plant Family Therapeutics',city:'Mountain Home',      lat:36.3354, lng:-92.3852 },
+  { id:'fiddlers',  name:"Fiddler's Green",          city:'Mountain View',      lat:35.8670, lng:-92.1179 },
+  { id:'anp',       name:'Arkansas Natural Products',city:'Clinton',            lat:35.5912, lng:-92.4602 },
+  { id:'harvest',   name:'Harvest Cannabis',         city:'Conway',             lat:35.0887, lng:-92.4421 },
+  { id:'gdf-lr',    name:'Good Day Farm',            city:'Little Rock',        lat:34.7465, lng:-92.2896 },
+  { id:'natrelief', name:'Natural Relief Dispensary',city:'Sherwood',           lat:34.8151, lng:-92.2243 },
+  { id:'custom',    name:'Custom Cannabis',          city:'Alexander',          lat:34.6323, lng:-92.4404 },
+  { id:'native',    name:'Native Green Wellness',    city:'Hensley',            lat:34.5563, lng:-92.1963 },
+  { id:'suite443',  name:'Suite 443',                city:'Hot Springs',        lat:34.5037, lng:-93.0552 },
+  { id:'greensp',   name:'Green Springs Medical',    city:'Hot Springs',        lat:34.5290, lng:-93.0490 },
+  { id:'doctors',   name:"Doctor's Orders RX",       city:'Texarkana',          lat:33.4418, lng:-94.0377 },
+  { id:'bloom',     name:'Bloom Medicinals',         city:'Texarkana',          lat:33.4560, lng:-93.9990 },
+  { id:'greenlight',name:'Greenlight Dispensary',    city:'Helena–West Helena', lat:34.5293, lng:-90.5915 },
+  { id:'bam',       name:'Body and Mind',            city:'West Memphis',       lat:35.1465, lng:-90.1848 },
+  { id:'jonesboro', name:'Green Remedies Group',     city:'Jonesboro',          lat:35.8423, lng:-90.7043 },
+  { id:'fortsmith', name:'River Valley Relief',      city:'Fort Smith',         lat:35.3859, lng:-94.3985 },
+  { id:'pinebluff', name:'Delta Cannabis Co.',       city:'Pine Bluff',         lat:34.2284, lng:-92.0032 }
+];
+
+const map = L.map('map', { scrollWheelZoom:false, zoomControl:true }).setView([34.85, -92.4], 7);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors', maxZoom: 18
+}).addTo(map);
+
+const markers = {};
+PARTNERS.forEach(p => {
+  const m = L.marker([p.lat, p.lng], {
+    icon: L.divIcon({ className:'', html:'<div class="ns-pin"></div>', iconSize:[18,18], iconAnchor:[9,9] }),
+    title: p.name
+  }).addTo(map);
+  m.bindPopup('<div class="pop-name">' + p.name + '</div><div class="pop-addr">' + p.city + ', Arkansas<br>Carries Natural State flower, vapes &amp; gummies</div>');
+  m.on('click', () => parent.postMessage({ type:'ns-pin', id:p.id }, '*'));
+  markers[p.id] = m;
+});
+
+function setActive(id) {
+  Object.entries(markers).forEach(([k, m]) => {
+    const el = m.getElement() && m.getElement().querySelector('.ns-pin');
+    if (el) el.classList.toggle('active', k === id);
+  });
+}
+
+window.addEventListener('message', e => {
+  const d = e.data || {};
+  if (d.type === 'ns-focus' && markers[d.id]) {
+    const m = markers[d.id];
+    map.flyTo(m.getLatLng(), 10, { duration: 0.6 });
+    m.openPopup();
+    setActive(d.id);
+  }
+  if (d.type === 'ns-reset') { map.flyTo([34.85, -92.4], 7, { duration: 0.6 }); map.closePopup(); setActive(null); }
+});
+map.on('popupopen', e => { const t = e.popup._source; const id = Object.keys(markers).find(k => markers[k] === t); setActive(id); });
+map.on('popupclose', () => setActive(null));
+</script>
+</body>
+</html>

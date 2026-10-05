@@ -1,0 +1,283 @@
+/* Marketing UI kit styles. Pulls tokens from /colors_and_type.css */
+
+/* ---------- Buttons ---------- */
+.ns-btn {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 14px 24px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 220ms cubic-bezier(.2,.7,.25,1);
+}
+.ns-btn--sm { padding: 10px 16px; font-size: 11px; }
+.ns-btn--primary {
+  background: var(--ns-bronze);
+  color: var(--ns-arctic);
+  box-shadow: var(--shadow-bronze);
+}
+.ns-btn--primary:hover { background: var(--ns-bronze-dark); }
+.ns-btn--secondary {
+  background: transparent;
+  color: var(--ns-midnight);
+  border-color: var(--ns-midnight);
+}
+.ns-btn--secondary:hover { background: var(--ns-midnight); color: var(--ns-arctic); }
+.ns-btn--ghost-light {
+  background: transparent;
+  color: var(--ns-arctic);
+  border-color: rgba(245,244,225,0.4);
+}
+.ns-btn--ghost-light:hover { border-color: var(--ns-bronze); color: var(--ns-bronze); }
+
+/* ---------- Eyebrows / rules ---------- */
+.ns-eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ns-bronze);
+}
+.ns-eyebrow--on-dark { color: var(--ns-bronze-light); }
+
+.ns-rule {
+  display: flex; align-items: center; gap: 16px;
+  padding: 36px 0;
+}
+.ns-rule__line { flex: 1; height: 1px; background: var(--ns-bronze); opacity: 0.6; }
+.ns-rule__glyph { width: 28px; height: auto; opacity: 0.95; }
+.ns-rule__label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ns-midnight);
+}
+
+.ns-tag {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-default);
+  font: 500 10px/1 var(--font-sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ns-midnight);
+}
+
+/* ---------- Header ---------- */
+.ns-header {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 32px;
+  padding: 14px 48px;
+  background: rgba(245,244,225,0.88);
+  backdrop-filter: blur(12px) saturate(1.05);
+  -webkit-backdrop-filter: blur(12px) saturate(1.05);
+  border-bottom: 1px solid var(--border-hairline);
+}
+.ns-header__brand img { height: 38px; width: auto; display: block; }
+.ns-header__nav { display: flex; gap: 28px; flex: 1; justify-content: center; }
+.ns-header__nav a {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ns-midnight);
+  text-decoration: none;
+  transition: color 140ms;
+}
+.ns-header__nav a:hover { color: var(--ns-bronze); }
+
+/* ---------- Hero ---------- */
+.ns-hero {
+  background: var(--ns-midnight);
+  color: var(--ns-arctic);
+  padding: 96px 48px 120px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.ns-hero__inner { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+.ns-hero__glyph { width: 56px; height: auto; opacity: 0.9; margin-bottom: 24px; }
+.ns-hero__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 132px;
+  line-height: 0.95;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 18px 0 24px;
+}
+.ns-hero__lede {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.45;
+  max-width: 540px;
+  opacity: 0.88;
+  text-wrap: pretty;
+}
+.ns-hero__rule { width: 80px; height: 1px; background: var(--ns-bronze); opacity: 0.6; margin: 36px 0; }
+.ns-hero__ctas { display: flex; gap: 20px; }
+
+/* ---------- Section ---------- */
+.ns-section {
+  padding: 96px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.ns-section__head {
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  margin-bottom: 56px;
+}
+.ns-section__title {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 56px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--ns-midnight);
+  margin: 0;
+}
+
+/* ---------- Product grid ---------- */
+.ns-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+.ns-product {
+  background: #fff;
+  border: 1px solid var(--border-hairline);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 220ms cubic-bezier(.2,.7,.25,1), box-shadow 220ms cubic-bezier(.2,.7,.25,1);
+  cursor: pointer;
+}
+.ns-product:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.ns-product__img {
+  aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+}
+.ns-product__img img { width: 50%; opacity: 0.55; }
+.ns-product__meta { padding: 18px 22px 22px; }
+.ns-product__eyebrow {
+  font: 500 10px/1.4 var(--font-sans);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ns-bronze);
+}
+.ns-product__name { font: 500 26px/1.2 var(--font-heading); margin: 6px 0 14px; color: var(--ns-midnight); }
+.ns-product__row { display: flex; justify-content: space-between; align-items: baseline; }
+.ns-product__price { font: 500 20px/1 var(--font-heading); color: var(--ns-midnight); }
+
+/* ---------- Values ---------- */
+.ns-values { background: var(--ns-cream); padding: 96px 48px; }
+.ns-values__grid {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px;
+}
+.ns-values__item { text-align: center; }
+.ns-values__num {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ns-bronze);
+  margin-bottom: 18px;
+}
+.ns-values__body {
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ns-midnight);
+  max-width: 32ch;
+  margin: 0 auto;
+  text-wrap: pretty;
+}
+
+/* ---------- Quote ---------- */
+.ns-quote-section {
+  background: var(--ns-arctic);
+  padding: 120px 48px;
+  text-align: center;
+}
+.ns-quote-section__inner { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+.ns-quote-section__mark {
+  font-family: var(--font-display);
+  font-size: 96px;
+  line-height: 1;
+  color: var(--ns-bronze);
+  margin-bottom: 16px;
+}
+.ns-quote-section__body {
+  font: italic 400 32px/1.4 var(--font-heading);
+  color: var(--ns-midnight);
+  margin: 0 0 28px;
+  text-wrap: pretty;
+}
+.ns-quote-section__attr {
+  font: 500 12px/1 var(--font-sans);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ns-bronze);
+}
+
+/* ---------- CTA strip ---------- */
+.ns-cta-strip {
+  background: var(--ns-midnight);
+  color: var(--ns-arctic);
+  padding: 56px 48px;
+}
+.ns-cta-strip__inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+}
+.ns-cta-strip__title {
+  font: 500 36px/1.15 var(--font-heading);
+  margin: 8px 0 0;
+}
+
+/* ---------- Footer ---------- */
+.ns-footer { background: var(--ns-midnight); color: var(--ns-arctic); padding: 64px 48px 24px; }
+.ns-footer__inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 280px 1fr; gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(245,244,225,0.12);
+}
+.ns-footer__brand img { width: 200px; opacity: 0.92; }
+.ns-footer__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.ns-footer__h {
+  font: 500 11px/1 var(--font-sans);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ns-bronze-light);
+  margin-bottom: 16px;
+}
+.ns-footer__cols a, .ns-footer__cols p {
+  display: block;
+  font: 400 15px/1.7 var(--font-body);
+  color: rgba(245,244,225,0.78);
+  text-decoration: none;
+  margin: 0;
+}
+.ns-footer__cols a:hover { color: var(--ns-bronze); }
+.ns-footer__legal {
+  max-width: 1200px; margin: 24px auto 0;
+  display: flex; justify-content: space-between; gap: 24px;
+  font: 400 12px/1.5 var(--font-sans);
+  letter-spacing: 0.06em;
+  color: rgba(245,244,225,0.5);
+}

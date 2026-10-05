@@ -1,0 +1,70 @@
+/* ============================================================
+   FONTS — Natural State Medicinals
+   ------------------------------------------------------------
+   Self-hosted licensed faces (uploaded OTFs):
+     • Burford Base          → fonts/Burford_Base.otf
+     • Burford Outline       → fonts/Burford_Outline.otf
+     • Burford Line          → fonts/Burford_Line.otf
+     • Burford Rustic        → fonts/Burford_Rustic-Outline.otf
+     • Caligor Sans Clean    → fonts/Caligor_Sans_Clean.otf
+     • Caligor Sans Edge     → fonts/Caligor_Sans_Edge.otf
+     • Esther Regular        → fonts/Esther-Regular.otf
+
+   🚩 STILL SUBSTITUTED (no file uploaded yet):
+     • Caligor (serif cut)   → Spectral
+   ============================================================ */
+
+/* CDN fallback for the one remaining un-uploaded cut (Caligor serif).
+   @import must lead the file. */
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;1,400&display=swap');
+
+@font-face {
+  font-family: 'Burford';
+  src: url('../fonts/Burford_Base.otf') format('opentype');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Burford Outline';
+  src: url('../fonts/Burford_Outline.otf') format('opentype');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Burford Line';
+  src: url('../fonts/Burford_Line.otf') format('opentype');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Burford Rustic';
+  src: url('../fonts/Burford_Rustic-Outline.otf') format('opentype');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Caligor Sans Clean';
+  src: url('../fonts/Caligor_Sans_Clean.otf') format('opentype');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Caligor Sans Edge';
+  src: url('../fonts/Caligor_Sans_Edge.otf') format('opentype');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Esther';
+  src: url('../fonts/Esther-Regular.otf') format('opentype');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+

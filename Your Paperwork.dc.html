@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your paperwork — Natural State Medicinals</title>
+<link rel="icon" type="image/png" href="assets/icon-ns-dark.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>Your paperwork — Natural State Medicinals</title>
+<meta name="description" content="Every form you need for an Arkansas medical cannabis card, in one place. Take all of it, or answer a few questions and take only what you need.">
+<link rel="canonical" href="https://mdedman-tech.github.io/Website_Rebuild/paperwork.html">
+<link rel="icon" type="image/png" href="assets/icon-ns-dark.png">
+<link rel="apple-touch-icon" href="assets/icon-ns-dark.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Natural State Medicinals">
+<meta property="og:title" content="Your paperwork — Natural State Medicinals">
+<meta property="og:description" content="Every form you need for an Arkansas medical cannabis card, in one place. Take all of it, or answer a few questions and take only what you need.">
+<meta property="og:url" content="https://mdedman-tech.github.io/Website_Rebuild/paperwork.html">
+<meta property="og:image" content="https://mdedman-tech.github.io/Website_Rebuild/assets/brand/primary-lockup-dark.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#20253A">
+<link rel="stylesheet" href="ns-tokens.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap">
+<script src="_ds/natural-state-design-system-019df9aa-a367-7899-b1ed-f3a99f259508/_ds_bundle.js"></script>
+<script src="./ar-elevation.js"></script>
+<script src="./topo-texture.js"></script>
+<style>
+  :root { color-scheme: light only;
+    --ns-arctic:#F5F4E1; --ns-midnight:#20253A; --ns-bronze:#B79550; --ns-cream:#F6E7D7; --ns-haze:#EFD7C5;
+    --ns-bronze-dark:#97793c; --ns-bronze-ink:#6F5623;
+    --text-strong:#20253A; --text-body:rgba(32,37,58,0.9); --text-muted:rgba(32,37,58,0.78);
+    --hair:rgba(32,37,58,0.13);
+    --font-display:'Burford','Playfair Display',Georgia,serif;
+    --font-sans:'Work Sans',system-ui,-apple-system,sans-serif;
+    --font-label:'Caligor Sans','Work Sans',sans-serif;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#F5F4E1; color:#20253A; font-family:var(--font-sans); -webkit-font-smoothing:antialiased; }
+  p { line-height:1.68; text-wrap:pretty; }
+  a { color:#6F5623; }
+  ::selection { background:rgba(183,149,80,.28); color:#20253A; }
+  a:focus-visible, button:focus-visible, label:focus-within { outline:3px solid #6F5623; outline-offset:4px; }
+
+  /* This page is a document, not an app: rules and small caps do the work that
+     boxes and shadows were doing before. */
+  .ns-kicker { font-family:var(--font-label); font-size:12px; font-weight:600; letter-spacing:.26em;
+    text-transform:uppercase; color:var(--ns-bronze-ink); }
+  .ns-rule { height:1px; background:var(--hair); }
+  .ns-rule-gold { height:2px; background:#B79550; }
+
+  .ns-btn { display:inline-flex; align-items:center; justify-content:center; min-height:70px; padding:0 32px;
+    border:none; border-radius:3px; background:#20253A; color:#F5F4E1; cursor:pointer; text-decoration:none;
+    font-family:var(--font-label); font-size:14px; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+    transition:background .2s cubic-bezier(.2,.7,.25,1), color .2s ease; }
+  .ns-btn:hover { background:#B79550; color:#20253A; }
+  .ns-btn.ns-line { background:none; color:#20253A; border:1px solid rgba(32,37,58,.4); }
+  .ns-btn.ns-line:hover { background:#20253A; color:#F5F4E1; border-color:#20253A; }
+  .ns-btn:disabled { opacity:.4; cursor:default; background:none; color:#20253A; border:1px solid rgba(32,37,58,.3); }
+
+  /* one ruled line per document, ticked with a real square */
+  .ns-doc { display:grid; grid-template-columns:auto 1fr auto; gap:clamp(16px,2.4vw,28px); align-items:baseline;
+    padding:clamp(20px,2.4vw,26px) 2px; border-bottom:1px solid var(--hair); cursor:pointer;
+    transition:background .2s ease; }
+  .ns-doc:hover { background:rgba(183,149,80,.07); }
+  .ns-doc input { appearance:none; -webkit-appearance:none; width:26px; height:26px; margin:0;
+    border:1.5px solid rgba(32,37,58,.45); background:none; cursor:pointer; position:relative; top:4px;
+    transition:background .18s ease, border-color .18s ease; }
+  .ns-doc input:checked { background:#B79550; border-color:#B79550; }
+  .ns-doc input:checked::after { content:""; position:absolute; left:7px; top:2px; width:9px; height:15px;
+    border-right:2.5px solid #20253A; border-bottom:2.5px solid #20253A; transform:rotate(42deg); }
+  .ns-doc-name { display:block; font-family:var(--font-display); font-weight:400; font-size:clamp(21px,2.1vw,27px);
+    line-height:1.12; letter-spacing:.005em; }
+  .ns-doc-note { display:block; margin-top:8px; max-width:56ch; font-size:17px; line-height:1.55; color:var(--text-muted); }
+  .ns-open { font-family:var(--font-label); font-size:13px; font-weight:600; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ns-bronze-ink); text-decoration:none; white-space:nowrap;
+    border-bottom:1px solid rgba(111,86,35,.4); padding-bottom:3px; transition:color .2s ease, border-color .2s ease; }
+  .ns-open:hover { color:#20253A; border-color:#20253A; }
+
+  .ns-yn { min-height:56px; min-width:96px; padding:0 22px; border:1px solid rgba(32,37,58,.4); background:none;
+    color:#20253A; cursor:pointer; font-family:var(--font-label); font-size:13px; font-weight:600;
+    letter-spacing:.16em; text-transform:uppercase; transition:background .2s ease, color .2s ease, border-color .2s ease; }
+  .ns-yn:hover { border-color:#20253A; background:rgba(32,37,58,.06); }
+
+  .ns-box { width:26px; height:26px; border:1.5px solid rgba(32,37,58,.45); flex:none; margin-top:4px; }
+
+  @media (max-width: 760px) {
+    .ns-doc { grid-template-columns:auto 1fr; }
+    .ns-open { grid-column:2; justify-self:start; margin-top:12px; }
+    .ns-btn { width:100%; }
+    .ns-row { flex-direction:column; align-items:stretch !important; }
+  }
+  @media print {
+    .ns-noprint { display:none !important; }
+    body { background:#fff; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+</style>
+</helmet>
+
+<div style="background:#F5F4E1; min-height:100vh">
+
+  <div style="position:relative; overflow:hidden; background:#20253A; padding:clamp(26px,4vw,44px) clamp(20px,5vw,44px)">
+    <topo-texture ink="245,244,225" opacity="0.055"></topo-texture>
+    <div style="position:relative; max-width:880px; margin:0 auto">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap">
+        <a href="Natural State Medicinals.dc.html#doors" style="display:flex; align-items:center; gap:12px; text-decoration:none">
+          
+          <span style="font-family:var(--font-label); font-size:11.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:rgba(245,244,225,.8)">Natural State Medicinals</span>
+        </a>
+        <a href="How to Get a Card.dc.html" class="ns-noprint" style="font-family:var(--font-label); font-size:12px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--ns-bronze); text-decoration:none">← Back to the story</a>
+      </div>
+      <span style="display:block; margin-top:clamp(28px,4vw,52px); font-family:var(--font-label); font-size:12px; font-weight:600; letter-spacing:.26em; text-transform:uppercase; color:rgba(183,149,80,.95)">For Arkansas patients</span>
+      <h1 style="margin:16px 0 0; max-width:20ch; font-family:var(--font-display); font-weight:400; font-size:clamp(38px,6.4vw,74px); line-height:1.02; letter-spacing:.005em; color:#F5F4E1">Your paperwork</h1>
+      <p style="margin:20px 0 0; max-width:46ch; font-size:clamp(18px,1.7vw,22px); line-height:1.6; color:rgba(245,244,225,.82)">Everything the state needs from you, in one place. Take all of it, or answer a few questions and take only what you need.</p>
+    </div>
+  </div>
+
+  <main style="max-width:880px; margin:0 auto; padding:clamp(34px,5vw,64px) clamp(20px,5vw,44px) clamp(60px,8vw,100px)">
+
+    <section class="ns-noprint">
+      <span class="ns-kicker">Start here</span>
+      <contour-rule style="display:block; margin:14px 0 clamp(24px,3vw,34px)"></contour-rule>
+      <div class="ns-row" style="display:flex; gap:14px; align-items:center; flex-wrap:wrap">
+        <button class="ns-btn" type="button" onClick="{{ onEverything }}">I need everything</button>
+        <button class="ns-btn ns-line" type="button" onClick="{{ onAsk }}">{{ askLabel }}</button>
+      </div>
+      <span aria-live="polite" style="display:block; margin-top:16px; font-size:17px; color:var(--text-muted); max-width:46ch">{{ status }}</span>
+      <p style="margin:14px 0 0; max-width:52ch; font-size:17px; color:var(--text-muted)">Most patients only need the first form. Your browser may ask permission to open several tabs. Say yes.</p>
+
+      <sc-if value="{{ asking }}" hint-placeholder-val="{{ false }}">
+        <div style="margin:clamp(28px,3.4vw,40px) 0 0; padding:clamp(24px,3vw,34px) 0; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair)">
+          <span class="ns-kicker">A few questions</span>
+          <div style="margin-top:10px">
+            <sc-for list="{{ questions }}" as="q" hint-placeholder-count="4">
+              <div style="padding:20px 0; border-bottom:1px solid var(--hair)">
+                <span style="display:block; max-width:46ch; font-family:var(--font-display); font-weight:400; font-size:clamp(20px,1.9vw,25px); line-height:1.16">{{ q.text }}</span>
+                <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap">
+                  <button class="ns-yn" type="button" onClick="{{ q.onYes }}" aria-pressed="{{ q.yesOn }}" style="{{ q.yesStyle }}">Yes</button>
+                  <button class="ns-yn" type="button" onClick="{{ q.onNo }}" aria-pressed="{{ q.noOn }}" style="{{ q.noStyle }}">No</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <p style="margin:22px 0 0; max-width:50ch; font-size:18px; color:var(--text-body)">{{ answerLine }}</p>
+        </div>
+      </sc-if>
+    </section>
+
+    <section style="margin:clamp(46px,6vw,80px) 0 0">
+      <span class="ns-kicker">The documents</span>
+      <h2 style="margin:14px 0 0; font-family:var(--font-display); font-weight:400; font-size:clamp(26px,3.2vw,40px); line-height:1.06">Tick what you want</h2>
+      <p style="margin:14px 0 0; max-width:54ch; font-size:18px; color:var(--text-muted)">Every one of these is published by the Arkansas Department of Health and opens on their website.</p>
+      <div style="margin:clamp(22px,3vw,32px) 0 0; border-top:1px solid var(--hair)">
+        <sc-for list="{{ docs }}" as="d" hint-placeholder-count="5">
+          <label class="ns-doc">
+            <input type="checkbox" checked="{{ d.on }}" onChange="{{ d.onToggle }}">
+            <span>
+              <span class="ns-doc-name">{{ d.name }}</span>
+              <span class="ns-doc-note">{{ d.note }}</span>
+            </span>
+            <a class="ns-open" href="{{ d.href }}" target="_blank" rel="noopener">{{ d.cta }}</a>
+          </label>
+        </sc-for>
+      </div>
+      <div class="ns-row ns-noprint" style="margin:clamp(26px,3.4vw,38px) 0 0; display:flex; gap:14px; align-items:center; flex-wrap:wrap">
+        <button class="ns-btn" type="button" onClick="{{ onSelected }}" disabled="{{ noneChosen }}">{{ selectedLabel }}</button>
+        <button class="ns-btn ns-line" type="button" onClick="{{ onPrint }}">Print the checklist</button>
+      </div>
+    </section>
+
+    <section style="position:relative; margin:clamp(50px,6.5vw,90px) 0 0; padding:clamp(26px,3.4vw,42px) clamp(18px,2.6vw,30px); overflow:hidden">
+      <topo-texture opacity="0.05"></topo-texture>
+      <div style="position:relative; display:flex; align-items:center; gap:clamp(20px,3vw,34px)">
+        <span class="ns-rule-gold" style="flex:1"></span>
+        <img src="assets/brand/primary-lockup-dark.png" alt="Natural State Medicinals" style="width:clamp(100px,12vw,146px); height:auto; object-fit:contain; flex:none">
+        <span class="ns-rule-gold" style="flex:1"></span>
+      </div>
+      <h2 style="position:relative; margin:clamp(26px,3vw,38px) 0 0; text-align:center; font-family:var(--font-display); font-weight:400; font-size:clamp(28px,3.6vw,46px); line-height:1.04">The checklist</h2>
+      <p style="position:relative; margin:14px auto 0; max-width:46ch; text-align:center; font-size:18px; color:var(--text-muted)">Four things go to the state together. Print this and set it on the kitchen table.</p>
+      <div style="position:relative; margin:clamp(26px,3.4vw,40px) 0 0; border-top:1px solid var(--hair)">
+        <sc-for list="{{ checklist }}" as="c" hint-placeholder-count="4">
+          <div style="display:flex; gap:clamp(16px,2.2vw,24px); align-items:flex-start; padding:clamp(18px,2.2vw,24px) 2px; border-bottom:1px solid var(--hair)">
+            <span class="ns-box" aria-hidden="true"></span>
+            <span>
+              <span style="display:block; font-family:var(--font-display); font-weight:400; font-size:clamp(20px,2vw,26px); line-height:1.14">{{ c.name }}</span>
+              <span style="display:block; margin-top:8px; max-width:58ch; font-size:17px; line-height:1.58; color:var(--text-body)">{{ c.note }}</span>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="position:relative; margin:20px 0 0; max-width:58ch; font-size:17px; color:var(--text-muted)">The doctor's signature is only good for thirty days. If one thing is missing, it comes back, so check it twice before you send it.</p>
+    </section>
+
+    <section class="ns-noprint" style="margin:clamp(46px,6vw,80px) 0 0; padding:clamp(28px,3.6vw,44px) clamp(24px,3.4vw,40px); background:#F6E7D7">
+      <span class="ns-kicker">Where it goes</span>
+      <h2 style="margin:14px 0 0; max-width:22ch; font-family:var(--font-display); font-weight:400; font-size:clamp(25px,3vw,36px); line-height:1.06">You send it on the state portal</h2>
+      <p style="margin:16px 0 0; max-width:50ch; font-size:19px; color:var(--text-body)">That is the way the state wants it, it is faster, and it tells you where your application stands. When you are approved, your card is right there in the same account.</p>
+      <div class="ns-row" style="margin:24px 0 0; display:flex; gap:14px; flex-wrap:wrap">
+        <a class="ns-btn" href="https://mmj.adh.arkansas.gov/?action=registration" target="_blank" rel="noopener">Apply on the portal</a>
+        <a class="ns-btn ns-line" href="https://www.healthy.arkansas.gov/programs-services/data-statistics-registries/medical-marijuana/" target="_blank" rel="noopener">The state's own page</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="ns-noprint" style="background:#20253A; padding:clamp(28px,4vw,46px) clamp(20px,5vw,44px)">
+    <div style="max-width:880px; margin:0 auto; display:grid; gap:12px">
+      <span style="display:flex; align-items:center; gap:12px">
+        
+        <span style="font-family:var(--font-label); font-size:11.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:rgba(245,244,225,.75)">Natural State Medicinals</span>
+      </span>
+      <span style="font-size:14px; line-height:1.7; color:rgba(245,244,225,.62); max-width:80ch">These forms are published by the Arkansas Department of Health and open on their website. We do not collect anything you fill in. Current as of August 2026, and rules change.</span>
+    </div>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:900,&quot;height&quot;:1100}}">
+const DOCS = [
+  { key: 'patient', name: 'Patient application', cta: 'Open',
+    note: 'The one most people need. The doctor\u2019s page is inside it, so print the whole thing.',
+    href: 'https://mmj.adh.arkansas.gov/static/web/media/Patient_Application.pdf' },
+  { key: 'caregiver', name: 'Caregiver application', cta: 'Open',
+    note: 'Only if somebody else will pick up your medicine for you.',
+    href: 'https://mmj.adh.arkansas.gov/static/web/media/Caregiver_Application.pdf' },
+  { key: 'change', name: 'Change of information', cta: 'Open',
+    note: 'A new address, a new name, adding or removing a caregiver, or canceling a card.',
+    href: 'https://mmj.adh.arkansas.gov/static/web/media/MMJ_Information_Change_Request.pdf' },
+  { key: 'portal', name: 'The state portal', cta: 'Open',
+    note: 'Apply online, check on an application, and get to your card once you are approved.',
+    href: 'https://mmj.adh.arkansas.gov/' },
+  { key: 'rules', name: 'The state\u2019s own instructions', cta: 'Open',
+    note: 'Everything the Department of Health publishes about the card program.',
+    href: 'https://www.healthy.arkansas.gov/programs-services/data-statistics-registries/medical-marijuana/' }
+];
+
+// A patient almost always needs one form. Four plain questions sort out
+// whether they are the exception, and tick the boxes for them.
+const QUESTIONS = [
+  { key: 'first', text: 'Is this your first Arkansas card?', gives: ['patient'] },
+  { key: 'renew', text: 'Is your card up for renewal in the next sixty days?', gives: ['patient'] },
+  { key: 'helper', text: 'Will somebody else pick up your medicine for you?', gives: ['caregiver'] },
+  { key: 'changed', text: 'Do you already hold a card, and something changed, like your address or your name?', gives: ['change'] }
+];
+
+class Component extends DCLogic {
+  state = { chosen: { patient: true }, status: '', asking: false, answers: {} };
+
+  answer(key, val) {
+    this.setState(p => {
+      const answers = Object.assign({}, p.answers, { [key]: val });
+      const chosen = { portal: true };
+      QUESTIONS.forEach(q => { if (answers[q.key]) q.gives.forEach(k => { chosen[k] = true; }); });
+      // Before anything is answered, assume a first timer, which is the common
+      // case. An explicit no to all three is different: they already hold a
+      // card and need nothing new, so tick nothing but the portal.
+      if (Object.keys(answers).length === 0) chosen.patient = true;
+      return { answers, chosen, status: '' };
+    });
+  }
+
+  // Tabs open on a small stagger. Browsers treat a burst of window.open as
+  // popup spam; a gap between them survives the blocker in most cases.
+  open(list) {
+    if (!list.length) return;
+    list.forEach((href, n) => setTimeout(() => window.open(href, '_blank', 'noopener'), n * 320));
+    this.setState({
+      status: list.length === 1
+        ? 'Opening it in a new tab.'
+        : 'Opening ' + list.length + ' tabs. Look along the top of your browser.'
+    });
+  }
+
+  renderVals() {
+    const chosen = this.state.chosen;
+    const picked = DOCS.filter(d => chosen[d.key]);
+
+    const answers = this.state.answers;
+    const answered = QUESTIONS.filter(q => answers[q.key] !== undefined).length;
+    const allNo = answered === QUESTIONS.length && QUESTIONS.every(q => answers[q.key] === false);
+    const on = 'background:#20253A; color:#F5F4E1; border-color:#20253A';
+    const off = '';
+
+    return {
+      status: this.state.status,
+      asking: this.state.asking,
+      askLabel: this.state.asking ? 'Hide the questions' : 'Which do I need?',
+      onAsk: () => this.setState(p => ({ asking: !p.asking, status: '' })),
+      questions: QUESTIONS.map(q => ({
+        text: q.text,
+        yesOn: answers[q.key] === true ? 'true' : 'false',
+        noOn: answers[q.key] === false ? 'true' : 'false',
+        yesStyle: answers[q.key] === true ? on : off,
+        noStyle: answers[q.key] === false ? on : off,
+        onYes: () => this.answer(q.key, true),
+        onNo: () => this.answer(q.key, false)
+      })),
+      answerLine: answered === 0
+        ? 'Answer these and I will tick the right boxes for you below.'
+        : (allNo
+          ? 'Then there is nothing new to fill out today. Your card lives on the state portal, ticked below, and that is where you pull it up. Come back when renewal is sixty days out.'
+          : 'Ticked below: ' + picked.map(d => d.name).join(', ') + '. Everything else you can leave alone.'),
+      docs: DOCS.map(d => ({
+        name: d.name, note: d.note, href: d.href, cta: d.cta,
+        on: chosen[d.key] ? 'checked' : undefined,
+        onToggle: () => this.setState(p => ({
+          chosen: Object.assign({}, p.chosen, { [d.key]: !p.chosen[d.key] }), status: ''
+        }))
+      })),
+      noneChosen: picked.length ? undefined : 'disabled',
+      selectedLabel: picked.length <= 1 ? 'Open selected file'
+        : picked.length === 2 ? 'Open both files'
+        : 'Open all ' + picked.length + ' files',
+      onSelected: () => this.open(picked.map(d => d.href)),
+      onEverything: () => this.open(DOCS.map(d => d.href)),
+      onPrint: () => window.print(),
+      checklist: [
+        { name: 'The application, filled out', note: 'Your part and your doctor\u2019s part. It is one document.' },
+        { name: 'The page your doctor signed', note: 'Good for thirty days from the day they sign it, and not a day longer.' },
+        { name: 'A photocopy of your ID', note: 'The front of your Arkansas license or state ID, on a full sheet of paper.' },
+        { name: 'Fifty dollars', note: 'To the Department of Health, once a year. Renewals cost the same.' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Natural State Medicinals — Find your natural state</title>
+<link rel="icon" type="image/png" href="assets/icon-ns-dark.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>Natural State Medicinals — Find your natural state</title>
+<meta name="description" content="Arkansas medical cannabis, grown by a small crew and carried by licensed dispensaries across the state. Flower, vapes, gummies, and solventless concentrates.">
+<link rel="canonical" href="https://mdedman-tech.github.io/Website_Rebuild/index.html">
+<link rel="icon" type="image/png" href="assets/icon-ns-dark.png">
+<link rel="apple-touch-icon" href="assets/icon-ns-dark.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Natural State Medicinals">
+<meta property="og:title" content="Natural State Medicinals — Find your natural state">
+<meta property="og:description" content="Arkansas medical cannabis, grown by a small crew and carried by licensed dispensaries across the state. Flower, vapes, gummies, and solventless concentrates.">
+<meta property="og:url" content="https://mdedman-tech.github.io/Website_Rebuild/index.html">
+<meta property="og:image" content="https://mdedman-tech.github.io/Website_Rebuild/assets/brand/primary-lockup-dark.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#20253A">
+<link rel="stylesheet" href="ns-tokens.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap">
+<script src="_ds/natural-state-design-system-019df9aa-a367-7899-b1ed-f3a99f259508/_ds_bundle.js"></script>
+<script src="./ar-elevation.js"></script>
+<style>
+  :root { color-scheme: light only;
+    --ns-arctic:#F5F4E1; --ns-midnight:#20253A; --ns-bronze:#B79550; --ns-cream:#F6E7D7;
+    --ns-bronze-dark:#97793c; --ns-bronze-ink:#7A5F28; --ns-bronze-light:#cdb074;
+    --text-strong:#20253A; --text-body:rgba(32,37,58,0.88); --text-muted:rgba(32,37,58,0.78);
+    --hair:rgba(32,37,58,0.12);
+    --font-display:'Burford','Playfair Display',Georgia,serif;
+    --font-sans:'Work Sans',system-ui,-apple-system,sans-serif;
+    --font-label:'Caligor Sans','Work Sans',sans-serif;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body { margin:0; background:#121624; color:#20253A; font-family:var(--font-sans); -webkit-font-smoothing:antialiased; }
+  /* The stock. A fine fibre tooth at grain scale plus a slower, larger
+     cloudiness, both black at low opacity, painted under every section that
+     does not carry its own fill. Nothing new enters the palette. */
+  .ns-sheet { background-color:#F5F4E1;
+    background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIj48ZmlsdGVyIGlkPSJwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC43NSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIiBmaWx0ZXI9InVybCgjcCkiIG9wYWNpdHk9IjAuMDkiLz48L3N2Zz4=");
+    background-repeat:repeat;
+    background-size:160px 160px; }
+  p { line-height:1.7; }
+  a { color:#B79550; text-decoration:none; }
+  a:hover { color:#97793c; }
+  ::selection { background:rgba(183,149,80,0.28); color:#20253A; }
+
+  @keyframes nsMarkIn { from { opacity:0; transform:scale(1.16); filter:blur(7px); } to { opacity:1; transform:scale(1); filter:blur(0); } }
+  @keyframes nsRise { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+  @keyframes nsFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(7px); } }
+  @keyframes nsRule { from { transform:scaleX(0); opacity:0; } to { transform:scaleX(1); opacity:1; } }
+
+  .ns-mark   { animation:nsMarkIn 1.7s cubic-bezier(.2,.7,.25,1) 4.2s both; }
+  .ns-sheen  { opacity:0; transition:opacity 1.2s ease 5.6s; }
+  .ns-lit .ns-sheen { opacity:1; }
+  /* Foil: a narrow warm band masked to the lockup. It travels as you scroll, so
+     the gold leaf catches light the way a stamped foil does when the page tips. */
+  .ns-foil { opacity:0; transition:opacity 1.4s ease 5.9s; }
+  .ns-lit .ns-foil { opacity:1; }
+  .ns-estd   { animation:nsRise 1.1s cubic-bezier(.2,.7,.25,1) 5.5s both; }
+  .ns-hrule  { transform-origin:center; animation:nsRule 1.2s cubic-bezier(.2,.7,.25,1) 5.2s both; }
+  .ns-scroll { animation:nsRise 1s cubic-bezier(.2,.7,.25,1) 6.2s both, nsFloat 3s ease-in-out 7.2s infinite; }
+
+  html.ns-skip .ns-skipbtn { display:none; }
+  .ns-skipbtn { transition:opacity .4s ease, border-color .22s ease, color .22s ease; }
+  .ns-skipbtn.is-gone { opacity:0; pointer-events:none; visibility:hidden; }
+  html.ns-skip .ns-mark, html.ns-skip .ns-estd, html.ns-skip .ns-hrule, html.ns-skip .ns-scroll {
+    animation:none !important; opacity:1 !important; transform:none !important; filter:none !important;
+  }
+
+  /* pocket transit, bottom right of the hero */
+  .ns-compass-wrap { opacity:0; transition:opacity 500ms ease; }
+  .ns-compass-wrap.is-active { opacity:.82; }
+  .ns-compass-cap, .ns-compass-sub { opacity:0; transition:opacity 500ms ease; }
+  .ns-compass-wrap.caption-in .ns-compass-cap { opacity:.73; }
+  .ns-compass-wrap.caption-in .ns-compass-sub { opacity:.55; animation:nsSubBounce 5s cubic-bezier(.2,.7,.25,1) infinite; }
+  /* the needle hands its momentum to the line below it */
+  @keyframes nsSubBounce {
+    0%, 9%, 100% { transform:translateY(0); }
+    3.2% { transform:translateY(3px); }
+    6% { transform:translateY(-1px); }
+  }
+  .ns-compass-wrap.is-active { transition:opacity 260ms cubic-bezier(.2,.7,.25,1); }
+  /* both layers share the 1200x1500 canvas; boss/pivot sits at (600,674) */
+  /* art occupies y 4.1%–84.9% of the 1200x1500 canvas; negative margins crop the dead space
+     so the caption sits close to the instrument (% margins resolve against width) */
+  .ns-compass { position:relative; width:118px; aspect-ratio:1200/1500; margin:-5.2% 0 -18.9%; filter:drop-shadow(0 4px 10px rgba(32,37,58,.22)); }
+  .ns-compass img { position:absolute; inset:0; width:100%; height:auto; }
+  .ns-needle { transform-origin:50% 44.9%; will-change:transform; backface-visibility:hidden; transform:translate(-0.25%,0.2%) rotate(0deg); }
+  .ns-compass-wrap.sweep .ns-needle { animation:nsSweepSouth 2300ms linear 200ms forwards; }
+  @keyframes nsSweepSouth {
+    0%   { transform:translate(-0.25%,0.2%) rotate(0deg);   animation-timing-function:cubic-bezier(.42,0,.58,1); }
+    58%  { transform:translate(-0.25%,0.2%) rotate(268deg); animation-timing-function:cubic-bezier(.42,0,.58,1); }
+    80%  { transform:translate(-0.25%,0.2%) rotate(150deg); animation-timing-function:cubic-bezier(.42,0,.58,1); }
+    91%  { transform:translate(-0.25%,0.2%) rotate(192deg); animation-timing-function:cubic-bezier(.42,0,.58,1); }
+    97%  { transform:translate(-0.25%,0.2%) rotate(176deg); animation-timing-function:cubic-bezier(.42,0,.58,1); }
+    100% { transform:translate(-0.25%,0.2%) rotate(180deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ns-compass-wrap, .ns-compass-cap, .ns-compass-sub { transition:none; }
+    .ns-compass-wrap.caption-in .ns-compass-sub { animation:none; }
+    .ns-compass-wrap.sweep .ns-needle { animation:none; transform:translate(-0.25%,0.2%) rotate(180deg); }
+  }
+  @media (max-width:600px) {
+    .ns-compass-wrap { right:16px !important; bottom:16px !important; }
+    .ns-compass { width:92px !important; }
+    .ns-compass-cap { width:108px !important; }
+  }
+
+  [data-reveal] { opacity:0; transform:translateY(18px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.25,1); }
+  [data-reveal].is-in { opacity:1; transform:none; }
+
+  /* survey stations */
+  @keyframes nsPing { 0% { transform:scale(.45); opacity:.6; } 70% { transform:scale(2.5); opacity:0; } 100% { transform:scale(2.5); opacity:0; } }
+  .ns-stage:hover .ns-station { opacity:.72; }
+  .ns-stage:hover .ns-station:hover { opacity:1; }
+  .ns-station { transition:opacity .35s cubic-bezier(.2,.7,.25,1); }
+  /* map pin: teardrop head, cast shadow on the ground, survey ring at its base */
+  .ns-pinwrap { position:relative; width:26px; height:34px; flex:none; }
+  .ns-pin { position:absolute; left:4px; top:1px; width:18px; height:18px; background:#B79550; border-radius:50% 50% 50% 0; transform:rotate(-45deg); box-shadow:0 2px 5px rgba(32,37,58,.26); transition:transform .38s cubic-bezier(.2,.7,.25,1), background .3s ease, box-shadow .38s ease; }
+  .ns-pin::after { content:""; position:absolute; left:50%; top:50%; width:6px; height:6px; margin:-3px 0 0 -3px; border-radius:50%; background:#F5F4E1; }
+  .ns-station:hover .ns-pin { transform:rotate(-45deg) translate(2.8px,-2.8px); background:#97793c; box-shadow:0 6px 12px rgba(32,37,58,.3); }
+  .ns-pinshadow { position:absolute; left:7px; bottom:2px; width:12px; height:4px; border-radius:50%; background:rgba(32,37,58,.34); filter:blur(1.5px); transition:transform .38s cubic-bezier(.2,.7,.25,1), opacity .38s ease; }
+  .ns-station:hover .ns-pinshadow { transform:scale(.66); opacity:.55; }
+  .ns-station:focus-visible { outline:2px solid #7A5F28; outline-offset:10px; opacity:1; }
+  .ns-stage:focus-within .ns-station { opacity:.72; }
+  .ns-station:focus-visible .ns-pin { transform:rotate(-45deg) translate(2.8px,-2.8px); background:#97793c; }
+  .ns-station:focus-visible .ns-title { transform:translateX(4px) scale(1.045); }
+  .ns-station:focus-visible .ns-lead { width:64px; }
+  .ns-primary .ns-pinwrap { transform:scale(1.28); transform-origin:bottom left; }
+  .ns-quiet .ns-pinwrap { transform:scale(.82); transform-origin:bottom left; }
+  .ns-quiet .ns-title { font-weight:400; }
+  a:focus-visible { outline:2px solid #7A5F28; outline-offset:3px; }
+  .ns-station .ns-lead { transition:width .45s cubic-bezier(.2,.7,.25,1); }
+  .ns-station:hover .ns-lead { width:64px; }
+  /* Burford has no true lowercase: sentence case renders as one full cap plus
+     small caps, which reads as uneven letter heights. The stations are signage,
+     so they go all caps and sit at one height. */
+  /* Pressed into the sheet: a pale highlight on the lower edge of every stroke,
+     a soft ink shade above it. Light and shadow only, no new color. */
+  .ns-station .ns-title { display:inline-block; text-transform:uppercase; transform-origin:left center; transition:transform .4s cubic-bezier(.2,.7,.25,1);
+    text-shadow:0 1px 0 rgba(255,255,255,.85), 0 2px 1px rgba(255,255,255,.5), 0 -1px 1px rgba(32,37,58,.22); }
+  .ns-station:hover .ns-title { transform:translateX(4px) scale(1.045); }
+  .ns-ping { position:absolute; left:4px; bottom:0; width:18px; height:9px; border-radius:50%; border:1px solid #B79550; }
+  .ns-station .ns-ping { animation:nsPing 3.6s cubic-bezier(.2,.7,.25,1) infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior:auto; }
+    .ns-mark,.ns-sheen,.ns-foil,.ns-estd,.ns-hrule,.ns-scroll { animation:none !important; opacity:1 !important; transform:none !important; filter:none !important; }
+    [data-reveal] { opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+  @media (max-width: 1000px) { .ns-station { grid-column:span 6 !important; align-self:start !important; } }
+  @media (max-width: 640px) { .ns-station { grid-column:span 12 !important; } }
+</style>
+</helmet>
+
+<div class="ns-sheet" style="position:relative; overflow-x:clip">
+
+  <div style="position:relative">
+  <div id="ns-topo" aria-hidden="true" style="position:absolute; inset:0; overflow:hidden; pointer-events:none"></div>
+
+  <section onClick="{{ skipIntro }}" style="position:relative; min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:clamp(64px,8vh,104px) clamp(20px,6vw,56px) clamp(72px,9vh,104px); overflow:hidden">
+
+    <x-import component-from-global-scope="arkansas-intro" from="./arkansas-intro.js" hint-size="100%,100%"></x-import>
+
+    <button class="ns-skipbtn" type="button" onClick="{{ skipIntro }}" style="position:absolute; top:20px; right:20px; z-index:20; min-height:36px; padding:0 16px; background:rgba(18,22,36,.55); border:1px solid rgba(245,244,225,.55); border-radius:4px; color:#F5F4E1; font-family:var(--font-label); font-size:10.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; cursor:pointer" style-hover="border-color:rgba(245,244,225,.8); color:#F5F4E1">Skip intro</button>
+
+    <div style="position:relative; display:flex; flex-direction:column; align-items:center; gap:min(clamp(14px,2.4vh,26px), 3svh)">
+      <div class="ns-mark" style="position:relative; width:min(clamp(240px,34vw,470px), 40svh); line-height:0">
+        <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; -webkit-mask-image:url(assets/logo-silhouette-mask.png); mask-image:url(assets/logo-silhouette-mask.png); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; background:rgba(245,244,225,.5); backdrop-filter:blur(5px) saturate(1.03); -webkit-backdrop-filter:blur(5px) saturate(1.03)"></div>
+        <img src="assets/logo-primary-light.png" alt="Natural State Medicinals" style="position:relative; width:100%; height:auto; display:block; filter:drop-shadow(0 3px 5px rgba(32,37,58,.22)) drop-shadow(0 30px 52px rgba(32,37,58,.34))">
+        <div class="ns-sheen" aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; -webkit-mask-image:url(assets/logo-primary-light.png); mask-image:url(assets/logo-primary-light.png); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; background-image:radial-gradient(115% 95% at 50% -25%, rgba(255,252,240,.75) 0%, rgba(212,184,120,.34) 34%, rgba(212,184,120,0) 66%); mix-blend-mode:screen"></div>
+        <div class="ns-foil" aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; -webkit-mask-image:url(assets/logo-primary-light.png); mask-image:url(assets/logo-primary-light.png); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; background-image:linear-gradient(100deg, rgba(255,240,205,0) 38%, rgba(255,243,214,.55) 46%, rgba(255,250,232,.92) 50%, rgba(255,243,214,.55) 54%, rgba(255,240,205,0) 62%); background-repeat:no-repeat; background-size:280% 100%; background-position:-60% 0; mix-blend-mode:screen"></div>
+      </div>
+
+      <div class="ns-estd" style="font-family:var(--font-label); font-size:min(11px,2.1svh); font-weight:600; letter-spacing:.34em; text-transform:uppercase; color:var(--ns-bronze-ink)">Cultivated in Arkansas</div>
+    </div>
+
+  </section>
+
+  <div class="ns-compass-wrap" id="ns-compass" aria-hidden="true" style="position:fixed; right:24px; bottom:24px; z-index:40; display:flex; flex-direction:column; align-items:center; gap:4px; pointer-events:none">
+    <svg class="ns-compass-cap" viewBox="0 0 160 30" style="width:140px; height:auto; margin-bottom:-3px">
+      <path id="ns-cap-arc" d="M 10 28 A 150 150 0 0 1 150 28" fill="none"></path>
+      <text style="font-family:var(--font-label); font-size:11px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; fill:#20253A">
+        <textPath href="#ns-cap-arc" startOffset="50%" text-anchor="middle">Set your bearing</textPath>
+      </text>
+    </svg>
+    <div class="ns-compass">
+      <img src="assets/compass/Compass_Body.png" alt="">
+      <img class="ns-needle" src="assets/compass/Compass_Needle.png" alt="">
+    </div>
+    <div class="ns-compass-sub" style="margin-top:4px; font-family:var(--font-label); font-size:8px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:#20253A">Scroll down</div>
+  </div>
+
+  <section id="doors" style="position:relative; padding:clamp(52px,6vw,92px) clamp(20px,6vw,56px) clamp(72px,8vw,116px)">
+    <div style="max-width:1320px; margin:0 auto">
+      <div data-reveal="" style="display:flex; align-items:baseline; gap:18px; flex-wrap:wrap; margin-bottom:clamp(28px,4vw,56px)">
+        <span style="font-family:var(--font-label); font-size:11px; font-weight:600; letter-spacing:.26em; text-transform:uppercase; color:var(--ns-bronze-ink)">Where would you like to start</span>
+        <span style="flex:1; min-width:60px; height:1px; background:var(--hair)"></span>
+
+      </div>
+
+      <div class="ns-stage" style="position:relative; display:grid; grid-template-columns:repeat(12,1fr); grid-auto-rows:minmax(0,auto); row-gap:clamp(34px,5vw,74px); column-gap:clamp(16px,2vw,32px)">
+
+        <a class="ns-station ns-primary" data-reveal="" href="education/index.html" style="grid-column:1 / span 5; display:block">
+          <span style="display:flex; align-items:flex-end; height:34px">
+            <span class="ns-pinwrap">
+              <span class="ns-ping"></span>
+              <span class="ns-pinshadow"></span>
+              <span class="ns-pin"></span>
+            </span>
+            <span class="ns-lead" style="width:38px; height:1px; background:#B79550; opacity:.55; margin-bottom:3px"></span>
+          </span>
+          <div style="margin-top:14px; display:flex; align-items:baseline; gap:12px">
+            <span style="font-family:var(--font-label); font-size:10.5px; font-weight:600; letter-spacing:.22em; color:var(--ns-bronze-ink)">01</span>
+            <span class="ns-title" style="font-family:var(--font-display); font-weight:400; font-size:clamp(31px,3.7vw,52px); line-height:1; letter-spacing:.005em; color:var(--text-strong)">Education</span>
+          </div>
+          <p style="margin:12px 0 0; max-width:34ch; font-size:16px; line-height:1.62; color:var(--text-muted)">A patient’s guide to the plant, the practice, and the products.</p>
+        </a>
+
+        <a class="ns-station ns-primary" data-reveal="" href="https://www.naturalstatemeds.com/find-our-products" target="_blank" rel="noopener" style="grid-column:7 / span 5; align-self:end; display:block">
+          <span style="display:flex; align-items:flex-end; height:34px">
+            <span class="ns-pinwrap">
+              <span class="ns-ping"></span>
+              <span class="ns-pinshadow"></span>
+              <span class="ns-pin"></span>
+            </span>
+            <span class="ns-lead" style="width:38px; height:1px; background:#B79550; opacity:.55; margin-bottom:3px"></span>
+          </span>
+          <div style="margin-top:14px; display:flex; align-items:baseline; gap:12px">
+            <span style="font-family:var(--font-label); font-size:10.5px; font-weight:600; letter-spacing:.22em; color:var(--ns-bronze-ink)">02</span>
+            <span class="ns-title" style="font-family:var(--font-display); font-weight:400; font-size:clamp(31px,3.7vw,52px); line-height:1; letter-spacing:.005em; color:var(--text-strong)">Find our product</span>
+          </div>
+          <p style="margin:12px 0 0; max-width:34ch; font-size:16px; line-height:1.62; color:var(--text-muted)">Arkansas dispensaries carrying Natural State right now.</p>
+        </a>
+
+        <a class="ns-station" data-reveal="" href="About Us.dc.html" style="grid-column:2 / span 4; display:block">
+          <span style="display:flex; align-items:flex-end; height:34px">
+            <span class="ns-pinwrap">
+              <span class="ns-ping"></span>
+              <span class="ns-pinshadow"></span>
+              <span class="ns-pin"></span>
+            </span>
+            <span class="ns-lead" style="width:38px; height:1px; background:#B79550; opacity:.55; margin-bottom:3px"></span>
+          </span>
+          <div style="margin-top:14px; display:flex; align-items:baseline; gap:12px">
+            <span style="font-family:var(--font-label); font-size:10.5px; font-weight:600; letter-spacing:.22em; color:var(--ns-bronze-ink)">03</span>
+            <span class="ns-title" style="font-family:var(--font-display); font-weight:400; font-size:clamp(24px,2.6vw,35px); line-height:1; letter-spacing:.005em; color:var(--text-strong)">About us</span>
+          </div>
+          <p style="margin:12px 0 0; max-width:32ch; font-size:15px; line-height:1.62; color:var(--text-muted)">Who grows it, where it is grown, and why we do it the slow way.</p>
+        </a>
+
+        <a class="ns-station" data-reveal="" href="How to Get a Card.dc.html" style="grid-column:7 / span 4; align-self:end; display:block">
+          <span style="display:flex; align-items:flex-end; height:34px">
+            <span class="ns-pinwrap">
+              <span class="ns-ping"></span>
+              <span class="ns-pinshadow"></span>
+              <span class="ns-pin"></span>
+            </span>
+            <span class="ns-lead" style="width:38px; height:1px; background:#B79550; opacity:.55; margin-bottom:3px"></span>
+          </span>
+          <div style="margin-top:14px; display:flex; align-items:baseline; gap:12px">
+            <span style="font-family:var(--font-label); font-size:10.5px; font-weight:600; letter-spacing:.22em; color:var(--ns-bronze-ink)">04</span>
+            <span class="ns-title" style="font-family:var(--font-display); font-weight:400; font-size:clamp(24px,2.6vw,35px); line-height:1; letter-spacing:.005em; color:var(--text-strong)">How to get a card</span>
+          </div>
+          <p style="margin:12px 0 0; max-width:32ch; font-size:15px; line-height:1.62; color:var(--text-muted)">What the state asks for, what it costs, and how long it takes.</p>
+        </a>
+
+        <a class="ns-station" data-reveal="" href="Check Your Allotment.dc.html" style="grid-column:3 / span 4; display:block">
+          <span style="display:flex; align-items:flex-end; height:34px">
+            <span class="ns-pinwrap">
+              <span class="ns-ping"></span>
+              <span class="ns-pinshadow"></span>
+              <span class="ns-pin"></span>
+            </span>
+            <span class="ns-lead" style="width:38px; height:1px; background:#B79550; opacity:.55; margin-bottom:3px"></span>
+          </span>
+          <div style="margin-top:14px; display:flex; align-items:baseline; gap:12px">
+            <span style="font-family:var(--font-label); font-size:10.5px; font-weight:600; letter-spacing:.22em; color:var(--ns-bronze-ink)">05</span>
+            <span class="ns-title" style="font-family:var(--font-display); font-weight:400; font-size:clamp(24px,2.6vw,35px); line-height:1; letter-spacing:.005em; color:var(--text-strong)">Check your allotment</span>
+          </div>
+          <p style="margin:12px 0 0; max-width:32ch; font-size:15px; line-height:1.62; color:var(--text-muted)">Two and a half ounces every fourteen days. See where you stand.</p>
+        </a>
+
+        <a class="ns-station" data-reveal="" href="Contact Us.dc.html" style="grid-column:8 / span 3; align-self:end; display:block">
+          <span style="display:flex; align-items:flex-end; height:34px">
+            <span class="ns-pinwrap">
+              <span class="ns-ping"></span>
+              <span class="ns-pinshadow"></span>
+              <span class="ns-pin"></span>
+            </span>
+            <span class="ns-lead" style="width:38px; height:1px; background:#B79550; opacity:.55; margin-bottom:3px"></span>
+          </span>
+          <div style="margin-top:14px; display:flex; align-items:baseline; gap:12px">
+            <span style="font-family:var(--font-label); font-size:10.5px; font-weight:600; letter-spacing:.22em; color:var(--ns-bronze-ink)">06</span>
+            <span class="ns-title" style="font-family:var(--font-display); font-weight:400; font-size:clamp(21px,2vw,27px); line-height:1; letter-spacing:.005em; color:var(--text-strong)">Contact us</span>
+          </div>
+          <p style="margin:12px 0 0; max-width:30ch; font-size:14.5px; line-height:1.62; color:var(--text-muted)">Questions, feedback, or a problem with a package.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  </div>
+
+  <footer style="background:#20253A; padding:22px clamp(20px,6vw,56px) 24px">
+    <div style="max-width:1440px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:14px 32px; flex-wrap:wrap">
+      <span style="display:flex; align-items:center; gap:12px">
+        <img src="assets/brand/nav-mark-fanleaf-gold.png" alt="" style="width:24px; height:22px; object-fit:contain">
+        <span style="font-family:var(--font-label); font-size:10.5px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:rgba(245,244,225,.72)">Natural State Medicinals</span>
+      </span>
+      <span style="flex:1 1 480px; font-size:11.5px; line-height:1.5; color:rgba(245,244,225,.5); max-width:96ch">{{ compliance }}</span>
+    </div>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;federalPosture&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Compliance&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    this._light();
+    this._compass();
+    const seen = location.hash === '#doors';
+    if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // the custom element may not be upgraded yet; keep asking until it can skip,
+      // and only then reveal the mark, so the logo never pops over a running intro
+      const tryFinish = (n) => {
+        const el = document.querySelector('arkansas-intro');
+        if (el && el.finish) {
+          el.finish();
+          document.documentElement.classList.add('ns-skip');
+          return;
+        }
+        if (n < 60) this._introTimer = setTimeout(() => tryFinish(n + 1), 30);
+      };
+      tryFinish(0);
+    } else {
+      this._seenTimer = setTimeout(() => {
+        const btn = document.querySelector('.ns-skipbtn');
+        if (btn) btn.classList.add('is-gone');
+      }, 5200);
+    }
+
+    const targets = document.querySelectorAll('[data-reveal]');
+    if (targets.length) {
+      this._io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('is-in'); this._io.unobserve(en.target); } });
+      }, { rootMargin: '0px 0px -10% 0px' });
+      targets.forEach(t => this._io.observe(t));
+    }
+  }
+  // A single fixed light source sits just above the viewport. Scrolling moves
+  // the mark past it, so the highlight and the cast shadow rake across.
+  _light() {
+    const mark = document.querySelector('.ns-mark');
+    const sheen = document.querySelector('.ns-sheen');
+    const foil = document.querySelector('.ns-foil');
+    const img = mark && mark.querySelector('img');
+    if (!mark || !sheen || !img) return;
+    mark.classList.add('ns-lit');
+    let raf = 0;
+    const apply = () => {
+      raf = 0;
+      const r = mark.getBoundingClientRect();
+      if (!r.width) return;
+      const lx = window.innerWidth * 0.5;
+      const ly = -window.innerHeight * 0.22;
+      const px = ((lx - r.left) / r.width) * 100;
+      const py = ((ly - r.top) / r.height) * 100;
+      sheen.style.backgroundImage =
+        'radial-gradient(125% 105% at ' + px.toFixed(1) + '% ' + py.toFixed(1) + '%, ' +
+        'rgba(255,252,240,.78) 0%, rgba(212,184,120,.34) 34%, rgba(212,184,120,0) 66%)';
+      const dx = (r.left + r.width / 2 - lx) / window.innerWidth;
+      const dy = (r.top + r.height / 2 - ly) / window.innerHeight;
+      const ox = Math.max(-26, Math.min(26, dx * 46));
+      const oy = Math.max(6, Math.min(44, dy * 34));
+      // pressed in, not floating: a pale edge where the paper lifts, a soft ink
+      // shade on the far side, and one long faint shadow to keep it seated
+      img.style.filter =
+        'drop-shadow(' + (ox * -0.08).toFixed(1) + 'px -1px 0 rgba(255,255,255,.9)) ' +
+        'drop-shadow(' + (ox * 0.1).toFixed(1) + 'px 1.5px 1px rgba(32,37,58,.34)) ' +
+        'drop-shadow(' + (ox * 0.4).toFixed(1) + 'px ' + (oy * 0.5 + 4).toFixed(1) + 'px 24px rgba(32,37,58,.16))';
+      if (foil) {
+        const p = Math.max(0, Math.min(1, window.scrollY / (window.innerHeight * 0.85)));
+        foil.style.backgroundPositionX = (-60 + p * 200).toFixed(1) + '%';
+      }
+    };
+    this._onScroll = () => { if (!raf) raf = requestAnimationFrame(apply); };
+    addEventListener('scroll', this._onScroll, { passive: true });
+    addEventListener('resize', this._onScroll);
+    apply();
+  }
+
+  // Pocket transit. Nothing here holds a node from mount time: the wrap is looked
+  // up when it is needed, so a template that is still streaming cannot lose the
+  // wiring. Fires off the hero-settled event, never a timer.
+  _compass() {
+    const wrap = () => document.getElementById('ns-compass');
+
+    const run = () => {
+      const el = wrap();
+      if (!el) { this._compassPending = true; return; }
+      this._compassPending = false;
+      if (el.classList.contains('is-active')) return;
+      el.classList.add('is-active', 'sweep');
+      clearTimeout(this._capTimer);
+      this._capTimer = setTimeout(() => { const e = wrap(); if (e) e.classList.add('caption-in'); }, 2150);
+    };
+    this._compassRun = run;
+
+    this._onSettled = () => run();
+    document.addEventListener('ns-intro-settled', this._onSettled);
+    if (location.hash === '#doors' || document.documentElement.classList.contains('ns-skip')) run();
+
+    // it points at what is below; it fades out as soon as you start moving, gone by ~30vh
+    this._onCompassScroll = () => {
+      const el = wrap();
+      if (!el || !el.classList.contains('is-active')) return;
+      const span = window.innerHeight * 0.3;
+      if (window.scrollY >= span) this._compassSeen = true;
+      const f = 1 - Math.min(1, window.scrollY / span);
+      // first time it is a full statement; on the way back it is only a quiet reminder
+      el.style.opacity = (f * (this._compassSeen ? 0.25 : 0.82)).toFixed(3);
+    };
+    addEventListener('scroll', this._onCompassScroll, { passive: true });
+    this._onCompassScroll();
+  }
+
+  componentDidUpdate() {
+    // the intro may have settled while the compass markup was still streaming
+    if (this._compassPending && this._compassRun) this._compassRun();
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this._introTimer); clearTimeout(this._seenTimer); clearTimeout(this._capTimer);
+    if (this._onSettled) document.removeEventListener('ns-intro-settled', this._onSettled);
+    if (this._onCompassScroll) removeEventListener('scroll', this._onCompassScroll);
+    if (this._io) this._io.disconnect();
+    if (this._onScroll) { removeEventListener('scroll', this._onScroll); removeEventListener('resize', this._onScroll); }
+  }
+
+  renderVals() {
+    const federal = !!this.props.federalPosture;
+    return {
+      compliance: federal
+        ? 'For adults 21 and over. Keep out of reach of children. This product is not approved by the FDA to treat, cure, or prevent any disease. Marijuana use during pregnancy or breastfeeding poses potential harms. This site is education, not medical advice.'
+        : 'For use by qualifying patients only. Keep out of reach of children. This product is not approved by the FDA to treat, cure, or prevent any disease. Marijuana use during pregnancy or breastfeeding poses potential harms. This site is education, not medical advice.',
+      doors: [
+        { num: '01', title: 'About us', cta: 'Meet the growers',
+          desc: 'Who grows it, where it is grown, and why we do it the slow way.' },
+        { num: '02', title: 'Education', cta: 'Open the guide',
+          desc: 'A patient\u2019s guide to the plant, the practice, and the products.' },
+        { num: '03', title: 'Find our product', cta: 'See dispensaries',
+          desc: 'Arkansas dispensaries carrying Natural State flower, vapes and gummies.' },
+        { num: '04', title: 'Check your allotment', cta: 'Check now',
+          desc: 'Two and a half ounces every fourteen days. See where you stand.' },
+        { num: '05', title: 'Contact us', cta: 'Get in touch',
+          desc: 'Questions, feedback, or a problem with a package. A person answers.' }
+      ],
+      skipIntro: (e) => {
+        if (e && e.target && e.target.closest && e.target.closest('a')) return;
+        if (document.documentElement.classList.contains('ns-skip')) return;
+        document.documentElement.classList.add('ns-skip');
+        const intro = document.querySelector('arkansas-intro');
+        if (intro && intro.finish) intro.finish();
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>
