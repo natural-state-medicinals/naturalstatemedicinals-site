@@ -110,14 +110,24 @@
 
   // nearness by measurement, not IntersectionObserver: some embeds never report
   var tracked = [];
-  function isNear(el) { var r = el.getBoundingClientRect(); return r.bottom > -1400 && r.top < innerHeight + 1400; }
+  // phones paint only within one screen of the viewport, and let go of tiles once
+  // they are well past it; desktop keeps the wide margin and never releases
+  function phone() { return innerWidth < 760; }
+  function isNear(el) { var r = el.getBoundingClientRect(), m = phone() ? innerHeight : 1400; return r.bottom > -m && r.top < innerHeight + m; }
+  function isFar(el) { var r = el.getBoundingClientRect(), m = innerHeight * 3; return r.bottom < -m || r.top > innerHeight + m; }
+  function release(el) {
+    var st = state.get(el); if (!st || !st.done) return;
+    st.token = {}; st.done = false; st.w = 0; st.h = 0;
+    (st.urls || []).forEach(function (u) { if (u) URL.revokeObjectURL(u); });
+    st.urls = null; setRule(st.id, null);
+  }
   var sT = 0;
   function onScroll() {
     if (sT) return;
     sT = setTimeout(function () {
       sT = 0;
       tracked = tracked.filter(function (el) { return el.isConnected; });
-      tracked.forEach(function (el) { var st = state.get(el); if (!st) return; st.near = isNear(el); if (st.near && !st.done) queue(el); });
+      tracked.forEach(function (el) { var st = state.get(el); if (!st) return; st.near = isNear(el); if (st.near && !st.done) queue(el); else if (!st.near && phone() && isFar(el)) release(el); });
     }, 120);
   }
   addEventListener('scroll', onScroll, { passive: true });
@@ -168,7 +178,7 @@
     Promise.all(need.map(sheet)).then(function (qs) {
       if (st.token !== token) return;
       qs = qs.filter(Boolean); if (!qs.length) return;
-      var dpr = Math.min(2, window.devicePixelRatio || 1);
+      var dpr = phone() ? 1 : Math.min(2, window.devicePixelRatio || 1);
       var CH = 3000, tiles = [];
       for (var cy = 0; cy < h; cy += CH) tiles.push([cy, Math.min(h, cy + CH)]);
       var urls = new Array(tiles.length), left = tiles.length;

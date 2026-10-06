@@ -34,26 +34,39 @@ reduced-motion both land correctly.
 
 ## Published site
 
-GitHub Pages serves the repo root at
-https://mdedman-tech.github.io/Website_Rebuild/. Seven single-file builds sit there with every asset inlined, plus the education
-guide, which stays as loose files under `education/`:
+GitHub Pages serves the repo root. The seven site pages are published as loose files,
+the same way the education guide is: each page is its `.dc.html` source with cross-page
+links rewritten to the clean filenames below and a loading screen added at the top of
+`<body>`. Scripts, styles and images load from the shared root files, `assets/` and
+`_ds/`, so they download once and are cached across pages.
 
-| URL | Page |
+| URL | Source |
 |---|---|
-| `index.html` | Landing |
-| `about.html` | About us |
-| `get-a-card.html` | How to get a card |
-| `allotment.html` | Check your allotment |
-| `contact.html` | Contact us |
-| `paperwork.html` | Your paperwork |
-| `find-our-flower.html` | Find our flower |
+| `index.html` | `Natural State Medicinals.dc.html` |
+| `about.html` | `About Us.dc.html` |
+| `get-a-card.html` | `How to Get a Card.dc.html` |
+| `allotment.html` | `Check Your Allotment.dc.html` |
+| `contact.html` | `Contact Us.dc.html` |
+| `paperwork.html` | `Your Paperwork.dc.html` |
+| `find-our-flower.html` | `Find Our Flower.dc.html` |
 | `education/index.html` | Education guide (routes to desktop or mobile) |
 
-These are generated output, not source. Do not edit them. Regenerate from the
-`.dc.html` pages: each `*.src.html` is the inliner input, and it is the `.dc.html`
-plus a thumbnail template, with cross-page `.dc.html` links rewritten to the clean
-published filenames above. Rebuild all seven whenever any page changes, so the links
-between them stay consistent.
+These are generated output, not source. Edit the `.dc.html` page, then regenerate all
+seven so the links between them stay consistent. `rules.html` is still the older
+single-file bundle. The `*.src.html` files were the old bundler inputs and are no longer used.
+
+Shared pieces every page loads:
+- `vendor/react.production.min.js`, `vendor/react-dom.production.min.js`: React 18.3.1,
+  hosted with the site so nothing depends on unpkg.
+- `site-nav.js`: the site menu (`<ns-site-nav current="...">`) and the
+  "Keep going" hand-off (`<ns-keep-going to="...">`). It writes `.dc.html` links while
+  editing and clean filenames once published.
+- `assets/img-manifest.js` + `img-sizes.js`: every photo has WebP copies at 800, 1600
+  and 2400px (never wider than the master) next to the JPG, named `name-800.webp` and so
+  on. The script gives each photo a `srcset` and a `sizes` equal to its rendered width,
+  and keeps the JPG as the fallback. Add a photo, then regenerate its WebP copies and its
+  manifest entry.
+- `assets/share/*.jpg`: the 1200x630 link-preview image for each page.
 
 `.nojekyll` keeps Pages from running the files through Jekyll.
 
@@ -182,7 +195,7 @@ The living repository is **natural-state-medicinals** on GitHub. `mdedman-tech/W
 was where the rebuild started and is no longer the source of truth.
 
 Canonical and Open Graph URLs on all seven pages, plus `sitemap.xml` and `robots.txt`,
-declare **https://www.naturalstatemedicinals.com** — the domain this site will be served
+declare **https://naturalstatemedicinals.com** — the domain this site will be served
 from. `naturalstatemeds.com` will redirect there. Until DNS is pointed, the github.io
 address serves the pages while the canonicals name the destination, which is the correct
 posture for a site about to move.
@@ -203,7 +216,7 @@ date: 2026-09-03T00:00:00Z
 - Age gate on every page: 18-or-Arkansas-patient wording, remember me 30 days, rules.html for a no
 - Landing intro holds on the drawn outline behind the gate, then runs its normal sequence
 - Guide plays its own opening first, then the gate appears
-- Canonicals, Open Graph URLs, sitemap and robots repointed to www.naturalstatemedicinals.com
+- Canonicals, Open Graph URLs, sitemap and robots repointed to naturalstatemedicinals.com
 - Find our flower page: search-by-store or by-product guidance added to the intro copy
 - Crew pile at 35 photos, six even rows, bottom row clamped inside the pile box
 - Letterpress headings across all six pages and both guide files

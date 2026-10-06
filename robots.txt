@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.naturalstatemedicinals.com/sitemap.xml
+Sitemap: https://naturalstatemedicinals.com/sitemap.xml
