@@ -28,7 +28,7 @@
       if (this.onMove) removeEventListener('pointermove', this.onMove);
       if (this.onTilt) removeEventListener('deviceorientation', this.onTilt);
       if (this.onFirstTouch) removeEventListener('touchend', this.onFirstTouch);
-      cancelAnimationFrame(this.raf); cancelAnimationFrame(this.praf);
+      cancelAnimationFrame(this.raf); cancelAnimationFrame(this.praf); if (this.io) this.io.disconnect();
       (this.anims || []).forEach(a => a.cancel());
       this._built = false; this.started = false; if (this.shadowRoot) this.shadowRoot.innerHTML = '';
     }
@@ -50,6 +50,7 @@
       this.onScroll = () => { if (!this.raf) this.raf = requestAnimationFrame(() => { this.raf = 0; this.update(); }); };
       this.onResize = () => { clearTimeout(this._rs); this._rs = setTimeout(() => { this.measure(); this.update(true); }, 120); };
       addEventListener('resize', this.onResize);
+      if (this.getAttribute('variant') === 'mobile') this.pin.style.height = '150svh';
       this.measure();
       if (this.reduce) { this.pin.style.height = '100svh'; this.update(true); return; }
       this.hero.style.visibility = 'hidden';
@@ -59,12 +60,20 @@
       if (logo && !logo.complete) logo.addEventListener('load', remeasure, { once: true });
       if (document.fonts) document.fonts.ready.then(remeasure);
       this.idle(root);
+      this.inView = true;
+      if ('IntersectionObserver' in window) {
+        this.io = new IntersectionObserver(es => { const v = es[0].isIntersecting; if (v === this.inView) return; this.inView = v;
+          this.hero.style.visibility = v ? '' : 'hidden';
+          (this.anims || []).forEach(x => v ? x.play() : x.pause());
+          if (v) this.update(true); }, { rootMargin: '200px 0px' });
+        this.io.observe(this.pin);
+      }
       addEventListener('scroll', this.onScroll, { passive: true });
       this.tick = () => { this.praf = 0; this.mx += (this.tx - this.mx) * 0.07; this.my += (this.ty - this.my) * 0.07; this.update(true);
         if (Math.abs(this.tx - this.mx) + Math.abs(this.ty - this.my) > 0.002) this.praf = requestAnimationFrame(this.tick); };
       this.aim = (x, y) => { this.tx = Math.max(-1, Math.min(1, x)); this.ty = Math.max(-1, Math.min(1, y)); if (!this.praf) this.praf = requestAnimationFrame(this.tick); };
       if (matchMedia('(pointer: fine)').matches) {
-        this.onMove = e => this.aim(e.clientX / innerWidth * 2 - 1, e.clientY / innerHeight * 2 - 1);
+        this.onMove = e => this.inView && this.aim(e.clientX / innerWidth * 2 - 1, e.clientY / innerHeight * 2 - 1);
         addEventListener('pointermove', this.onMove, { passive: true });
       } else this.tilt();
       this.update(true);
@@ -191,7 +200,7 @@
     });
   }
   update(force) {
-    const pin = this.pin; if (!pin) return;
+    const pin = this.pin; if (!pin || this.inView === false) return;
     let p;
     if (this.reduce) p = 1;
     else { const span = Math.max(1, pin.offsetHeight - this.hero.offsetHeight); p = this.forceP ?? Math.min(1, Math.max(0, -pin.getBoundingClientRect().top / span)); }
@@ -205,6 +214,7 @@
       const q = Math.min(1, Math.max(0, (p - b.t0) / (b.t1 - b.t0))), e = q * q * (3 - 2 * q);
       const r = (b.L ? -1 : 1) * b.rmax * e, sc = 1 + (b.smax - 1) * e;
       const dx = b.dx * Math.pow(e, 1.6), dy = 70 * e * b.push;
+      const gone = e >= 0.999; if (gone !== b.gone) { b.gone = gone; b.el.style.visibility = gone ? 'hidden' : ''; }
       b.el.style.transform = `translate3d(${(dx + ox * b.dz).toFixed(1)}px,${(dy + oy * b.dz).toFixed(1)}px,0) rotate(${r.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
       if (b.lastB < 0) { b.lastB = b.b0; b.el.style.filter = 'none'; b.el.style.willChange = 'transform'; }
     });

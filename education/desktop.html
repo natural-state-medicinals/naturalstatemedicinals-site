@@ -4349,7 +4349,7 @@ class Component extends DCLogic {
   }
 
   _initScroll() {
-    this._onScroll = () => { const now = Date.now(); if (now - (this._last || 0) < 16) return; this._last = now; this._update(); };
+    this._onScroll = () => { if (this._sraf) return; this._sraf = requestAnimationFrame(() => { this._sraf = 0; this._update(); }); };
     window.addEventListener('scroll', this._onScroll, { passive: true });
     this._update();
   }
