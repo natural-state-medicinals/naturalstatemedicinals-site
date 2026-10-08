@@ -19,6 +19,7 @@
 <script src="../vendor/react-dom.production.min.js"></script>
 <script src="../assets/img-manifest.js"></script>
 <script src="../img-sizes.js"></script>
+<script src="./ozarks-hero.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -171,7 +172,7 @@
   h1[style*="#d8bd82"], h2[style*="#d8bd82"] {
     text-shadow:0 1px 1px rgba(11,14,24,.55), 0 -1px 0 rgba(245,244,225,.16); }
 </style>
-<script src="../ns-age-gate.js" data-variant="b" data-no-href="../rules.html" data-leaf="../assets/brand/nav-mark-fanleaf-gold.png" data-delay="2200"></script>
+<script src="../ns-age-gate.js" data-variant="b" data-no-href="../rules.html" data-leaf="../assets/brand/nav-mark-fanleaf-gold.png" data-delay="3000"></script>
 </helmet>
 
 <template id="__bundler_thumbnail">
@@ -345,43 +346,27 @@
   </sc-if>
 
   <!-- ============ HERO ============ -->
-  <section data-cnum="" data-clabel="Welcome" style="position:relative;min-height:94svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px 60px;background:radial-gradient(120% 90% at 50% 12%, #2b3150 0%, #20253A 52%, #161a2b 100%);overflow:hidden;">
-    <img class="nsm-hero-branch-r" data-para="1.2" data-base="rotate(8deg)" src="../assets/brand/leaf-branch-midnight.png" alt="" aria-hidden="true" style="position:absolute;top:-6%;right:-22%;width:300px;opacity:0.5;filter:brightness(1.7) sepia(0.4) saturate(2) hue-rotate(2deg) drop-shadow(0 14px 30px rgba(0,0,0,0.4));transform:rotate(8deg);">
-    <img class="nsm-hero-branch-l" data-para="1.8" data-base="rotate(-16deg)" src="../assets/brand/leaf-glyph-bronze.png" alt="" aria-hidden="true" style="position:absolute;bottom:-4%;left:-14%;width:200px;opacity:0.9;transform:rotate(-16deg);filter:drop-shadow(0 18px 34px rgba(0,0,0,0.45));">
-    <div class="nsm-hero-bloom" aria-hidden="true" style="position:absolute;top:6%;left:50%;transform:translateX(-50%);width:min(420px,86vw);height:min(420px,86vw);background:radial-gradient(closest-side, rgba(183,149,80,0.16), transparent 70%);pointer-events:none;"></div>
-    <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:22px;max-width:460px;">
-      <img width="1459" height="1526" class="nsm-hero-logo" src="../assets/brand/primary-logo-light.png" alt="Natural State Medicinals" style="width:min(74vw,250px);height:auto;filter:drop-shadow(0 16px 40px rgba(0,0,0,0.5));">
-      <p class="nsm-hero-sub" style="margin:0;font-family:var(--font-sans);font-size:calc(15px * var(--text-scale));line-height:1.6;color:rgba(245,244,225,0.82);max-width:34ch;">A patient's guide to the plant, our flower, and how to use it well. Grown in Arkansas, for Arkansas.</p>
-      <div class="nsm-hero-cta" style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:340px;margin-top:4px;">
-        <button onClick="{{ goFlower }}" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:56px;background:var(--ns-bronze);color:var(--ns-midnight);border:none;border-radius:6px;cursor:pointer;font-family:var(--font-sans);font-size:calc(15px * var(--text-scale));font-weight:600;letter-spacing:0.04em;box-shadow:var(--shadow-bronze);">Skip the theory, meet the flower <span style="font-size:calc(17px * var(--text-scale));">→</span></button>
-        <button onClick="{{ openQuiz }}" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:52px;background:rgba(32,37,58,0.55);backdrop-filter:blur(10px) saturate(1.05);-webkit-backdrop-filter:blur(10px) saturate(1.05);color:var(--ns-arctic);border:1px solid rgba(183,149,80,0.55);border-radius:6px;cursor:pointer;font-family:var(--font-sans);font-size:calc(14px * var(--text-scale));font-weight:600;letter-spacing:0.04em;"><span style="display:grid;place-items:center;width:19px;height:19px;border:1px solid var(--ns-bronze);border-radius:50%;color:var(--ns-bronze);font-size:calc(12px * var(--text-scale));">?</span> Take the quiz, find your strain</button>
-      </div>
-    </div>
-    <div class="nsm-hero-scroll" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.7;">
-      <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));letter-spacing:0.2em;color:var(--ns-arctic);text-transform:uppercase;">Scroll</span>
-      <span style="width:1px;height:26px;background:linear-gradient(var(--ns-bronze),transparent);"></span>
-    </div>
-  </section>
+  <nsm-ozarks-hero data-cnum="" data-clabel="Welcome" data-screen-label="Hero" variant="mobile"></nsm-ozarks-hero>
 
   <!-- ============ WELCOME LETTER + CONTENTS ============ -->
-  <section style="position:relative;background:var(--ns-arctic);padding:66px 22px 60px;overflow:hidden;">
+  <section style="position:relative;background:var(--ns-midnight);padding:66px 22px 60px;overflow:hidden;">
     <div style="position:relative;max-width:560px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.22em;color:var(--ns-bronze);text-transform:uppercase;">A note before you begin</span>
-        <h2 style="margin:16px 0 0;font-family:var(--font-display);font-weight:400;font-size:clamp(calc(28px * var(--text-scale)), calc(7.5vw * var(--text-scale)), calc(40px * var(--text-scale)));line-height:1.14;letter-spacing:-0.01em;color:var(--text-strong);text-wrap:balance;">We love our plants, our people, and our patients, in that order, and all at once.</h2>
+        <h2 class="ns-press-dark" style="margin:16px 0 0;font-family:var(--font-display);font-weight:400;font-size:clamp(calc(28px * var(--text-scale)), calc(7.5vw * var(--text-scale)), calc(40px * var(--text-scale)));line-height:1.14;letter-spacing:-0.01em;color:#F5F4E1;text-wrap:balance;">We love our plants, our people, and our patients, in that order, and all at once.</h2>
         <div style="width:54px;height:2px;background:var(--ns-bronze);margin:24px 0;"></div>
-        <p style="margin:0 0 16px;font-family:var(--font-sans);font-size:calc(16px * var(--text-scale));line-height:1.72;color:var(--text-body);">This guide is not a sales sheet. It is a patient's companion, a calm, unhurried walk through how cannabis meets the body, what the plant is actually made of, and how to use it with intention rather than guesswork.</p>
-        <p style="margin:0;font-family:var(--font-sans);font-size:calc(16px * var(--text-scale));line-height:1.72;color:var(--text-body);">Read it cover to cover, or keep it nearby and return to the parts you need. However you use it, our hope is the same: that it helps you find your natural state, of wellness, balance, and relief.</p>
-        <p style="margin:26px 0 0;font-family:var(--font-sans);font-size:calc(15px * var(--text-scale));color:var(--text-muted);">From your neighbors at <strong style="font-weight:700;color:var(--text-body);">Natural State Medicinals</strong></p>
+        <p style="margin:0 0 16px;font-family:var(--font-sans);font-size:calc(16px * var(--text-scale));line-height:1.72;color:#F6E7D7;">This guide is not a sales sheet. It is a patient's companion, a calm, unhurried walk through how cannabis meets the body, what the plant is actually made of, and how to use it with intention rather than guesswork.</p>
+        <p style="margin:0;font-family:var(--font-sans);font-size:calc(16px * var(--text-scale));line-height:1.72;color:#F6E7D7;">Read it cover to cover, or keep it nearby and return to the parts you need. However you use it, our hope is the same: that it helps you find your natural state, of wellness, balance, and relief.</p>
+        <p style="margin:26px 0 0;font-family:var(--font-sans);font-size:calc(15px * var(--text-scale));color:rgba(245,244,225,0.72);">From your neighbors at <strong style="font-weight:700;color:#F6E7D7;">Natural State Medicinals</strong></p>
       </div>
-      <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .6s ease .06s,transform .6s cubic-bezier(.2,.7,.25,1) .06s;margin-top:36px;border-top:1px solid var(--border-hairline);padding-top:26px;">
-        <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.22em;color:var(--text-muted);text-transform:uppercase;">Where would you like to start?</span>
+      <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .6s ease .06s,transform .6s cubic-bezier(.2,.7,.25,1) .06s;margin-top:36px;border-top:1px solid rgba(245,244,225,0.16);padding-top:26px;">
+        <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.22em;color:rgba(245,244,225,0.72);text-transform:uppercase;">Where would you like to start?</span>
         <div style="margin-top:16px;display:flex;flex-direction:column;">
           <sc-for list="{{ doors }}" as="d" hint-placeholder-count="6">
-            <button onClick="{{ d.onClick }}" style="display:flex;align-items:center;gap:16px;width:100%;background:none;border:none;border-bottom:1px solid var(--border-hairline);padding:15px 2px;cursor:pointer;text-align:left;">
+            <button onClick="{{ d.onClick }}" style="display:flex;align-items:center;gap:16px;width:100%;background:none;border:none;border-bottom:1px solid rgba(245,244,225,0.16);padding:15px 2px;cursor:pointer;text-align:left;">
               <span style="flex:1;display:flex;flex-direction:column;gap:2px;">
-                <span style="font-family:var(--font-display);font-weight:400;font-size:calc(21px * var(--text-scale));letter-spacing:-0.005em;color:var(--text-strong);">{{ d.label }}</span>
-                <span style="font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));line-height:1.45;color:var(--text-muted);">{{ d.desc }}</span>
+                <span style="font-family:var(--font-display);font-weight:400;font-size:calc(21px * var(--text-scale));letter-spacing:-0.005em;color:#F5F4E1;">{{ d.label }}</span>
+                <span style="font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));line-height:1.45;color:rgba(245,244,225,0.72);">{{ d.desc }}</span>
               </span>
               <span style="color:var(--ns-bronze);font-size:calc(15px * var(--text-scale));">→</span>
             </button>
@@ -1985,7 +1970,8 @@ class Component extends DCLogic {
     return order.filter(n=>D.terpeneInfo && D.terpeneInfo[n]).map(n=>({ name:n, flavor:(D.terpeneInfo[n].flavor||''), medical:(D.terpeneInfo[n].medical||''), example:(D.terpeneInfo[n].example||''), foundIn:(D.terpStrains && D.terpStrains[n])||[] }));
   }
 
-  componentDidMount(){ this._glossBind(); this._initDeepLinks();
+  componentDidMount(){
+    this._onHeroAct=(e)=>{ if(e.detail==='quiz') this.openQuiz(); else this.goFlower(); }; window.addEventListener('nsm-hero', this._onHeroAct); this._glossBind(); this._initDeepLinks();
     try{ this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
     setTimeout(()=>this._lcObserve(), 300);
     this._pfKey=(e)=>{ if(e.key==='Escape'&&this.state.pfOpen) this.pfToggle(this.state.pfOpen,true); };

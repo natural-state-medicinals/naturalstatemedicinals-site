@@ -133,6 +133,18 @@ instead of a link out to another host. In-site Education links point at
 Deep links still work: `education/index.html#strain/dogtown` survives the
 redirect. The Cloudflare Worker plan is no longer needed.
 
+## Guide hero
+
+Both guide builds open on the Ozarks landing scene, `education/ozarks-hero.js`: a
+`<nsm-ozarks-hero variant="desktop|mobile">` custom element that renders into its own
+shadow root (the page runtime re-reads light-DOM children, so the scene must live there).
+It owns the sky, mountains, treelines, the four foreground plants that sweep aside on
+scroll, mouse or tilt parallax, and the intro. Begin scrolls to the next section; on
+mobile the two buttons fire a bubbling `nsm-hero` event (`flower` or `quiz`) that
+`mobile.html` handles. The welcome letter ("A note before you begin") now sits on
+midnight so the hero runs into it with no seam. The age gate waits 3 seconds so the
+intro plays first. Design source: `education/Landing Ozarks.dc.html`.
+
 ## Find our flower
 
 `find-our-flower.html` hosts the AskHoodie where-to-buy widget. The host script

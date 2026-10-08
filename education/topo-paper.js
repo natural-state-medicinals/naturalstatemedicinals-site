@@ -20,7 +20,7 @@
   var BASE = (SELF && SELF.src ? SELF.src.replace(/[^\/]*$/, '') : '') + 'topo/';
   var SHEETS = ['snowball', 'greers-ferry-dam', 'conway', 'pine-bluff', 'jonesboro', 'horseshoe-mountain', 'mountain-home-west'];
   var SURFACES = ['rgb(245, 244, 225)'];
-  var PX_PER_KM = 125, OVERLAP = 260;
+  var PX_PER_KM = 125, OVERLAP = 260, CH = 1600;
   var INK = '32,37,58', MINOR_A = 0.075, INDEX_A = 0.15;
 
   var loading = {};
@@ -115,11 +115,12 @@
   function phone() { return innerWidth < 760; }
   function isNear(el) { var r = el.getBoundingClientRect(), m = phone() ? innerHeight : 1400; return r.bottom > -m && r.top < innerHeight + m; }
   function isFar(el) { var r = el.getBoundingClientRect(), m = innerHeight * 3; return r.bottom < -m || r.top > innerHeight + m; }
+  function revoke(a) { (a || []).forEach(function (u) { if (u) URL.revokeObjectURL(u); }); }
   function release(el) {
-    var st = state.get(el); if (!st || !st.done) return;
+    var st = state.get(el); if (!st || !st.tiles) return;
     st.token = {}; st.done = false; st.w = 0; st.h = 0;
-    (st.urls || []).forEach(function (u) { if (u) URL.revokeObjectURL(u); });
-    st.urls = null; setRule(st.id, null);
+    revoke(st.urls); revoke(st.old);
+    st.urls = st.old = st.tiles = null; setRule(st.id, null);
   }
   var sT = 0;
   function onScroll() {
@@ -127,8 +128,8 @@
     sT = setTimeout(function () {
       sT = 0;
       tracked = tracked.filter(function (el) { return el.isConnected; });
-      tracked.forEach(function (el) { var st = state.get(el); if (!st) return; st.near = isNear(el); if (st.near && !st.done) queue(el); else if (!st.near && phone() && isFar(el)) release(el); });
-    }, 120);
+      tracked.forEach(function (el) { var st = state.get(el); if (!st) return; st.near = isNear(el); if (st.near) queue(el); else if (!st.near && phone() && isFar(el)) release(el); });
+    }, 50);
   }
   addEventListener('scroll', onScroll, { passive: true });
   var ro = new ResizeObserver(function (ents) { ents.forEach(function (en) { if (state.has(en.target)) queue(en.target); }); });
@@ -153,7 +154,7 @@
   }
 
   var pending = new Set(), raf = 0;
-  function queue(el) { pending.add(el); clearTimeout(raf); raf = setTimeout(flush, 140); }
+  function queue(el) { pending.add(el); clearTimeout(raf); raf = setTimeout(flush, 20); }
   function flush() { var list = Array.from(pending); pending.clear(); list.forEach(paint); }
 
   function paint(el) {
@@ -166,10 +167,27 @@
     var root = rootOf(el), rs = state.get(root);
     var rb = root.getBoundingClientRect(), eb = el.getBoundingClientRect();
     var ox = eb.left - rb.left, oy = eb.top - rb.top;
-    if (Math.abs(w - st.w) < 24 && Math.abs(h - st.h) < 24 && st.ox === ox && st.oy === oy && st.done) return;
-    st.w = w; st.h = h; st.ox = ox; st.oy = oy;
+    var same = st.tiles && Math.abs(w - st.w) < 24 && Math.abs(h - st.h) < 24 && st.ox === ox && st.oy === oy;
+    if (!same) {
+      // keep the old picture up until the first new tile lands
+      revoke(st.old); st.old = (st.urls || []).filter(Boolean);
+      st.w = w; st.h = h; st.ox = ox; st.oy = oy; st.token = {}; st.done = false;
+      st.tiles = [];
+      for (var cy0 = 0; cy0 < h; cy0 += CH) st.tiles.push([cy0, Math.min(h, cy0 + CH)]);
+      st.urls = st.tiles.map(function () { return null; });
+      st.busy = st.tiles.map(function () { return false; });
+    }
+    // only the tiles near the screen; the rest fill in as you scroll to them
+    var m = phone() ? innerHeight : 1400, want = [];
+    st.tiles.forEach(function (tl, ti) {
+      if (st.urls[ti] || st.busy[ti]) return;
+      if (eb.top + tl[1] > -m && eb.top + tl[0] < innerHeight + m) want.push(ti);
+    });
+    if (!want.length) return;
+    want.sort(function (a, b) { return Math.abs(eb.top + st.tiles[a][0]) - Math.abs(eb.top + st.tiles[b][0]); });
     var rootW = root.offsetWidth, start = (rs && rs.root != null ? rs.root : 0) * 2;
-    var token = st.token = {};
+    var token = st.token, tiles = st.tiles, urls = st.urls, busy = st.busy;
+    want.forEach(function (ti) { busy[ti] = true; });
 
     // which sheets this box needs, stacked down the root
     var need = [], y = 0, k = 0;
@@ -179,11 +197,8 @@
       if (st.token !== token) return;
       qs = qs.filter(Boolean); if (!qs.length) return;
       var dpr = phone() ? 1 : Math.min(2, window.devicePixelRatio || 1);
-      var CH = 3000, tiles = [];
-      for (var cy = 0; cy < h; cy += CH) tiles.push([cy, Math.min(h, cy + CH)]);
-      var urls = new Array(tiles.length), left = tiles.length;
-      tiles.forEach(function (tl, ti) {
-        var th = tl[1] - tl[0];
+      want.forEach(function (ti) {
+        var tl = tiles[ti], th = tl[1] - tl[0];
         var cv = document.createElement('canvas');
         cv.width = Math.round(w * dpr); cv.height = Math.round(th * dpr);
         var ctx = cv.getContext('2d');
@@ -199,11 +214,11 @@
           if (top - oy > tl[1]) break;
         }
         cv.toBlob(function (blob) {
-          if (st.token !== token) return;
-          urls[ti] = blob ? URL.createObjectURL(blob) : null;
-          if (--left) return;
-          (st.urls || []).forEach(function (u) { if (u) URL.revokeObjectURL(u); });
-          st.urls = urls; st.done = true;
+          busy[ti] = false;
+          if (st.token !== token || !blob) return;
+          urls[ti] = URL.createObjectURL(blob);
+          if (st.old) { revoke(st.old); st.old = null; }
+          st.done = urls.every(Boolean);
           setRule(st.id, urls, tiles, h);
         }, 'image/png');
       });
@@ -252,6 +267,9 @@
   function kick() { clearTimeout(scanT); scanT = setTimeout(function () { lastScan = Date.now(); scan(); onScroll(); }, 400); }
   function boot() {
     scan(); onScroll();
+    // load and contour every sheet in idle time so none is waited on mid-scroll
+    var idle = window.requestIdleCallback || function (f) { return setTimeout(f, 200); }, si = 0;
+    (function next() { if (si >= SHEETS.length) return; sheet(SHEETS[si++]).then(function () { idle(next, { timeout: 2000 }); }); })();
     [800, 2000, 4500, 9000].forEach(function (ms) { setTimeout(kick, ms); });
     addEventListener('resize', kick);
     addEventListener('scroll', function () { if (Date.now() - lastScan > 4000) { lastScan = Date.now(); kick(); } }, { passive: true });
