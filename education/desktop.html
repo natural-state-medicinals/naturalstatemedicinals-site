@@ -29,7 +29,6 @@
 <meta name="supported-color-schemes" content="light">
 <meta name="theme-color" content="#20253A">
 <link rel="stylesheet" href="fonts-local.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Bebas+Neue&amp;display=swap">
 <link rel="stylesheet" href="../_ds/overbuilt-design-system-3b590326-9189-43e6-8372-d3f6399c38de/tokens/colors.css">
 <link rel="stylesheet" href="../_ds/overbuilt-design-system-3b590326-9189-43e6-8372-d3f6399c38de/tokens/typography.css">
 <link rel="stylesheet" href="../_ds/overbuilt-design-system-3b590326-9189-43e6-8372-d3f6399c38de/tokens/spacing.css">
@@ -693,7 +692,7 @@
   <nsm-ozarks-hero id="chap-welcome" data-chapter="welcome" data-screen-label="Hero" variant="desktop"></nsm-ozarks-hero>
 
   <!-- ============ WELCOME LETTER + TABLE OF CONTENTS ============ -->
-  <section style="position:relative;background:var(--ns-midnight);padding:clamp(72px,12vh,150px) clamp(20px,6vw,80px);">
+  <section style="position:relative;background:var(--ns-midnight);padding:clamp(52px,7vh,88px) clamp(20px,6vw,80px);">
     <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,6vw,90px);align-items:start;">
       <div data-reveal="" style="opacity:0;transform:translateY(22px);">
         <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;letter-spacing:0.22em;color:var(--ns-bronze);">A note before you begin</span>
@@ -4379,10 +4378,10 @@ class Component extends DCLogic {
       nav.style.webkitBackdropFilter = top ? 'none' : 'blur(14px) saturate(1.05)';
       nav.style.borderBottomColor = top ? 'transparent' : 'rgba(32,37,58,0.12)';
     }
-    document.querySelectorAll('[data-navtext]').forEach(el => { el.style.color = top ? 'var(--ns-arctic)' : 'var(--text-strong)'; });
-    document.querySelectorAll('.nsm-brand-mark').forEach(el => { el.style.color = top ? 'var(--ns-arctic)' : 'var(--text-strong)'; });
-    document.querySelectorAll('.nsm-nav-leaf-w').forEach(el => { el.style.opacity = top ? '1' : '0'; });
-    document.querySelectorAll('.nsm-nav-leaf-g').forEach(el => { el.style.opacity = top ? '0' : '1'; });
+    document.querySelectorAll('[data-navtext]').forEach(el => { el.style.color = 'var(--text-strong)'; });
+    document.querySelectorAll('.nsm-brand-mark').forEach(el => { el.style.color = 'var(--text-strong)'; });
+    document.querySelectorAll('.nsm-nav-leaf-w').forEach(el => { el.style.opacity = '0'; });
+    document.querySelectorAll('.nsm-nav-leaf-g').forEach(el => { el.style.opacity = '1'; });
 
     const secs = [...document.querySelectorAll('[data-chapter]')];
     let active = secs.length ? secs[0].getAttribute('data-chapter') : 'welcome';

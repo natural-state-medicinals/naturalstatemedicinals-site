@@ -187,15 +187,15 @@
   <div id="nsm-mbar" style="position:fixed;top:0;left:0;right:0;z-index:80;min-height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 16px;border-bottom:1px solid transparent;transition:background .35s ease,border-color .35s ease;">
     <div id="nsm-mprog" style="position:absolute;top:0;left:0;height:2px;width:0;background:var(--ns-bronze);"></div>
     <a href="../index.html#doors" title="Back to naturalstatemedicinals.com" style="display:flex;align-items:center;gap:9px;padding:6px 2px;text-decoration:none;">
-      <img width="160" height="144" src="../assets/brand/nav-mark-fanleaf.png" alt="" style="width:24px;height:22px;object-fit:contain;">
-      <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.16em;color:var(--ns-arctic);text-transform:uppercase;">Natural State</span>
+      <img data-mleaf="" width="160" height="144" src="../assets/brand/nav-mark-fanleaf-gold.png" alt="" style="width:24px;height:22px;object-fit:contain;">
+      <span data-mink="color" style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.16em;color:#20253A;text-transform:uppercase;">Natural State</span>
     </a>
     <div style="display:flex;align-items:center;gap:12px;">
       <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));letter-spacing:0.04em;color:var(--ns-bronze);font-weight:600;"><span id="nsm-mpct">0%</span></span>
       <button onClick="{{ toggleNav }}" aria-label="Open contents" style="display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;width:44px;height:44px;background:rgba(183,149,80,0.14);border:1px solid rgba(183,149,80,0.4);border-radius:8px;cursor:pointer;">
-        <span style="width:17px;height:2px;background:var(--ns-arctic);border-radius:2px;"></span>
-        <span style="width:17px;height:2px;background:var(--ns-arctic);border-radius:2px;"></span>
-        <span style="width:17px;height:2px;background:var(--ns-arctic);border-radius:2px;"></span>
+        <span data-mink="background" style="width:17px;height:2px;background:#20253A;border-radius:2px;"></span>
+        <span data-mink="background" style="width:17px;height:2px;background:#20253A;border-radius:2px;"></span>
+        <span data-mink="background" style="width:17px;height:2px;background:#20253A;border-radius:2px;"></span>
       </button>
     </div>
   </div>
@@ -2016,7 +2016,9 @@ class Component extends DCLogic {
         const pct=document.getElementById('nsm-mpct'); if(pct) pct.textContent=Math.round(p*100)+'%';
         const nav=document.getElementById('nsm-mbar');
         const sc = window.scrollY>28;
-        if(nav){ nav.style.background = sc?'rgba(22,26,43,0.92)':'transparent'; nav.style.borderColor = sc?'rgba(183,149,80,0.28)':'transparent'; nav.style.backdropFilter = sc?'blur(12px) saturate(1.05)':'none'; nav.style.webkitBackdropFilter = sc?'blur(12px)':'none'; }
+        if(nav){ nav.style.background = sc?'rgba(22,26,43,0.92)':'transparent'; nav.style.borderColor = sc?'rgba(183,149,80,0.28)':'transparent'; nav.style.backdropFilter = sc?'blur(12px) saturate(1.05)':'none'; nav.style.webkitBackdropFilter = sc?'blur(12px)':'none';
+          const ink = sc ? '#F5F4E1' : '#20253A'; nav.querySelectorAll('[data-mink]').forEach(el => { el.style[el.dataset.mink] = ink; });
+          const lf = nav.querySelector('[data-mleaf]'); if (lf) { const src = sc ? '../assets/brand/nav-mark-fanleaf.png' : '../assets/brand/nav-mark-fanleaf-gold.png'; if (lf.getAttribute('src') !== src) lf.setAttribute('src', src); } }
         if(!this.reduced){ const vh=window.innerHeight; for(const el of shapes){ const r=el.getBoundingClientRect(); const off=(r.top+r.height/2)-vh/2; let t=(el.getAttribute('data-base')||''); if(el.hasAttribute('data-para')){ const sp=parseFloat(el.getAttribute('data-para'))||0; t+=' translate3d(0,'+(off*sp*-0.06).toFixed(1)+'px,0)'; } if(el.hasAttribute('data-kb')){ const prog=Math.min(1,Math.max(0,1-(r.top+r.height/2)/(vh+r.height))); t+=' scale('+(1.04+prog*0.12).toFixed(3)+')'; } el.style.transform=t; } }
         this._driveEnt();
         this._driveChap();
