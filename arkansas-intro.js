@@ -226,10 +226,12 @@
 
       const mkCanvas = (height) => {
         const c = document.createElement('canvas');
-        c.width = Math.round(w * dpr); c.height = Math.round(height * dpr);
+        // stay well inside mobile canvas limits: an oversize canvas paints nothing at all
+        const r = Math.max(0.5, Math.min(dpr, Math.sqrt(8e6 / (w * height)), 8000 / height));
+        c.width = Math.round(w * r); c.height = Math.round(height * r); c._r = r;
         c.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:' + height + 'px;display:block';
         const x = c.getContext('2d');
-        x.scale(dpr, dpr);
+        x.scale(r, r);
         return [c, x];
       };
 
@@ -386,7 +388,7 @@
     // Act 2: fly into the marker. Everything is re-drawn as vector each frame
     // (no raster upscale), so nothing softens on the way in.
     _drive(S) {
-      const ctx = S.ctx, w = S.w, h = S.h, wh = S.wh, ring = S.ring, bands = S.bands, dpr = S.dpr;
+      const ctx = S.ctx, w = S.w, h = S.h, wh = S.wh, ring = S.ring, bands = S.bands, dpr = S.ctx.canvas._r || S.dpr;
       const plate = this._plate, cream = this._cream;
       const statePath = S.statePath;
       const K = 34;

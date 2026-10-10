@@ -218,7 +218,7 @@
   @keyframes nsmTabFade { from { opacity:0; } to { opacity:1; } }
   .nsm-tabfade { animation: nsmTabFade 200ms ease; }
   @keyframes nsmDamaskDrift { from { background-position:0 0; } to { background-position:var(--damask-w,380px) var(--damask-w,380px); } }
-  .nsm-damask { animation:nsmDamaskDrift 150s linear infinite; }
+  .nsm-damask { animation:none; }
   @media (prefers-reduced-motion: reduce){ .nsm-hero-bloom, .nsm-damask { animation:none !important; } }
   @media (prefers-reduced-motion: reduce){ .nsm-radar-poly { animation:none; stroke-dashoffset:0; fill-opacity:1; } .nsm-strain-drawer { animation:none; } .nsm-grow-img, .nsm-ext-img, .nsm-conc-img, [data-cb-panel] { transition:none !important; } .nsm-grow-img.is-live { animation:none !important; transform:none !important; } }
 
@@ -391,6 +391,8 @@
   h1[style*="F1EBD4"], h2[style*="F1EBD4"],
   h1[style*="#d8bd82"], h2[style*="#d8bd82"] {
     text-shadow:0 1px 1px rgba(11,14,24,.55), 0 -1px 0 rgba(245,244,225,.16); }
+
+  @media (prefers-reduced-motion: reduce){ [data-reveal], .nsm-lc-fork [data-step], .nsm-lc-fork .nsm-lc-vline, .nsm-lc-fork .nsm-lc-hline, [data-ecs-step], [data-ent-step], [data-cb-step], .nsm-lc-note { opacity:1 !important; transform:none !important; transition:none !important; animation:none !important; } img[data-src] { transition:none !important; } }
 </style>
 <script src="../ns-age-gate.js" data-variant="b" data-no-href="../rules.html" data-leaf="../assets/brand/nav-mark-fanleaf-gold.png" data-delay="3000"></script>
 </helmet>
@@ -427,7 +429,7 @@
 
   <!-- ============ FLOATING TOOLBAR ============ -->
   <div class="nsm-no-print" style="position:fixed;right:clamp(14px,3vw,28px);bottom:clamp(14px,3vw,28px);z-index:75;display:flex;flex-direction:column;gap:10px;">
-    <button onClick="{{ shareGuide }}" title="Share this guide" aria-label="Share this guide" style="display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:rgba(245,244,225,0.92);backdrop-filter:blur(8px);border:1px solid rgba(32,37,58,0.14);box-shadow:var(--shadow-md);cursor:pointer;color:var(--ns-midnight);" style-hover="background:var(--ns-bronze);color:var(--ns-midnight);border-color:var(--ns-bronze);">
+    <button onClick="{{ shareGuide }}" title="Share this guide" aria-label="Share this guide" style="display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:rgba(245,244,225,0.92);border:1px solid rgba(32,37,58,0.14);box-shadow:var(--shadow-md);cursor:pointer;color:var(--ns-midnight);" style-hover="background:var(--ns-bronze);color:var(--ns-midnight);border-color:var(--ns-bronze);">
       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"></line><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line></svg>
     </button>
   </div>
@@ -692,7 +694,7 @@
   <nsm-ozarks-hero id="chap-welcome" data-chapter="welcome" data-screen-label="Hero" variant="desktop"></nsm-ozarks-hero>
 
   <!-- ============ WELCOME LETTER + TABLE OF CONTENTS ============ -->
-  <section style="position:relative;background:var(--ns-midnight);padding:clamp(52px,7vh,88px) clamp(20px,6vw,80px);">
+  <section style="position:relative;z-index:1;margin-top:calc(-1 * var(--nsm-hero-tuck, 14svh));background:var(--ns-midnight);padding:clamp(36px,5vh,64px) clamp(20px,6vw,80px) clamp(52px,7vh,88px);">
     <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,6vw,90px);align-items:start;">
       <div data-reveal="" style="opacity:0;transform:translateY(22px);">
         <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;letter-spacing:0.22em;color:var(--ns-bronze);">A note before you begin</span>
@@ -725,7 +727,7 @@
   <!-- ============ THE NSM STANDARD (pinned interstitial) ============ -->
   <section data-pin-sec="" style="position:relative;background:var(--ns-midnight);overflow:hidden;">
     <div style="position:relative;min-height:clamp(420px,62vh,640px);display:flex;align-items:center;justify-content:center;padding:clamp(60px,10vh,120px) clamp(20px,6vw,80px);overflow:hidden;">
-      <img width="2000" height="1125" loading="lazy" decoding="async" src="../assets/facility/cultivation-rows.jpg" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <img width="2000" height="1125" loading="lazy" decoding="async" src="../assets/facility/cultivation-rows.jpg" alt="Rows of cannabis plants growing in the NSM cultivation facility" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
       <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(22,26,43,0.74) 0%, rgba(22,26,43,0.62) 45%, rgba(22,26,43,0.82) 100%);"></div>
       <div style="position:relative;max-width:1000px;text-align:center;">
         <span style="font-family:var(--font-sans);font-size:clamp(calc(11px * var(--text-scale)), calc(1.2vw * var(--text-scale)), calc(13px * var(--text-scale)));font-weight:600;letter-spacing:0.3em;color:#d8bd82;">The NSM standard</span>
@@ -959,7 +961,7 @@
   <div style="height:130vh;position:relative;">
   <div style="position:sticky;top:0;height:100vh;min-height:100vh;background:var(--ns-bronze);padding:clamp(54px,9vh,110px) clamp(20px,6vw,80px);display:flex;align-items:center;justify-content:center;">
     <div data-reveal="" style="opacity:0;transform:translateY(22px);max-width:900px;margin:0 auto;text-align:center;">
-      <img width="480" height="480" loading="lazy" decoding="async" src="../assets/type-sativa-sm.png" alt="Sativa, day" style="display:block;width:clamp(64px,8vw,92px);height:auto;margin:0 auto clamp(14px,2.4vh,22px);">
+      <img width="480" height="480" loading="lazy" decoding="async" src="../assets/type-sativa-sm.png" alt="" style="display:block;width:clamp(64px,8vw,92px);height:auto;margin:0 auto clamp(14px,2.4vh,22px);">
       <div style="font-family:var(--font-display);font-weight:400;font-size:clamp(calc(64px * var(--text-scale)), calc(13vw * var(--text-scale)), calc(140px * var(--text-scale)));line-height:0.88;letter-spacing:-0.02em;color:var(--ns-midnight);">Sativa</div>
       <p style="margin:clamp(20px,3vh,30px) auto 0;max-width:54ch;font-family:var(--font-sans);font-size:clamp(calc(15px * var(--text-scale)), calc(1.55vw * var(--text-scale)), calc(18px * var(--text-scale)));line-height:1.72;color:rgba(32,37,58,0.82);">Traditionally associated with daytime use, brighter, more cerebral, more likely to keep you moving than slow you down. The plants grow tall and thin with long, narrow leaves and a longer flowering cycle. Energetic and uplifting are the words most patients reach for. The science says the terpene profile matters more than the label, but in practice sativas tend to carry higher concentrations of limonene and terpinolene, which track with those brighter, more head-forward effects.</p>
       <p style="margin:clamp(24px,3.5vh,36px) auto 0;max-width:30ch;font-family:var(--font-display);font-weight:400;font-size:clamp(calc(22px * var(--text-scale)), calc(3vw * var(--text-scale)), calc(38px * var(--text-scale)));line-height:1.2;letter-spacing:-0.005em;color:var(--ns-midnight);">The strain you reach for when you have somewhere to be, and want to actually want to go there.</p>
@@ -970,7 +972,7 @@
   <div style="height:130vh;position:relative;">
   <div style="position:sticky;top:0;height:100vh;min-height:100vh;background:#1faa6b;padding:clamp(54px,9vh,110px) clamp(20px,6vw,80px);display:flex;align-items:center;justify-content:center;">
     <div data-reveal="" style="opacity:0;transform:translateY(22px);max-width:900px;margin:0 auto;text-align:center;">
-      <img width="480" height="480" loading="lazy" decoding="async" src="../assets/type-hybrid-sm.png" alt="Hybrid, balance" style="display:block;width:clamp(64px,8vw,92px);height:auto;margin:0 auto clamp(14px,2.4vh,22px);">
+      <img width="480" height="480" loading="lazy" decoding="async" src="../assets/type-hybrid-sm.png" alt="" style="display:block;width:clamp(64px,8vw,92px);height:auto;margin:0 auto clamp(14px,2.4vh,22px);">
       <div style="font-family:var(--font-display);font-weight:400;font-size:clamp(calc(64px * var(--text-scale)), calc(13vw * var(--text-scale)), calc(140px * var(--text-scale)));line-height:0.88;letter-spacing:-0.02em;color:var(--ns-arctic);">Hybrid</div>
       <p style="margin:clamp(20px,3vh,30px) auto 0;max-width:54ch;font-family:var(--font-sans);font-size:clamp(calc(15px * var(--text-scale)), calc(1.55vw * var(--text-scale)), calc(18px * var(--text-scale)));line-height:1.72;color:rgba(245,244,225,0.9);">A cross of the two, bred to carry qualities from both sides of the family. Most of what you will find in the flower library is a hybrid, leaning one direction or the other depending on its parents. The middle path, and by far the most common one. This is also where the category system starts to show its limits: a hybrid leaning hard indica feels nothing like one leaning sativa, even if both carry the same label. The terpene profile and cannabinoid ratios are where the actual answer lives.</p>
       <p style="margin:clamp(24px,3.5vh,36px) auto 0;max-width:30ch;font-family:var(--font-display);font-weight:400;font-size:clamp(calc(22px * var(--text-scale)), calc(3vw * var(--text-scale)), calc(38px * var(--text-scale)));line-height:1.2;letter-spacing:-0.005em;color:var(--ns-arctic);">The honest workhorse of the catalog, versatile by design.</p>
@@ -981,7 +983,7 @@
   <div style="height:130vh;position:relative;">
   <div style="position:sticky;top:0;height:100vh;min-height:100vh;background:var(--ns-midnight);padding:clamp(54px,9vh,110px) clamp(20px,6vw,80px);display:flex;align-items:center;justify-content:center;">
     <div data-reveal="" style="opacity:0;transform:translateY(22px);max-width:900px;margin:0 auto;text-align:center;">
-      <img width="480" height="480" loading="lazy" decoding="async" src="../assets/type-indica-sm.png" alt="Indica, night" style="display:block;width:clamp(64px,8vw,92px);height:auto;margin:0 auto clamp(14px,2.4vh,22px);">
+      <img width="480" height="480" loading="lazy" decoding="async" src="../assets/type-indica-sm.png" alt="" style="display:block;width:clamp(64px,8vw,92px);height:auto;margin:0 auto clamp(14px,2.4vh,22px);">
       <div style="font-family:var(--font-display);font-weight:400;font-size:clamp(calc(64px * var(--text-scale)), calc(13vw * var(--text-scale)), calc(140px * var(--text-scale)));line-height:0.88;letter-spacing:-0.02em;color:var(--ns-arctic);">Indica</div>
       
       <p style="margin:clamp(20px,3vh,30px) auto 0;max-width:54ch;font-family:var(--font-sans);font-size:clamp(calc(15px * var(--text-scale)), calc(1.55vw * var(--text-scale)), calc(18px * var(--text-scale)));line-height:1.72;color:rgba(245,244,225,0.82);">Traditionally associated with evenings, heavier, more physical, more body than brain. The plants are shorter and bushier than sativas with broader leaves and a faster flowering time. Relaxing, sedating, and couch-friendly are the words that follow indica around. There is a reason the old joke calls it in-da-couch.&nbsp;<br><br>Myrcene, the most common terpene in cannabis and one that carries a pronounced sedating quality, tends to run higher in indica-dominant cultivars, which is probably where the reputation comes from. That said, a low-myrcene indica can feel surprisingly clear-headed, and a high-myrcene sativa can put you on the couch just as fast.&nbsp;</p><p style="margin:clamp(24px,3.5vh,36px) auto 0;max-width:30ch;font-family:var(--font-display);font-weight:400;font-size:clamp(calc(22px * var(--text-scale)), calc(3vw * var(--text-scale)), calc(38px * var(--text-scale)));line-height:1.2;letter-spacing:-0.005em;color:var(--ns-arctic);">The one that makes resting feel like something you chose.</p>
@@ -1053,7 +1055,7 @@
               <div style="display:flex;flex-direction:column;gap:1px;">
                 <sc-for list="{{ activeTerp.foundIn }}" as="f" hint-placeholder-count="3">
                   <button onClick="{{ f.onClick }}" title="Jump to this strain" style="display:flex;align-items:center;gap:12px;padding:13px 8px;border:none;border-bottom:1px solid var(--border-hairline);background:none;width:100%;text-align:left;cursor:pointer;transition:background .18s ease;" style-hover="background:rgba(183,149,80,0.09);">
-                    <img decoding="async" src="{{ f.leafSrc }}" loading="lazy" alt="{{ f.type }}" style="width:24px;height:22px;object-fit:contain;flex:none;">
+                    <img decoding="async" src="{{ f.leafSrc }}" loading="lazy" alt="" style="width:24px;height:22px;object-fit:contain;flex:none;">
                     <span style="flex:1;font-family:var(--font-display);font-size:clamp(calc(16px * var(--text-scale)), calc(1.8vw * var(--text-scale)), calc(19px * var(--text-scale)));letter-spacing:0.005em;color:var(--text-strong);">{{ f.strain }}</span>
                     <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));letter-spacing:0.04em;color:var(--text-muted);">{{ f.type }}</span>
                     <span style="font-family:var(--font-display);font-size:clamp(calc(18px * var(--text-scale)), calc(2vw * var(--text-scale)), calc(24px * var(--text-scale)));color:var(--ns-bronze);min-width:58px;text-align:right;">{{ f.pctText }}</span>
@@ -1077,7 +1079,7 @@
 
   <!-- ============ BREATHER (sparse) ============ -->
   <section style="position:relative;min-height:78vh;display:flex;align-items:center;justify-content:center;background:var(--ns-midnight);overflow:hidden;padding:clamp(80px,16vh,180px) clamp(20px,6vw,80px);">
-    <img width="2000" height="1125" loading="lazy" decoding="async" src="../assets/facility/plant-bw.jpg" alt="" aria-hidden="true" data-parallax="80" style="position:absolute;left:0;right:0;top:-16%;width:100%;height:132%;object-fit:cover;opacity:0.5;will-change:transform;">
+    <img width="2000" height="1125" loading="lazy" decoding="async" src="../assets/facility/plant-bw.jpg" alt="Black-and-white photo of a cannabis plant in flower" data-parallax="80" style="position:absolute;left:0;right:0;top:-16%;width:100%;height:132%;object-fit:cover;opacity:0.5;will-change:transform;">
     <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(22,26,43,0.7) 0%, rgba(22,26,43,0.45) 50%, rgba(22,26,43,0.82) 100%);"></div>
     <div data-reveal="" style="position:relative;opacity:0;transform:translateY(22px);max-width:920px;text-align:center;">
       
@@ -1164,7 +1166,7 @@
                 <sc-if value="{{ s.noPhoto }}" hint-placeholder-val="{{ true }}">
                   <span style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:18px;box-sizing:border-box;text-align:center;overflow:hidden;background:var(--ns-arctic) url(topo/strain-fallback.png) center/cover no-repeat;"><img width="648" height="583" loading="lazy" decoding="async" src="../assets/brand/leaf-glyph-bronze.png" alt="" aria-hidden="true" style="width:30px;height:30px;object-fit:contain;flex:none;"><span style="font-family:var(--font-display);font-weight:400;font-size:clamp(calc(22px * var(--text-scale)), calc(2vw * var(--text-scale)), calc(30px * var(--text-scale)));line-height:1.05;letter-spacing:-0.01em;color:var(--ns-midnight);text-wrap:balance;">{{ s.name }}</span></span>
                 </sc-if>
-                <img decoding="async" src="{{ s.leafSrc }}" loading="lazy" alt="{{ s.catLabel }}" title="{{ s.catLabel }}" style="position:absolute;top:11px;left:12px;width:30px;height:27px;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5));">
+                <img decoding="async" src="{{ s.leafSrc }}" loading="lazy" alt="" title="{{ s.catLabel }}" style="position:absolute;top:11px;left:12px;width:30px;height:27px;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5));">
               </div>
               <div style="padding:18px 22px 20px;display:flex;flex-direction:column;gap:14px;width:100%;box-sizing:border-box;">
                 <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
@@ -3237,6 +3239,7 @@ class Component extends DCLogic {
 
   componentDidMount() {
     this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    this._onHeroAct = (e) => { if (e.detail === 'quiz') this.openQuiz(); else this.scrollTo('flower'); }; window.addEventListener('nsm-hero', this._onHeroAct);
     setTimeout(() => this._lcObserve(), 300);
     this._bindImgs();
     { const be = document.getElementById('__bundler_err'); if (be && be.parentNode) be.parentNode.removeChild(be); }
@@ -4372,16 +4375,15 @@ class Component extends DCLogic {
 
     const nav = document.getElementById('nsm-nav');
     const top = sy < 60;
-    if (nav) {
-      nav.style.background = top ? 'transparent' : 'rgba(245,244,225,0.82)';
-      nav.style.backdropFilter = top ? 'none' : 'blur(14px) saturate(1.05)';
-      nav.style.webkitBackdropFilter = top ? 'none' : 'blur(14px) saturate(1.05)';
+    if (nav && this._navTop !== top) { this._navTop = top;
+      nav.style.background = top ? 'transparent' : 'rgba(245,244,225,0.97)';
       nav.style.borderBottomColor = top ? 'transparent' : 'rgba(32,37,58,0.12)';
     }
+    if (!this._navInk) { this._navInk = 1;
     document.querySelectorAll('[data-navtext]').forEach(el => { el.style.color = 'var(--text-strong)'; });
     document.querySelectorAll('.nsm-brand-mark').forEach(el => { el.style.color = 'var(--text-strong)'; });
     document.querySelectorAll('.nsm-nav-leaf-w').forEach(el => { el.style.opacity = '0'; });
-    document.querySelectorAll('.nsm-nav-leaf-g').forEach(el => { el.style.opacity = '1'; });
+    document.querySelectorAll('.nsm-nav-leaf-g').forEach(el => { el.style.opacity = '1'; }); }
 
     const secs = [...document.querySelectorAll('[data-chapter]')];
     let active = secs.length ? secs[0].getAttribute('data-chapter') : 'welcome';

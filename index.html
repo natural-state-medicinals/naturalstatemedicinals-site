@@ -72,7 +72,7 @@
   a:hover { color:#97793c; }
   ::selection { background:rgba(183,149,80,0.28); color:#20253A; }
 
-  @keyframes nsMarkIn { from { opacity:0; transform:scale(1.16); filter:blur(7px); } to { opacity:1; transform:scale(1); filter:blur(0); } }
+  @keyframes nsMarkIn { from { opacity:0; transform:scale(1.08); } to { opacity:1; transform:none; } }
   @keyframes nsRise { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
   @keyframes nsFloat { 0%,100% { transform:translateY(0); } 50% { transform:translateY(7px); } }
   @keyframes nsRule { from { transform:scaleX(0); opacity:0; } to { transform:scaleX(1); opacity:1; } }
@@ -196,10 +196,9 @@
 
     <div style="position:relative; display:flex; flex-direction:column; align-items:center; gap:min(clamp(14px,2.4vh,26px), 3svh)">
       <div class="ns-mark" style="position:relative; width:min(clamp(240px,34vw,470px), 40svh); line-height:0">
-        <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; -webkit-mask-image:url(assets/logo-silhouette-mask.png); mask-image:url(assets/logo-silhouette-mask.png); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; background:rgba(245,244,225,.5); backdrop-filter:blur(5px) saturate(1.03); -webkit-backdrop-filter:blur(5px) saturate(1.03)"></div>
         <img width="3500" height="3116" src="assets/logo-primary-light.png" alt="Natural State Medicinals" style="position:relative; width:100%; height:auto; display:block; filter:drop-shadow(0 3px 5px rgba(32,37,58,.22)) drop-shadow(0 30px 52px rgba(32,37,58,.34))">
-        <div class="ns-sheen" aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; -webkit-mask-image:url(assets/logo-primary-light.png); mask-image:url(assets/logo-primary-light.png); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; background-image:radial-gradient(115% 95% at 50% -25%, rgba(255,252,240,.75) 0%, rgba(212,184,120,.34) 34%, rgba(212,184,120,0) 66%); mix-blend-mode:screen"></div>
-        <div class="ns-foil" aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; -webkit-mask-image:url(assets/logo-primary-light.png); mask-image:url(assets/logo-primary-light.png); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; background-image:linear-gradient(100deg, rgba(255,240,205,0) 38%, rgba(255,243,214,.55) 46%, rgba(255,250,232,.92) 50%, rgba(255,243,214,.55) 54%, rgba(255,240,205,0) 62%); background-repeat:no-repeat; background-size:280% 100%; background-position:-60% 0; mix-blend-mode:screen"></div>
+        <div class="ns-sheen" aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; -webkit-mask-image:url(assets/logo-primary-light.png); mask-image:url(assets/logo-primary-light.png); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; background-image:radial-gradient(115% 95% at 50% -25%, rgba(255,252,240,.75) 0%, rgba(212,184,120,.34) 34%, rgba(212,184,120,0) 66%)"></div>
+        <div class="ns-foil" aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; -webkit-mask-image:url(assets/logo-primary-light.png); mask-image:url(assets/logo-primary-light.png); -webkit-mask-size:100% 100%; mask-size:100% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; background-image:linear-gradient(100deg, rgba(255,240,205,0) 38%, rgba(255,243,214,.55) 46%, rgba(255,250,232,.92) 50%, rgba(255,243,214,.55) 54%, rgba(255,240,205,0) 62%); background-repeat:no-repeat; background-size:280% 100%; background-position:-60% 0"></div>
       </div>
 
       <div class="ns-estd" style="font-family:var(--font-label); font-size:min(11px,2.1svh); font-weight:600; letter-spacing:.34em; text-transform:uppercase; color:var(--ns-bronze-ink)">Cultivated in Arkansas</div>

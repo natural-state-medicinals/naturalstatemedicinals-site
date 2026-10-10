@@ -18,7 +18,7 @@
       sr.addEventListener('click', e => {
         const btn = e.target.closest('[data-act]'); if (!btn) return;
         const act = btn.dataset.act;
-        if (act === 'begin') { const t = this.nextElementSibling; if (t) window.scrollTo({ top: t.getBoundingClientRect().top + scrollY, behavior: this.reduce ? 'auto' : 'smooth' }); }
+        if (act === 'begin') { const t = this.nextElementSibling; if (t) window.scrollTo({ top: Math.ceil(t.getBoundingClientRect().top + scrollY), behavior: 'instant' }); }
         else this.dispatchEvent(new CustomEvent('nsm-hero', { bubbles: true, detail: act }));
       });
       setTimeout(() => this.mount(), 0);
@@ -44,7 +44,10 @@
         const art = el.querySelector('svg'), sw = el.querySelector('[data-sway]');
         if (art && +d.b0 > 0.05) art.style.filter = 'blur(' + d.b0 + 'px)';
         if (sw) sw.style.willChange = 'transform';
-        return { el, L: d.side === 'L', edge: +d.edge, bot: +(d.bot || 0), fw: +d.fw, push: +(d.push || 1), s: +d.s, dz: +d.dz, x1: +d.x1, t0: +d.t0, t1: +d.t1, rmax: +d.rmax, smax: +d.smax, b0: +d.b0, b1: +d.b1, lastB: -1 };
+        // a second, softer copy fades in on top as the plant passes: the blur deepens without re-rendering a filter every frame
+        let blur = null;
+        if (art && this.getAttribute('variant') !== 'mobile' && +d.b1 > +d.b0) { blur = art.cloneNode(true); blur.style.filter = 'blur(' + d.b1 + 'px)'; blur.style.opacity = '0'; art.after(blur); }
+        return { el, L: d.side === 'L', edge: +d.edge, bot: +(d.bot || 0), fw: +d.fw, push: +(d.push || 1), s: +d.s, dz: +d.dz, x1: +d.x1, t0: +d.t0, t1: +d.t1, rmax: +d.rmax, smax: +d.smax, b0: +d.b0, b1: +d.b1, lastB: -1, blur, ...(this.getAttribute('variant') !== 'mobile' ? { t0: +d.t0 * 0.5, t1: 0.36 + (+d.t1 - 0.7) * 0.53 } : {}) };
       });
       this.mx = this.my = this.tx = this.ty = 0;
       this.reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -58,7 +61,7 @@
       this.frame = now => {
         this.raf = 0; const dt = Math.min(250, Math.max(1, now - this.last)); this.last = now;
         const pt = this.forceP ?? this.target();
-        this.p += (pt - this.p) * (this.smooth ? 1 - Math.exp(-dt / 85) : 1); if (Math.abs(pt - this.p) < 0.0004) this.p = pt;
+        this.p += (pt - this.p) * (this.smooth && Math.abs(pt - this.p) < 0.25 ? 1 - Math.exp(-dt / 85) : 1); if (Math.abs(pt - this.p) < 0.0004) this.p = pt;
         const m = 1 - Math.exp(-dt / 220); this.mx += (this.tx - this.mx) * m; this.my += (this.ty - this.my) * m;
         let busy = this.p !== pt || Math.abs(this.tx - this.mx) + Math.abs(this.ty - this.my) > 0.002;
         this.brs.forEach(b => { const k = 1 - Math.exp(-dt / b.lag); b.mx += (this.mx - b.mx) * k; b.my += (this.my - b.my) * k; if (Math.abs(this.mx - b.mx) + Math.abs(this.my - b.my) > 0.002) busy = true; });
@@ -66,14 +69,31 @@
         if (busy && this.inView !== false) this.raf = requestAnimationFrame(this.frame);
       };
       this.onScroll = () => this.kick();
-      this.onResize = () => { clearTimeout(this._rs); this._rs = setTimeout(() => { this.measure(); this.update(true); }, 120); };
+      this.onResize = () => { const w = innerWidth, hh = innerHeight; if (this._vw === w && Math.abs(hh - (this._vh || hh)) < 160) return; this._vw = w; this._vh = hh; clearTimeout(this._rs); this._rs = setTimeout(() => { this.measure(); this.update(true); this.raster(); }, 120); };
+      this._vw = innerWidth; this._vh = innerHeight;
+      // if a plane is late to paint, the frame behind it shows the colour that belongs there: cream sky above, midnight ground below
+      if (!this.mob) this.hero.style.background = 'linear-gradient(to bottom, #F6E7D7 0, #F6E7D7 58%, #20253A 58%, #20253A 100%)';
       addEventListener('resize', this.onResize);
+      // promote every moving plane once, up front, so nothing is re-layered mid-scroll
+      this.layers.forEach(l => { l.el.style.willChange = 'transform'; l.el.style.backfaceVisibility = 'hidden'; });
+      this.brs.forEach(b => { b.el.style.willChange = 'transform'; b.el.style.backfaceVisibility = 'hidden'; });
       if (this.mob) this.pin.style.height = '125svh';
-      this.measure(); this.p = this.target();
-      if (this.reduce) { this.pin.style.height = '100svh'; this.update(true); return; }
-      this.hero.style.visibility = 'hidden';
-      const go = () => { if (this.started) return; this.started = true; this.hero.style.visibility = ''; this.measure(); this.intro(root); };
-      (document.fonts ? Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 900))]) : Promise.resolve()).then(go);
+      else this.pin.style.height = '165svh';
+      const hash = (location.hash || '').replace('#', ''), deep = !!hash && hash !== 'chap-welcome' && hash !== 'welcome';
+      let seen = false; try { seen = Date.now() - (+localStorage.getItem('nsm-hero-seen') || 0) < 864e5; } catch (e) {}
+      this.measure(); this.p = this.target(); this.raster();
+      if (this.reduce) { this.started = true; this.pin.style.height = '100svh'; this.update(true); if (document.fonts) document.fonts.ready.then(() => { this.measure(); this.update(true); }); return; }
+      if (deep || (seen && !this.mob)) {
+        // returning within a day, or arriving on a section link: no intro, the scene is already settled
+        this.started = true;
+      } else {
+        // the scene plays at once; the title, tagline and links wait for their own faces so they never swap fonts on screen
+        this.started = true; this.measure(); this.intro(root, true);
+        try { localStorage.setItem('nsm-hero-seen', String(Date.now())); } catch (e) {}
+        const seq = [...root.querySelectorAll('[data-seq]')]; seq.forEach(el => { el.style.opacity = '0'; });
+        const faces = document.fonts ? Promise.all(["400 40px 'Burford'", "italic 400 16px 'Libre Caslon Text'", "600 12px 'Work Sans'", "700 14px 'Work Sans'"].map(f => document.fonts.load(f).catch(() => {}))) : Promise.resolve();
+        Promise.race([faces, new Promise(r => setTimeout(r, 3000))]).then(() => { if (!this.isConnected) return; this.measure(); this.update(true); seq.forEach(el => { el.style.opacity = ''; }); this.introSeq(root); });
+      }
       const logo = root.querySelector('[data-seq="0"]'), remeasure = () => { clearTimeout(this._rm); this._rm = setTimeout(() => { this.measure(); this.update(true); }, 60); };
       if (logo && !logo.complete) logo.addEventListener('load', remeasure, { once: true });
       if (document.fonts) document.fonts.ready.then(remeasure);
@@ -94,27 +114,18 @@
       } else this.tilt();
       this.update(true);
     }
-  // brand treatment: 'lockup' (arched primary), 'a' (flower glyph + eyebrow), 'c' (horizontal gold wordmark). ?hero=a|c overrides for review
   brand(sr) {
-    const mode = (new URLSearchParams(location.search).get('hero') || this.getAttribute('brand') || 'f').toLowerCase();
-    this.lock = mode === 'lockup'; this.cover = mode === 'f';
-    // headline treatment for review: ?head=1 (depth-toned, tracked), 2 (outline cut), 3 (bronze, in the sky)
-    this.headMode = new URLSearchParams(location.search).get('head') || this.getAttribute('head') || '';
-    const hd = sr.querySelector('[data-head]'), hs = { '1': ["'Burford',Georgia,serif", '#5E5168', '0.06em', 'clamp(36px,min(6.4vw,9.2vh),96px)'], '2': ["'Burford Outline','Burford',Georgia,serif", '#20253A', '0.08em', 'clamp(40px,min(7vw,10vh),108px)'], '3': ["'Burford',Georgia,serif", '#A8874A', '0.08em', 'clamp(36px,min(6vw,8.6vh),92px)'] }[this.headMode];
-    if (hd && hs) { hd.style.fontFamily = hs[0]; hd.style.color = hs[1]; hd.style.letterSpacing = hs[2]; hd.style.fontSize = hs[3]; hd.style.textShadow = 'none'; }
-    if (this.lock) return;
+    // one treatment: the field guide cover
+    this.lock = false; this.cover = true;
     const img = sr.querySelector('[data-seq="0"]'); if (!img) return;
     const box = document.createElement('div'); box.setAttribute('data-seq', '0');
     box.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:14px;';
-    box.innerHTML = mode === 'a'
-      ? '<img src="../assets/brand/flower-glyph-bronze.png" alt="" style="display:block;width:clamp(46px,6vh,66px);height:auto;"><span style="font-family:\'Work Sans\',system-ui,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#20253A;">Natural State Medicinals</span>'
-      : '<img src="../assets/brand/logo-secondary-gold.png" alt="Natural State" style="display:block;width:clamp(150px,15vw,210px);height:auto;">';
     if (this.cover) {
       // field guide cover: the sky is the cover paper, the landscape its illustration
       const ink = "font-family:'Work Sans',system-ui,sans-serif;font-weight:600;text-transform:uppercase;color:#20253A;";
       box.style.gap = '0';
       box.innerHTML = '<img data-cv-glyph="" src="../assets/brand/flower-stamp.png" alt="" style="display:block;width:clamp(76px,12vh,128px);height:auto;margin-bottom:clamp(12px,1.8vh,20px);">'
-        + '<h1 style="margin:0 0 clamp(8px,1.4vh,16px);font-family:\'Burford\',Georgia,serif;font-weight:400;font-size:clamp(38px,min(5.6vw,7.4vh),92px);line-height:0.9;letter-spacing:0.13em;padding-left:0.13em;color:#20253A;text-align:center;text-shadow:0 1.5px 0 rgba(255,251,242,1),0 2.5px 2px rgba(255,251,242,0.55),0 -1px 1px rgba(10,12,22,0.28);">Education<br>Guide</h1>'
+        + '<h1 class="nsm-hero-title" style="margin:0 0 clamp(8px,1.4vh,16px);padding-top:0;padding-bottom:0;border:0;display:block;font-style:normal;font-variant:normal;text-transform:none;font-family:\'Burford\',Georgia,serif;font-weight:400;font-size:clamp(38px,min(5.6vw,7.4vh),92px);line-height:0.9;letter-spacing:0.13em;padding-left:0.13em;color:#20253A;text-align:center;text-shadow:0 1.5px 0 rgba(255,251,242,1),0 2.5px 2px rgba(255,251,242,0.55),0 -1px 1px rgba(10,12,22,0.28);">Education<br>Guide</h1>'
         + '<p style="margin:0;font-family:\'Libre Caslon Text\',Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(15px,min(1.35vw,2.1vh),19px);line-height:1.45;letter-spacing:0.005em;color:#262A3F;text-align:center;max-width:34ch;text-wrap:balance;">A patient\'s field guide to the plant, the practice, and the products.</p>';
       // cartographer italic for the cover line, in the style of USGS water labels
       if (document.fonts) document.fonts.load("italic 16px 'Libre Caslon Text'").then(() => { if (this.started) { this.measure(); this.update(true); } }).catch(() => {});
@@ -123,9 +134,11 @@
       const cl = box.closest('[data-layer]'); if (cl) cl.style.zIndex = '';
       const h = sr.querySelector('[data-head]'); if (h) h.remove();
       // phones: the two shortcuts are printed on the cover, same depth as the words (behind trees and plants)
-      const oldActs = sr.querySelector('[data-acts]');
-      if (oldActs) {
-        oldActs.remove();
+      const oldActs = sr.querySelector('[data-acts]'), beginBtn = sr.querySelector('[data-act="begin"]');
+      if (oldActs || beginBtn) {
+        if (oldActs) oldActs.remove();
+        // desktop: the printed links and Scroll cue replace Begin
+        if (beginBtn) { if (!sr.querySelector('[data-cue]')) { const hero = sr.querySelector('[data-hero]'); hero.insertAdjacentHTML('beforeend', '<div data-cue="" aria-hidden="true" style="transition:opacity 420ms cubic-bezier(0.2,0.7,0.25,1);position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:7;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.7;pointer-events:none;"><span style="font-family:\'Work Sans\',system-ui,sans-serif;font-size:10px;letter-spacing:0.2em;color:#F5F4E1;text-transform:uppercase;">Scroll</span><span style="width:1px;height:26px;background:#B79550;"></span></div>'); } }
         // Field Notes cover style: bold title-case sans, slash between, a small bronze arrow marks each as a link
         const lk = "display:flex;align-items:center;gap:5px;min-height:52px;padding:0 2px;background:none;border:none;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent;font-family:'Work Sans',system-ui,sans-serif;font-size:14.5px;font-weight:700;letter-spacing:0.005em;color:#20253A;transition:color 140ms cubic-bezier(0.2,0.7,0.25,1);";
         const ar = '<svg aria-hidden="true" width="11" height="11" viewBox="0 0 12 12" style="flex:none;margin-top:1px;"><path d="M2 6h7.5M6.5 2.6 9.9 6 6.5 9.4" fill="none" stroke="#B79550" stroke-width="1.6" stroke-linecap="square"></path></svg>';
@@ -146,10 +159,79 @@
       const p2 = sr.querySelector('[data-content] [data-seq="2"]'); if (p2) p2.remove();
       // USGS topo (Lavaca quad) printed faintly on the cream sky; ?sky=plain turns it off
       if (new URLSearchParams(location.search).get('sky') !== 'plain') { const sky = sr.querySelector('[data-layer]'); if (sky) { const m = document.createElement('div'); m.setAttribute('aria-hidden', 'true'); m.style.cssText = 'position:absolute;left:0;right:0;top:0;height:60%;background:url(../assets/topo/lavaca-sky.png) center 30%/cover no-repeat;opacity:0.2;pointer-events:none;'; sky.appendChild(m); } }
-      return;
     }
-    img.replaceWith(box);
-    const h = sr.querySelector('[data-head]'); if (h) h.textContent = 'Education guide';
+  }
+  // paint each vector plane to a bitmap once. the live SVGs (thousands of trees) are too slow to re-tile while scrolling,
+  // which showed as missing patches; a bitmap moves as one solid piece. the SVGs stay, hidden, for measuring.
+  raster() {
+    if (!this.shadowRoot || !window.Blob || !window.URL) return;
+    const gen = this._rgen = (this._rgen || 0) + 1, root = this.shadowRoot;
+    root.querySelectorAll('svg').forEach(v => { if (v._cv) { v._cv.remove(); v._cv = null; v.style.visibility = ''; } });
+    const defsEl = [...root.querySelectorAll('svg')].find(v => v.querySelector('defs')), defs = defsEl ? defsEl.innerHTML : '';
+    const ds = Math.min(window.devicePixelRatio || 1, 1.5), hr = this.hero.getBoundingClientRect(), jobs = [];
+    const finish = el => { const an = el.getAnimations ? el.getAnimations() : [], held = an.map(a => a.currentTime); an.forEach(a => { a.currentTime = a.effect.getComputedTiming().endTime; }); return () => an.forEach((a, i) => { a.currentTime = held[i]; }); };
+    this.layers.forEach(l => {
+      if (l.f < 0.2) return;
+      l.el.querySelectorAll(':scope > svg').forEach(svg => {
+        const vb = svg.viewBox && svg.viewBox.baseVal; if (!vb || !vb.width) return;
+        const prev = l.el.style.transform; l.el.style.transform = 'none'; const back = finish(svg);
+        const sr = svg.getBoundingClientRect(), lr = l.el.getBoundingClientRect(); let bb; try { bb = svg.getBBox(); } catch (e) { bb = { y: vb.y, height: vb.height }; }
+        back(); l.el.style.transform = prev;
+        const s = sr.width / vb.width; if (!s) return;
+        const y0 = Math.min(vb.y, bb.y) - 4, yLow = vb.y + (hr.height + l.f * this.lift + 120 - (sr.top - hr.top)) / s, y1 = Math.max(y0 + 10, Math.min(bb.y + bb.height + 4, yLow));
+        let cw = sr.width * ds, ch = (y1 - y0) * s * ds; const k = Math.min(1, Math.sqrt(7e6 / (cw * ch))); cw = Math.round(cw * k); ch = Math.round(ch * k);
+        jobs.push({ svg, vb: [vb.x, y0, vb.width, y1 - y0], cw, ch, defs: svg.querySelector('use') ? defs : '', css: 'position:absolute;display:block;pointer-events:none;left:' + (sr.left - lr.left).toFixed(1) + 'px;top:' + (sr.top - lr.top + (y0 - vb.y) * s).toFixed(1) + 'px;width:' + sr.width.toFixed(1) + 'px;height:' + ((y1 - y0) * s).toFixed(1) + 'px;' });
+      });
+    });
+    this.brs.forEach(b => [b.el.querySelector('svg'), b.blur].forEach((svg, i) => {
+      if (!svg) return; const vb = svg.viewBox && svg.viewBox.baseVal; if (!vb || !vb.width) return;
+      const cs = getComputedStyle(svg), w = parseFloat(cs.width), h = parseFloat(cs.height); if (!w || !h) return;
+      const sc = i ? 0.5 : 1;
+      jobs.push({ svg, vb: [vb.x, vb.y, vb.width, vb.height], cw: Math.round(w * sc), ch: Math.round(h * sc), defs, css: svg.style.cssText + ';display:block;pointer-events:none;' });
+    }));
+    jobs.forEach(j => {
+      const fill = getComputedStyle(j.svg).fill;
+      const str = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + j.vb.map(n => (+n).toFixed(2)).join(' ') + '" width="' + j.cw + '" height="' + j.ch + '" preserveAspectRatio="none" style="fill:' + fill + '">' + j.defs + j.svg.innerHTML + '</svg>';
+      const url = URL.createObjectURL(new Blob([str], { type: 'image/svg+xml' })), img = new Image();
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        if (gen !== this._rgen || !this.isConnected) return;
+        try {
+          const cv = document.createElement('canvas'); cv.width = j.cw; cv.height = j.ch; cv.setAttribute('aria-hidden', 'true');
+          cv.getContext('2d').drawImage(img, 0, 0, j.cw, j.ch);
+          cv.style.cssText = j.css; cv.style.filter = j.svg.style.filter || ''; cv.style.opacity = j.svg.style.opacity || '';
+          j.svg.after(cv);
+          (j.svg.getAnimations ? j.svg.getAnimations() : []).forEach(a => { try { const n = cv.animate(a.effect.getKeyframes(), a.effect.getTiming()); n.currentTime = a.currentTime; a.cancel(); } catch (e) {} });
+          j.svg.style.visibility = 'hidden'; j.svg._cv = cv;
+        } catch (e) {}
+      };
+      img.onerror = () => URL.revokeObjectURL(url);
+      img.src = url;
+    });
+  }
+  // highest point of one layer's shapes between two screen x positions, at rest, in hero coordinates
+  topIn(l, x0, x1, heroTop, vh) {
+    const prev = l.el.style.transform; l.el.style.transform = 'none'; let top = vh;
+    l.el.querySelectorAll('use').forEach(u => { const r = u.getBoundingClientRect(); if (r.height && r.right > x0 && r.left < x1) top = Math.min(top, r.top - heroTop); });
+    l.el.querySelectorAll('path').forEach(p => { if (p.closest('defs,symbol')) return; const len = p.getTotalLength(), c = p.getScreenCTM(); if (!c || !len) return;
+      for (let i = 0; i <= 600; i++) { const q = p.getPointAtLength(len * i / 600), px = c.a * q.x + c.c * q.y + c.e, py = c.b * q.x + c.d * q.y + c.f - heroTop; if (px >= x0 && px <= x1) top = Math.min(top, py); } });
+    l.el.style.transform = prev; return top;
+  }
+  // lowest point of a layer's ridge line across the screen: below it, the layer is solid all the way across
+  valley(l, heroTop, vw, vh) {
+    const prev = l.el.style.transform; l.el.style.transform = 'none';
+    const n = Math.ceil(vw / 8), col = new Array(n).fill(Infinity);
+    l.el.querySelectorAll('path').forEach(p => { if (p.closest('defs,symbol')) return; const bb = p.getBoundingClientRect(); if (bb.width < vw * 0.2) return; const len = p.getTotalLength(), c = p.getScreenCTM(); if (!c || !len) return;
+      const N = Math.min(4000, Math.ceil(len / 3));
+      for (let i = 0; i <= N; i++) { const q = p.getPointAtLength(len * i / N), px = c.a * q.x + c.c * q.y + c.e, py = c.b * q.x + c.d * q.y + c.f - heroTop; const k = Math.floor(px / 8); if (k >= 0 && k < n) col[k] = Math.min(col[k], py); } });
+    l.el.style.transform = prev;
+    let v = -Infinity; col.forEach(y => { if (y !== Infinity) v = Math.max(v, y); });
+    return v === -Infinity ? vh : v;
+  }
+  gapAt(c, p) {
+    const L = this.lift * p; let g = Infinity;
+    this.layers.forEach((l, i) => { if (l.f <= 0.1) return; const t = this.cvTops[i]; if (t >= this.vhh) return; g = Math.min(g, t - (l.f - 0.1) * L - c.b); });
+    return g;
   }
   // highest point of the far ridges and main range between two screen x positions, in hero coordinates
   ridgeTop(l, r, heroTop, vh) {
@@ -174,17 +256,22 @@
       this.aim((gx - this.g0) / 10, (gy - this.b0) / 12);
     };
     const start = () => addEventListener('deviceorientation', this.onTilt);
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+    // iPhone asks for motion permission; skip tilt there and let the idle sway carry the branches
+    if (typeof DeviceOrientationEvent.requestPermission === 'function') return;
+    if (false) {
       this.onFirstTouch = () => { removeEventListener('touchend', this.onFirstTouch); DeviceOrientationEvent.requestPermission().then(s => { if (s === 'granted') start(); }).catch(() => {}); };
       addEventListener('touchend', this.onFirstTouch, { passive: true });
     } else start();
   }
-  intro(root) {
+  intro(root, holdSeq) {
     const easing = 'cubic-bezier(0.2,0.7,0.25,1)';
     const go = (el, from, delay, duration) => el.animate([from, { opacity: 1, transform: 'translate3d(0,0,0)' }], { duration, delay, easing, fill: 'backwards' });
     root.querySelectorAll('[data-in]').forEach(el => go(el, { opacity: 0, transform: `translate3d(0,${+(el.dataset.dy || 0)}px,0)` }, +el.dataset.in, +(el.dataset.dur || 1400)));
     root.querySelectorAll('[data-bin]').forEach(el => { const [x, y] = el.dataset.bin.split(',').map(Number); go(el, { opacity: 0, transform: `translate3d(${x}px,${y}px,0)` }, +el.dataset.d, 1600); });
-    root.querySelectorAll('[data-seq]').forEach(el => go(el, { opacity: 0, transform: 'translate3d(0,14px,0)' }, 1150 + 260 * (+el.dataset.seq), 850));
+    if (!holdSeq) this.introSeq(root);
+  }
+  introSeq(root) {
+    root.querySelectorAll('[data-seq]').forEach(el => el.animate([{ opacity: 0, transform: 'translate3d(0,14px,0)' }, { opacity: 1, transform: 'translate3d(0,0,0)' }], { duration: 650, delay: 60 + 140 * (+el.dataset.seq), easing: 'cubic-bezier(0.2,0.7,0.25,1)', fill: 'backwards' }));
   }
   idle(root) {
     if (this.props.idle === false) return;
@@ -220,7 +307,8 @@
     const an = (this.hero.getAnimations ? this.hero.getAnimations({ subtree: true }) : []).filter(a => a.effect && a.effect.getComputedTiming().iterations !== Infinity);
     const held = an.map(a => a.currentTime);
     an.forEach(a => { a.currentTime = a.effect.getComputedTiming().endTime; });
-    try { this.measureRest(); } finally { an.forEach((a, i) => { a.currentTime = held[i]; }); }
+    const cw = this.cvWrap, cwt = cw ? cw.style.transform : ''; if (cw) cw.style.transform = '';
+    try { this.measureRest(); } finally { an.forEach((a, i) => { a.currentTime = held[i]; }); if (cw) cw.style.transform = cwt; }
   }
   measureRest() {
     const vw = innerWidth, vh = this.hero.offsetHeight, mob = vw < 760 ? 0.85 : 1;
@@ -275,8 +363,6 @@
         an.forEach((x, i) => { x.currentTime = held[i]; }); l.el.style.transform = prev; geo.treeTop = treeTop; });
       // large, and set down behind the treeline: the lower quarter of the letters tucks behind the pines at rest
       const hh = head.offsetHeight; let seat = treeTop - hh * 0.72;
-      // bronze headline lives wholly in the sky: clear of every ridge beneath it
-      if (this.headMode === '3') { const hr = head.getBoundingClientRect(), k = 'hs' + Math.round(hr.width); if (geo[k] == null) geo[k] = this.ridgeTop(vw * 0.5 - hr.width * 0.45, vw * 0.5 + hr.width * 0.45, heroTop, vh); seat = geo[k] - hh - 14; }
       // short screens: no room for a large word between logo and trees. keep the word large, shrink the logo to fit
       if (logo && this.lock && logoBottom + 10 > seat) {
         // sizes come from the logo's CSS rest box (reset above), so this can only ever shrink it
@@ -316,6 +402,29 @@
       this.lift = Math.max(vh * 0.3, (crownTop - (t + bh + 12)) / 0.9);
       this.cvP = 0;
       const acts = this.hero.querySelector('[data-acts]'); if (acts) acts.style.top = (t + bh + 22).toFixed(1) + 'px';
+      if (!this.mob) {
+        // tagline, then title: each fades out before any ridge or treeline climbing past it can touch it
+        const sky = wrap.closest('[data-layer]'), sp = sky ? sky.style.transform : ''; if (sky) sky.style.transform = 'none';
+        const els = [logo.querySelector('p'), logo.querySelector('h1')].filter(Boolean), bx = logo.getBoundingClientRect(), x0 = bx.left - 6, x1 = bx.right + 6;
+        const bots = els.map(el => el.getBoundingClientRect().bottom - heroTop);
+        if (sky) sky.style.transform = sp;
+        const lk = 'fl' + Math.round(x0) + 'x' + Math.round(x1) + 'y' + Math.round(t);
+        if (!geo[lk]) geo[lk] = this.layers.map(l => l.f > 0.1 ? this.topIn(l, x0, x1, heroTop, vh) : vh);
+        this.cvTops = geo[lk]; this.vhh = vh;
+        els.forEach(el => { el.style.willChange = 'opacity'; });
+        this.cvFade = els.map((el, i) => { const c = { el, b: bots[i] }; c.gap0 = this.gapAt(c, 0); c.w = Math.max(8, Math.min(60, c.gap0 - 12)); return c; });
+        // the next section tucks up to the settled treeline: its top meets the lowest point of the near ridge once the move is done
+        const nr = this.layers[this.layers.length - 1];
+        if (geo.valley == null) geo.valley = this.valley(nr, heroTop, vw, vh);
+        const pf = this.reduce ? 0 : 1, v1 = geo.valley - nr.f * this.lift * pf;
+        // no script moves the section: the pin is just long enough that plain scrolling brings it in after the branches have gone
+        const M1 = Math.max(0, vh - v1 - 4);
+        // capped near 1.85 screens; on screens where that is not enough, a little of the tuck gives way rather than the branches being covered
+        let pe = 0;
+        if (!this.reduce) { pe = Math.min(0.9, Math.max(0, ...this.brs.map(b => b.t1)) + 0.06); const span = Math.min(vh * 0.85, Math.max(vh * 0.65, M1 / (1 - pe))); this.pin.style.height = Math.round(vh + span) + 'px'; this.span = Math.max(1, this.pin.offsetHeight - vh); }
+        const M = Math.max(0, Math.min(M1, this.reduce ? M1 : this.span * (1 - pe), vh + this.span - geo.valley - 4));
+        document.documentElement.style.setProperty('--nsm-hero-tuck', Math.round(M) + 'px');
+      }
     }
     this.hero.style.setProperty('--pa', vw / vh < 0.8 ? '35%' : '29%');
     const hd = this.hero.querySelector('[data-head]'); let txt = null;
@@ -345,12 +454,19 @@
   update(force) {
     const pin = this.pin; if (!pin || this.inView === false) return;
     let p;
-    if (this.reduce) p = 1;
+    if (this.reduce) p = 0;
     else p = this.p ?? this.target();
     if (p === this.lastP && !force) return;
     this.lastP = p;
     // desktop: the line and Begin clear out of the way as soon as the scroll starts
-    { const ct = this.hero.querySelector(this.mob ? '[data-cv-links]' : '[data-content]'); if (ct) { const o = Math.max(0, 1 - p / 0.05); ct.style.opacity = o.toFixed(3); ct.style.visibility = o < 0.01 ? 'hidden' : ''; } }
+    const fade = (el, o) => { if (!el) return; el.style.opacity = o.toFixed(3); el.style.visibility = o < 0.01 ? 'hidden' : ''; };
+    if (this.mob) fade(this.hero.querySelector('[data-cv-links]') || this.hero.querySelector('[data-content]'), Math.max(0, 1 - p / 0.05));
+    else {
+      // the links and Begin clear out as soon as the scroll starts; the cover stays printed on the sky while the ridges pass in front
+      const q = this._q || (this._q = { links: this.hero.querySelector('[data-cv-links]'), content: this.hero.querySelector('[data-content]') });
+      const o5 = Math.max(0, 1 - p / 0.05), s5 = o5.toFixed(2); if (this._o5 !== s5) { this._o5 = s5; fade(q.links, o5); fade(q.content, o5); }
+      if (this.cvFade) this.cvFade.forEach(c => { const o = Math.max(0, Math.min(1, (this.gapAt(c, p) - 10) / c.w)); const s = o.toFixed(3); if (c.o !== s) { c.o = s; c.el.style.opacity = s; } });
+    }
     const cue = this.hero.querySelector('[data-cue]'); if (cue) cue.style.opacity = p > 0.01 ? '0' : '0.7';
     const k = this.props.parallax ?? 1, ox = -this.mx * 18 * k, oy = -this.my * 8 * k;
     this.brs.forEach(b => {
@@ -360,6 +476,7 @@
       const gone = e >= 0.999; if (gone !== b.gone) { b.gone = gone; b.el.style.visibility = gone ? 'hidden' : ''; }
       b.el.style.transform = `translate3d(${(dx - b.mx * 44 * k * b.dz).toFixed(1)}px,${(dy - b.my * 18 * k * b.dz).toFixed(1)}px,0) rotate(${r.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
       if (b.lastB < 0) { b.lastB = b.b0; b.el.style.filter = 'none'; b.el.style.willChange = 'transform'; }
+      if (b.blur) { const o = e.toFixed(2); if (b.bo !== o) { b.bo = o; (b.blur._cv || b.blur).style.opacity = o; } }
     });
     // camera lowers from the hilltop: nearer layers climb faster and swallow the base of Pinnacle
     const lift = this.lift * p;
