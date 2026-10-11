@@ -145,6 +145,9 @@
         if (!this._plate && !this._cream) {
           this._dead = false;
           requestAnimationFrame(() => this._build());
+        } else if (!this._held && !this._settledFired) {
+          // a remount mid-sequence stops its frame loop; never leave the plate frozen on screen, land on the finished cream page
+          this.finish();
         }
         return;
       }
@@ -189,7 +192,7 @@
         if (++tries > 4) this.release();
       }, 500);
     }
-    disconnectedCallback() { this._dead = true; clearTimeout(this._buildGuard); clearInterval(this._holdBail); clearInterval(this._holdWatch);
+    disconnectedCallback() { this._dead = true; clearInterval(this._wd); clearTimeout(this._buildGuard); clearInterval(this._holdBail); clearInterval(this._holdWatch);
       if (this._onGate) document.removeEventListener('ns-gate-passed', this._onGate); if (this._raf) cancelAnimationFrame(this._raf); }
 
     // fires once, whenever the hero has come to rest (normal end, skip, or reduced motion)
@@ -383,6 +386,18 @@
         return;
       }
       this._raf = requestAnimationFrame(draw);
+      this._watchdog();
+    }
+
+    // the sequence is driven by frames; if anything stops them (a remount, a throttled tab), finish cleanly instead of freezing
+    _watchdog() {
+      clearInterval(this._wd);
+      this._wd = setInterval(() => {
+        if (this._settledFired || !this.isConnected) { clearInterval(this._wd); return; }
+        if (this._held) { this._wdT = performance.now(); return; }
+        if (this._wdT == null) this._wdT = performance.now();
+        if (performance.now() - this._wdT > T_ZOOM + T_ZOOM_DUR + this._off + 2500) { clearInterval(this._wd); this.finish(); }
+      }, 500);
     }
 
     // Act 2: fly into the marker. Everything is re-drawn as vector each frame

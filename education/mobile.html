@@ -240,7 +240,7 @@
         <button onClick="{{ scaleReset }}" style="margin-top:12px;width:100%;background:none;border:1px solid rgba(183,149,80,0.4);border-radius:6px;padding:9px;cursor:pointer;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ns-bronze);">Reset to 100%</button>
       </div>
     </sc-if>
-    <button onClick="{{ toggleA }}" aria-label="Text size settings" style="display:flex;align-items:center;gap:7px;background:var(--ns-midnight);border:1px solid rgba(183,149,80,0.5);border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,0.32);padding:10px 15px;cursor:pointer;">
+    <button onClick="{{ toggleA }}" aria-label="Text size settings" style="display:flex;align-items:center;gap:7px;background:var(--ns-midnight);border:1px solid rgba(183,149,80,0.5);border-radius:4px;box-shadow:0 8px 22px rgba(0,0,0,0.32);padding:10px 15px;cursor:pointer;">
       <span style="font-family:var(--font-display);font-size:calc(12px * var(--text-scale));color:var(--ns-arctic);">A</span>
       <span style="font-family:var(--font-display);font-size:calc(18px * var(--text-scale));color:var(--ns-bronze);line-height:1;">A</span>
     </button>
@@ -270,7 +270,7 @@
             <span style="color:var(--ns-bronze);font-size:calc(17px * var(--text-scale));">→</span>
           </button>
           <sc-if value="{{ c.hasSubs }}" hint-placeholder-val="{{ false }}">
-            <button onClick="{{ c.onExpand }}" aria-label="Show sections" aria-expanded="{{ c.expanded }}" style="align-self:flex-start;margin:-8px 0 6px 42px;display:inline-flex;align-items:center;gap:8px;background:none;border:1px solid rgba(183,149,80,0.4);border-radius:999px;padding:6px 13px;cursor:pointer;font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ns-bronze);">Sections <span style="font-size:calc(14px * var(--text-scale));line-height:1;">{{ c.subCaret }}</span></button>
+            <button onClick="{{ c.onExpand }}" aria-label="Show sections" aria-expanded="{{ c.expanded }}" style="align-self:flex-start;margin:-8px 0 6px 42px;display:inline-flex;align-items:center;gap:8px;background:none;border:1px solid rgba(183,149,80,0.4);border-radius:4px;padding:6px 13px;cursor:pointer;font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ns-bronze);">Sections <span style="font-size:calc(14px * var(--text-scale));line-height:1;">{{ c.subCaret }}</span></button>
             <sc-if value="{{ c.expanded }}" hint-placeholder-val="{{ false }}">
               <div class="nsm-exp" style="display:flex;flex-direction:column;padding:0 2px 12px 42px;">
                 <sc-for list="{{ c.subs }}" as="s" hint-placeholder-count="3">
@@ -288,6 +288,125 @@
     </div>
   </sc-if>
 
+  <!-- ============ STRAIN SHEET ============ -->
+  <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+    <sc-for list="{{ sheetList }}" as="s" hint-placeholder-count="1">
+      <div role="dialog" aria-modal="true" aria-label="{{ s.name }}" style="position:fixed;inset:0;z-index:120;background:var(--ns-arctic);display:flex;flex-direction:column;">
+        <div style="flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;height:54px;padding:0 8px 0 18px;border-bottom:1px solid var(--border-hairline);">
+          <span style="display:flex;align-items:center;gap:8px;min-width:0;">
+            <img loading="lazy" decoding="async" src="{{ s.leafSrc }}" alt="" style="width:15px;height:14px;object-fit:contain;flex:none;">
+            <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ s.typeText }}</span>
+          </span>
+          <button onClick="{{ closeSheetStrain }}" aria-label="Close" style="flex:none;width:44px;height:44px;border:none;background:none;cursor:pointer;font-size:calc(19px * var(--text-scale));color:var(--text-strong);">✕</button>
+        </div>
+        <div id="nsm-sheet-body" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;">
+          <div style="max-width:600px;margin:0 auto;padding:18px 20px 36px;display:flex;flex-direction:column;gap:26px;">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <span style="display:block;width:100%;aspect-ratio:4/5;max-height:56svh;border:1px solid var(--border-hairline);box-sizing:border-box;overflow:hidden;background:var(--ns-arctic) url(topo/strain-fallback.png) center/cover no-repeat;">
+                <sc-if value="{{ s.hasPhoto }}" hint-placeholder-val="{{ false }}"><img decoding="async" src="{{ s.photo }}" alt="{{ s.name }} flower, Natural State Medicinals" style="width:100%;height:100%;object-fit:cover;display:block;"></sc-if>
+              </span>
+              <h3 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(40px * var(--text-scale));line-height:1;letter-spacing:-0.01em;color:var(--text-strong);">{{ s.dispName }}</h3>
+              <sc-if value="{{ s.hasEffects }}" hint-placeholder-val="{{ false }}"><span style="font-family:var(--font-sans);font-size:calc(14px * var(--text-scale));font-weight:600;color:var(--text-strong);">{{ s.effectsLine }}</span></sc-if>
+              <sc-if value="{{ s.hasDescription }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-family:var(--font-sans);font-size:calc(15.5px * var(--text-scale));line-height:1.68;color:var(--text-body);">{{ s.description }}</p></sc-if>
+            </div>
+            <div>
+              <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A5F28;">At a glance</span>
+              <div style="margin-top:10px;border-top:1px solid var(--ns-midnight);">
+                <sc-for list="{{ s.drFacts }}" as="fx" hint-placeholder-count="6">
+                  <div style="display:grid;grid-template-columns:118px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--border-hairline);">
+                    <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);padding-top:2px;">{{ fx.k }}</span>
+                    <span style="font-family:var(--font-sans);font-size:calc(14px * var(--text-scale));font-weight:600;line-height:1.45;color:var(--text-strong);font-variant-numeric:tabular-nums;">{{ fx.v }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <sc-if value="{{ s.hasBestUse }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A5F28;">Best used for</span>
+                <span style="font-family:var(--font-display);font-size:calc(23px * var(--text-scale));line-height:1.2;letter-spacing:-0.01em;color:var(--text-strong);">{{ s.bestUse }}</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{ s.hasTerpBars }}" hint-placeholder-val="{{ false }}">
+              <div style="background:var(--ns-midnight);padding:18px 16px;display:flex;flex-direction:column;gap:14px;">
+                <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#D8BD82;">Terpene profile</span>
+                <sc-if value="{{ s.hasRadar }}" hint-placeholder-val="{{ false }}">
+                  <div style="width:206px;max-width:100%;margin:0 auto;">
+                    <svg viewBox="0 0 216 210" width="100%" height="auto" role="img" aria-label="Terpene profile shape">
+                      <sc-for list="{{ s.radar.rings }}" as="rr" hint-placeholder-count="3"><circle cx="{{ s.radar.cx }}" cy="{{ s.radar.cy }}" r="{{ rr }}" fill="none" stroke="rgba(245,244,225,0.13)" stroke-width="1"></circle></sc-for>
+                      <sc-for list="{{ s.radar.spokes }}" as="sp" hint-placeholder-count="6"><line x1="{{ s.radar.cx }}" y1="{{ s.radar.cy }}" x2="{{ sp.x2 }}" y2="{{ sp.y2 }}" stroke="rgba(245,244,225,0.13)" stroke-width="1"></line></sc-for>
+                      <polygon points="{{ s.radar.polygon }}" fill="{{ s.radar.fill }}" stroke="{{ s.radar.stroke }}" stroke-width="2" stroke-linejoin="round"></polygon>
+                      <sc-for list="{{ s.radar.dots }}" as="dt" hint-placeholder-count="6"><circle cx="{{ dt.x }}" cy="{{ dt.y }}" r="2.4" fill="{{ s.radar.stroke }}"></circle></sc-for>
+                      <sc-for list="{{ s.radar.spokes }}" as="sp" hint-placeholder-count="6"><text x="{{ sp.lx }}" y="{{ sp.ly }}" text-anchor="{{ sp.anchor }}" style="font-family:var(--font-sans);font-size:calc(9px * var(--text-scale));letter-spacing:0.04em;fill:rgba(245,244,225,0.6);">{{ sp.name }}</text></sc-for>
+                    </svg>
+                  </div>
+                </sc-if>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                  <sc-for list="{{ s.terpBars }}" as="t" hint-placeholder-count="4">
+                    <button onClick="{{ t.onClick }}" style="display:flex;align-items:center;gap:10px;width:100%;min-height:32px;background:none;border:none;padding:0;cursor:pointer;text-align:left;">
+                      <span style="min-width:100px;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));color:#D8BD82;text-decoration:underline;text-decoration-color:rgba(216,189,130,0.4);text-underline-offset:3px;">{{ t.name }}</span>
+                      <span style="flex:1;height:6px;background:rgba(245,244,225,0.1);position:relative;overflow:hidden;"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ t.width }};background:var(--ns-bronze);"></span></span>
+                      <span style="min-width:44px;text-align:right;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:#D8BD82;">{{ t.pctText }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ s.hasTerpNotes }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A5F28;">What the lead terpenes bring</span>
+                <sc-for list="{{ s.terpNotes }}" as="tn" hint-placeholder-count="3">
+                  <div style="display:flex;flex-direction:column;gap:8px;border-top:2px solid {{ tn.accent }};padding-top:12px;">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;">
+                      <span style="font-family:var(--font-display);font-size:calc(21px * var(--text-scale));line-height:1;color:var(--text-strong);">{{ tn.name }}</span>
+                      <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;color:var(--text-muted);">{{ tn.pct }}</span>
+                    </div>
+                    <span style="font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));line-height:1.55;color:var(--text-body);"><span style="font-weight:600;color:var(--text-strong);">Aroma.</span> {{ tn.flavor }}</span>
+                    <span style="font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));line-height:1.55;color:var(--text-body);"><span style="font-weight:600;color:var(--text-strong);">Often associated with.</span> {{ tn.medical }}</span>
+                    <button onClick="{{ tn.onClick }}" style="align-self:flex-start;min-height:36px;background:none;border:none;padding:0;cursor:pointer;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));font-weight:600;color:var(--text-strong);text-decoration:underline;text-decoration-color:var(--ns-bronze);text-underline-offset:4px;">More on {{ tn.name }}</button>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ s.hasPhenome }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:6px;"><span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A5F28;">In the jar</span><p style="margin:0;font-family:var(--font-sans);font-size:calc(14.5px * var(--text-scale));line-height:1.62;color:var(--text-body);">{{ s.phenome }}</p></div>
+            </sc-if>
+            <sc-if value="{{ s.hasGenome }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:6px;"><span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A5F28;">Genetics</span><p style="margin:0;font-family:var(--font-sans);font-size:calc(14.5px * var(--text-scale));line-height:1.62;color:var(--text-body);">{{ s.genome }}</p></div>
+            </sc-if>
+            <sc-if value="{{ s.hasSong }}" hint-placeholder-val="{{ false }}">
+              <div style="background:var(--ns-midnight);padding:16px;display:flex;flex-direction:column;gap:12px;">
+                <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#D8BD82;">Pairs well with</span>
+                <span style="font-family:var(--font-display);font-size:calc(21px * var(--text-scale));line-height:1.15;color:var(--ns-arctic);">{{ s.songTitle }}<span style="font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));color:rgba(245,244,225,0.72);"> · {{ s.songArtist }}</span></span>
+                <div style="display:flex;gap:8px;">
+                  <a href="{{ s.spotifyUrl }}" target="_blank" rel="noopener" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;letter-spacing:0.06em;color:var(--ns-midnight);background:var(--ns-bronze);border-radius:4px;text-decoration:none;">Spotify ↗</a>
+                  <a href="{{ s.ytUrl }}" target="_blank" rel="noopener" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:44px;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;letter-spacing:0.06em;color:var(--ns-arctic);border:1px solid rgba(183,149,80,0.55);border-radius:4px;text-decoration:none;">YouTube ↗</a>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ s.hasSimilar }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A5F28;">Similar terpene profile</span>
+                <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;">
+                  <sc-for list="{{ s.similar }}" as="sm" hint-placeholder-count="3">
+                    <button onClick="{{ sm.onClick }}" style="display:flex;flex-direction:column;gap:7px;background:none;border:none;padding:0;cursor:pointer;text-align:left;color:var(--text-strong);min-width:0;">
+                      <span style="display:block;width:100%;aspect-ratio:4/5;border:1px solid var(--border-hairline);box-sizing:border-box;overflow:hidden;background:var(--ns-arctic) url(topo/strain-fallback.png) center/cover no-repeat;"><sc-if value="{{ sm.hasPhoto }}" hint-placeholder-val="{{ false }}"><img loading="lazy" decoding="async" src="{{ sm.photo }}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></sc-if></span>
+                      <span style="font-family:var(--font-display);font-size:calc(15px * var(--text-scale));line-height:1.08;">{{ sm.name }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+            <a href="{{ productsUrl }}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:9px;min-height:52px;background:var(--ns-bronze);color:var(--ns-midnight);border-radius:4px;text-decoration:none;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;letter-spacing:0.06em;">Find our products ↗</a>
+          </div>
+        </div>
+        <div style="flex:none;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border-hairline);padding-bottom:env(safe-area-inset-bottom);">
+          <button onClick="{{ s.onPrev }}" style="min-height:54px;padding:0 16px;background:none;border:none;border-right:1px solid var(--border-hairline);cursor:pointer;text-align:left;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">← {{ s.prevName }}</button>
+          <button onClick="{{ s.onNext }}" style="min-height:54px;padding:0 16px;background:none;border:none;cursor:pointer;text-align:right;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ s.nextName }} →</button>
+        </div>
+      </div>
+    </sc-for>
+  </sc-if>
+
   <!-- ============ QUIZ OVERLAY ============ -->
   <sc-if value="{{ quiz.open }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ quiz.onClose }}" style="position:fixed;inset:0;z-index:97;background:rgba(22,26,43,0.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:flex-start;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 30px) 22px 40px;overflow-y:auto;">
@@ -299,7 +418,7 @@
         <div style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));letter-spacing:0.08em;color:rgba(245,244,225,0.5);">{{ quiz.progressLabel }}</div>
         <sc-if value="{{ quiz.done }}" hint-placeholder-val="{{ false }}">
           <sc-if value="{{ quiz.hasResult }}" hint-placeholder-val="{{ true }}">
-            <div class="nsm-exp" style="margin-top:18px;background:var(--ns-cream);border-top:3px solid {{ quiz.result.catColor }};padding:22px 20px;">
+            <div class="nsm-exp" style="margin-top:18px;background:var(--ns-arctic);border-top:3px solid {{ quiz.result.catColor }};padding:22px 20px;">
               <sc-if value="{{ quiz.result.hasPhoto }}" hint-placeholder-val="{{ false }}">
                 <img loading="lazy" decoding="async" data-src="{{ quiz.result.photo }}" alt="{{ quiz.result.name }}" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;margin:0 0 16px;">
               </sc-if>
@@ -320,7 +439,7 @@
               </div>
               <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:7px;">
                 <sc-for list="{{ quiz.result.effects }}" as="e" hint-placeholder-count="4">
-                  <span style="font-family:var(--font-sans);font-size:calc(11.5px * var(--text-scale));color:var(--text-body);border:1px solid var(--border-hairline);border-radius:999px;padding:5px 12px;">{{ e }}</span>
+                  <span style="font-family:var(--font-sans);font-size:calc(11.5px * var(--text-scale));color:var(--text-body);border:1px solid var(--border-hairline);border-radius:4px;padding:5px 12px;">{{ e }}</span>
                 </sc-for>
               </div>
               <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;">
@@ -390,12 +509,12 @@
   </section>
 
   <!-- ============ 01 · THE SYSTEM ============ -->
-  <section id="chap-system" data-cnum="01" data-clabel="The System" style="position:relative;background:var(--ns-cream);padding:64px 22px 68px;overflow:hidden;">
+  <section id="chap-system" data-cnum="01" data-clabel="The System" style="position:relative;background:var(--ns-arctic);border-top:1px solid var(--border-hairline);padding:64px 22px 68px;overflow:hidden;">
     <div data-para="1.1" data-base="rotate(18deg)" aria-hidden="true" style="position:absolute;top:-40px;right:-70px;width:220px;height:220px;background:radial-gradient(closest-side,rgba(183,149,80,0.16),rgba(183,149,80,0));transform:rotate(18deg);"></div>
     <div style="position:relative;max-width:560px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--ns-bronze);padding-bottom:16px;">
-          <span style="font-family:var(--font-sans);font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">01</span>
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">01</span>
           <div>
             <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase;">How cannabis meets the body</span>
             <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(38px * var(--text-scale));line-height:0.98;letter-spacing:-0.01em;color:var(--text-strong);">The System</h2>
@@ -422,7 +541,7 @@
     <div style="position:relative;max-width:560px;margin:0 auto;padding:0 22px;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--border-on-dark);padding-bottom:16px;">
-          <span style="font-family:var(--font-sans);font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">02</span>
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">02</span>
           <div>
             <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--ns-bronze);text-transform:uppercase;">Why the whole plant matters</span>
             <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(36px * var(--text-scale));line-height:1.0;letter-spacing:-0.01em;color:var(--ns-arctic);">The Entourage Effect</h2>
@@ -484,7 +603,7 @@
     <div style="position:relative;max-width:560px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--ns-bronze);padding-bottom:16px;">
-          <span style="font-family:var(--font-sans);font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">03</span>
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">03</span>
           <div>
             <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase;">THC and the supporting cast</span>
             <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(38px * var(--text-scale));line-height:0.98;letter-spacing:-0.01em;color:var(--text-strong);">Cannabinoids</h2>
@@ -509,7 +628,7 @@
                 <p style="margin:0;font-size:calc(14px * var(--text-scale));line-height:1.65;color:{{ c.bodyColor }};">{{ c.detail }}</p>
                 <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:7px;">
                   <sc-for list="{{ c.helps }}" as="h" hint-placeholder-count="4">
-                    <span style="font-family:var(--font-sans);font-size:calc(11.5px * var(--text-scale));color:{{ c.bodyColor }};border:1px solid {{ c.chipBorder }};border-radius:999px;padding:5px 12px;">{{ h }}</span>
+                    <span style="font-family:var(--font-sans);font-size:calc(11.5px * var(--text-scale));color:{{ c.bodyColor }};border:1px solid {{ c.chipBorder }};border-radius:4px;padding:5px 12px;">{{ h }}</span>
                   </sc-for>
                 </div>
                 <sc-if value="{{ c.hasStudies }}" hint-placeholder-val="{{ false }}">
@@ -584,12 +703,12 @@
   </section>
 
   <!-- ============ 05 · TERPENES ============ -->
-  <section id="chap-terpenes" data-cnum="05" data-clabel="Terpenes" style="position:relative;background:var(--ns-cream);padding:64px 22px 68px;overflow:hidden;">
+  <section id="chap-terpenes" data-cnum="05" data-clabel="Terpenes" style="position:relative;background:var(--ns-arctic);border-top:1px solid var(--border-hairline);padding:64px 22px 68px;overflow:hidden;">
     <div data-para="1.3" data-base="rotate(24deg)" aria-hidden="true" style="position:absolute;bottom:-50px;left:-60px;width:180px;height:180px;background:radial-gradient(closest-side,rgba(183,149,80,0.18),rgba(183,149,80,0));transform:rotate(24deg);"></div>
     <div style="position:relative;max-width:560px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--ns-bronze);padding-bottom:16px;">
-          <span style="font-family:var(--font-sans);font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">05</span>
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">05</span>
           <div>
             <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase;">The fingerprint of a strain</span>
             <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(38px * var(--text-scale));line-height:0.98;letter-spacing:-0.01em;color:var(--text-strong);">Terpenes</h2>
@@ -599,7 +718,7 @@
       </div>
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .6s ease .05s,transform .6s cubic-bezier(.2,.7,.25,1) .05s;margin-top:22px;display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;">
         <sc-for list="{{ terpTabs }}" as="t" hint-placeholder-count="8">
-          <button onClick="{{ t.onClick }}" style="flex:none;background:{{ t.tabBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ t.tabColor }};border:1px solid {{ t.tabBorder }};border-radius:999px;padding:9px 16px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;letter-spacing:0.02em;">{{ t.name }}</button>
+          <button onClick="{{ t.onClick }}" style="flex:none;background:{{ t.tabBg }};color:{{ t.tabColor }};border:1px solid {{ t.tabBorder }};border-radius:4px;padding:9px 16px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;letter-spacing:0.02em;">{{ t.name }}</button>
         </sc-for>
       </div>
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease;margin-top:16px;background:var(--ns-arctic);border:1px solid var(--border-hairline);border-top:3px solid var(--ns-bronze);padding:22px 20px;">
@@ -660,7 +779,7 @@
     <div style="position:relative;max-width:600px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);padding:0 2px;">
         <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--ns-bronze);padding-bottom:16px;">
-          <span style="font-family:var(--font-sans);font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">06</span>
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">06</span>
           <div>
             <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase;">{{ strainCount }} cultivars, decoded</span>
             <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(38px * var(--text-scale));line-height:0.98;letter-spacing:-0.01em;color:var(--text-strong);">The Flower</h2>
@@ -668,137 +787,42 @@
         </div>
         <p style="margin:20px 0 0;font-size:calc(16px * var(--text-scale));line-height:1.7;color:var(--text-body);">Every cultivar carries its own lab-verified terpene and THC profile, drawn from real certificates of analysis. Filter, then tap any strain to see what is inside.</p>
       </div>
-      <div style="position:sticky;top:46px;z-index:20;background:var(--ns-arctic);padding:12px 2px 10px;margin-top:8px;border-bottom:1px solid var(--border-hairline);">
-        <div style="display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;">
+      <div style="position:sticky;top:46px;z-index:20;background:var(--ns-arctic);margin-top:10px;border-bottom:1px solid var(--border-hairline);">
+        <div role="tablist" aria-label="Filter by type" style="display:flex;gap:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;border-bottom:1px solid var(--border-hairline);padding:0 2px;">
           <sc-for list="{{ strainFilters }}" as="f" hint-placeholder-count="4">
-            <button onClick="{{ f.onClick }}" style="flex:none;display:flex;align-items:center;gap:8px;background:{{ f.chipBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ f.chipColor }};border:1px solid {{ f.chipBorder }};border-radius:999px;padding:9px 15px;cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;">
-              <img loading="lazy" decoding="async" data-src="{{ f.leafSrc }}" alt="" style="width:16px;height:16px;object-fit:contain;"><span>{{ f.label }}</span><span style="opacity:0.6;font-weight:400;">{{ f.count }}</span>
+            <button role="tab" aria-selected="{{ f.active }}" onClick="{{ f.onClick }}" style="flex:none;display:flex;align-items:center;gap:7px;min-height:46px;background:none;border:none;border-bottom:2px solid {{ f.tabLine }};margin-bottom:-1px;padding:0;cursor:pointer;font-family:var(--font-sans);font-size:calc(14px * var(--text-scale));font-weight:{{ f.tabWeight }};color:{{ f.tabInk }};">
+              <img loading="lazy" decoding="async" data-src="{{ f.leafSrc }}" alt="" style="width:15px;height:15px;object-fit:contain;opacity:{{ f.leafOp }};"><span>{{ f.label }}</span><span style="font-size:calc(11.5px * var(--text-scale));font-weight:500;color:var(--text-muted);">{{ f.count }}</span>
             </button>
           </sc-for>
         </div>
-        <div style="display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-top:8px;">
+        <div style="display:flex;align-items:baseline;gap:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:4px 2px 2px;">
+          <span style="flex:none;font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#7A5F28;">Effect</span>
           <sc-for list="{{ effectFilters }}" as="e" hint-placeholder-count="6">
-            <button onClick="{{ e.onClick }}" style="flex:none;display:flex;align-items:center;gap:6px;background:{{ e.chipBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ e.chipColor }};border:1px solid {{ e.chipBorder }};border-radius:999px;padding:7px 13px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;">{{ e.label }}<span style="opacity:0.55;font-weight:400;">{{ e.count }}</span></button>
+            <button onClick="{{ e.onClick }}" aria-pressed="{{ e.on }}" style="flex:none;min-height:40px;background:none;border:none;padding:0;cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:{{ e.tabWeight }};color:{{ e.tabInk }};text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px;text-decoration-color:{{ e.tabLine }};white-space:nowrap;">{{ e.label }}</button>
           </sc-for>
         </div>
-        <div style="padding-top:8px;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));letter-spacing:0.04em;color:var(--text-muted);">Showing {{ shownCount }} of {{ strainCount }} cultivars</div>
       </div>
-      <div style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
+      <div style="padding:10px 2px 0;font-family:var(--font-sans);font-size:calc(11.5px * var(--text-scale));color:var(--text-muted);">Showing {{ shownCount }} of {{ strainCount }} cultivars</div>
+      <div style="margin-top:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 14px;">
         <sc-for list="{{ strains }}" as="s" hint-placeholder-count="6">
-          <div id="strain-{{ s.anchor }}" data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.25,1);background:var(--surface-raised,#fff);border:1px solid var(--border-hairline);box-shadow:var(--shadow-sm);overflow:hidden;">
-            <button onClick="{{ s.onToggle }}" style="display:flex;align-items:stretch;gap:0;width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:0;">
+          <button id="strain-{{ s.anchor }}" onClick="{{ s.onToggle }}" aria-label="Open {{ s.name }}" style="display:flex;flex-direction:column;gap:9px;min-width:0;background:none;border:none;padding:0;cursor:pointer;text-align:left;color:var(--text-strong);scroll-margin-top:110px;">
+            <span style="position:relative;display:block;width:100%;aspect-ratio:4/5;border:1px solid var(--border-hairline);box-sizing:border-box;overflow:hidden;background:var(--ns-arctic) url(topo/strain-fallback.png) center/cover no-repeat;">
               <sc-if value="{{ s.hasPhoto }}" hint-placeholder-val="{{ true }}">
-                <img decoding="async" data-src="{{ s.photo }}" alt="{{ s.name }}" loading="lazy" style="width:96px;height:96px;object-fit:cover;flex:none;">
+                <img decoding="async" data-src="{{ s.photo }}" alt="{{ s.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
               </sc-if>
               <sc-if value="{{ s.noPhoto }}" hint-placeholder-val="{{ false }}">
-                <span style="width:96px;height:96px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px;box-sizing:border-box;text-align:center;overflow:hidden;background:var(--ns-arctic) url(topo/strain-fallback.png) center/cover no-repeat;"><img width="648" height="583" loading="lazy" decoding="async" src="../assets/brand/leaf-glyph-bronze.png" alt="" aria-hidden="true" style="width:16px;height:16px;object-fit:contain;flex:none;"><span style="font-family:var(--font-display);font-weight:400;font-size:calc(13px * var(--text-scale));line-height:1.05;letter-spacing:-0.01em;color:var(--ns-midnight);text-wrap:balance;">{{ s.name }}</span></span>
+                <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><img width="648" height="583" loading="lazy" decoding="async" src="../assets/brand/leaf-glyph-bronze.png" alt="" aria-hidden="true" style="width:26px;height:26px;object-fit:contain;"></span>
               </sc-if>
-              <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:12px 14px;border-left:3px solid {{ s.catColor }};">
-                <span style="font-family:var(--font-display);font-size:calc(21px * var(--text-scale));line-height:1;color:var(--text-strong);">{{ s.dispName }}</span>
-                <span style="font-family:var(--font-sans);font-size:calc(11.5px * var(--text-scale));letter-spacing:0.02em;color:var(--text-muted);">{{ s.typeText }}</span>
-                <span style="display:flex;align-items:center;gap:12px;margin-top:2px;">
-                  <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:var(--text-strong);"><span style="color:var(--ns-bronze);font-weight:600;">THC</span> {{ s.thcText }}</span>
-                </span>
-              </span>
-              <span style="flex:none;display:grid;place-items:center;width:44px;color:var(--ns-bronze);font-size:calc(20px * var(--text-scale));">{{ s.caret }}</span>
-            </button>
-            <sc-if value="{{ s.expanded }}" hint-placeholder-val="{{ false }}">
-              <div class="nsm-exp" style="padding:4px 16px 20px;border-top:1px solid var(--border-hairline);">
-                <sc-if value="{{ s.hasDescription }}" hint-placeholder-val="{{ true }}">
-                  <p style="margin:16px 0 0;font-family:var(--font-sans);font-size:calc(15px * var(--text-scale));line-height:1.66;color:var(--text-body);">{{ s.description }}</p>
-                </sc-if>
-                <div style="margin-top:18px;background:var(--ns-midnight);padding:18px 16px;">
-                  <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end;border-bottom:1px solid var(--border-on-dark);padding-bottom:14px;">
-                    <div>
-                      <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.18em;color:var(--ns-bronze);text-transform:uppercase;">THC Range</span>
-                      <div style="font-family:var(--font-display);font-size:calc(30px * var(--text-scale));line-height:1;color:var(--ns-arctic);margin-top:6px;">{{ s.thcText }}</div>
-                    </div>
-                    <div>
-                      <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.18em;color:var(--ns-bronze);text-transform:uppercase;">Total Terpenes</span>
-                      <div style="font-family:var(--font-display);font-size:calc(30px * var(--text-scale));line-height:1;color:var(--ns-arctic);margin-top:6px;">{{ s.terpText }}</div>
-                    </div>
-                  </div>
-                  <sc-if value="{{ s.hasRadar }}" hint-placeholder-val="{{ false }}">
-                    <div style="width:206px;max-width:100%;margin:14px auto 0;">
-                      <svg viewBox="0 0 216 210" width="100%" height="auto" role="img" aria-label="Terpene profile shape">
-                        <sc-for list="{{ s.radar.rings }}" as="rr" hint-placeholder-count="3"><circle cx="{{ s.radar.cx }}" cy="{{ s.radar.cy }}" r="{{ rr }}" fill="none" stroke="rgba(245,244,225,0.13)" stroke-width="1"></circle></sc-for>
-                        <sc-for list="{{ s.radar.spokes }}" as="sp" hint-placeholder-count="6"><line x1="{{ s.radar.cx }}" y1="{{ s.radar.cy }}" x2="{{ sp.x2 }}" y2="{{ sp.y2 }}" stroke="rgba(245,244,225,0.13)" stroke-width="1"></line></sc-for>
-                        <polygon class="nsm-radar-poly" points="{{ s.radar.polygon }}" fill="{{ s.radar.fill }}" stroke="{{ s.radar.stroke }}" stroke-width="2" stroke-linejoin="round"></polygon>
-                        <sc-for list="{{ s.radar.dots }}" as="dt" hint-placeholder-count="6"><circle cx="{{ dt.x }}" cy="{{ dt.y }}" r="2.4" fill="{{ s.radar.stroke }}"></circle></sc-for>
-                        <sc-for list="{{ s.radar.spokes }}" as="sp" hint-placeholder-count="6"><text x="{{ sp.lx }}" y="{{ sp.ly }}" text-anchor="{{ sp.anchor }}" style="font-family:var(--font-sans);font-size:calc(9px * var(--text-scale));letter-spacing:0.04em;fill:rgba(245,244,225,0.6);">{{ sp.name }}</text></sc-for>
-                      </svg>
-                    </div>
-                  </sc-if>
-                </div>
-                <sc-if value="{{ s.hasTerpBars }}" hint-placeholder-val="{{ true }}">
-                  <div style="margin-top:16px;">
-                    <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;color:var(--ns-bronze);text-transform:uppercase;">Terpene profile</span>
-                    <div style="margin-top:10px;display:flex;flex-direction:column;gap:9px;">
-                      <sc-for list="{{ s.terpBars }}" as="t" hint-placeholder-count="4">
-                        <button onClick="{{ t.onClick }}" style="display:flex;align-items:center;gap:10px;width:100%;background:none;border:none;padding:0;cursor:pointer;text-align:left;">
-                          <span style="min-width:96px;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:var(--text-strong);border-bottom:1px dotted rgba(32,37,58,0.3);">{{ t.name }}</span>
-                          <span style="flex:1;height:7px;background:rgba(32,37,58,0.1);border-radius:999px;overflow:hidden;position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ t.width }};background:var(--ns-bronze);border-radius:999px;"></span></span>
-                          <span style="min-width:42px;text-align:right;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:var(--ns-bronze);font-weight:600;">{{ t.pctText }}</span>
-                        </button>
-                      </sc-for>
-                    </div>
-                  </div>
-                </sc-if>
-                <sc-if value="{{ s.hasEffects }}" hint-placeholder-val="{{ true }}">
-                  <div style="margin-top:16px;">
-                    <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;color:var(--ns-bronze);text-transform:uppercase;">Reported effects</span>
-                    <div style="margin-top:9px;display:flex;flex-wrap:wrap;gap:7px;">
-                      <sc-for list="{{ s.effects }}" as="e" hint-placeholder-count="4">
-                        <span style="font-family:var(--font-sans);font-size:calc(11.5px * var(--text-scale));color:var(--text-body);border:1px solid var(--border-hairline);border-radius:999px;padding:5px 12px;">{{ e }}</span>
-                      </sc-for>
-                    </div>
-                  </div>
-                </sc-if>
-                <sc-if value="{{ s.hasBestUse }}" hint-placeholder-val="{{ false }}">
-                  <div style="margin-top:16px;background:var(--ns-midnight);padding:15px 16px;">
-                    <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;color:var(--ns-bronze);text-transform:uppercase;">Best used for</span>
-                    <p style="margin:7px 0 0;font-family:var(--font-serif);font-size:calc(16.5px * var(--text-scale));line-height:1.6;color:rgba(245,244,225,0.9);">{{ s.bestUse }}</p>
-                  </div>
-                </sc-if>
-                <sc-if value="{{ s.hasPhenome }}" hint-placeholder-val="{{ false }}">
-                  <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px;">
-                    <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;color:var(--ns-bronze);text-transform:uppercase;">Look &amp; aroma</span>
-                    <p style="margin:0;font-size:calc(13.5px * var(--text-scale));line-height:1.6;color:var(--text-body);">{{ s.phenome }}</p>
-                  </div>
-                </sc-if>
-                <sc-if value="{{ s.hasLineage }}" hint-placeholder-val="{{ false }}">
-                  <div style="margin-top:14px;display:flex;flex-direction:column;gap:6px;">
-                    <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;color:var(--ns-bronze);text-transform:uppercase;">Lineage</span>
-                    <span style="font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));color:var(--text-body);">{{ s.parentsText }}</span>
-                    <sc-if value="{{ s.hasRatio }}" hint-placeholder-val="{{ false }}"><span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:var(--text-muted);">{{ s.ratio }}</span></sc-if>
-                  </div>
-                </sc-if>
-                <sc-if value="{{ s.hasBreeder }}" hint-placeholder-val="{{ false }}">
-                  <div style="margin-top:14px;display:flex;flex-direction:column;gap:4px;">
-                    <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;color:var(--ns-bronze);text-transform:uppercase;">Breeder</span>
-                    <span style="font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));color:var(--text-body);">{{ s.breeder }}</span>
-                  </div>
-                </sc-if>
-                <sc-if value="{{ s.hasSong }}" hint-placeholder-val="{{ false }}">
-                  <div style="margin-top:18px;background:var(--ns-midnight);border-radius:8px;padding:16px 16px;">
-                    <div style="display:flex;align-items:center;gap:12px;">
-                      <img width="160" height="160" loading="lazy" decoding="async" src="../assets/brand/music-note-leaf-sm.png" alt="" style="flex:none;width:40px;height:40px;object-fit:contain;border-radius:9px;">
-                      <span style="flex:1;display:flex;flex-direction:column;gap:2px;">
-                        <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--ns-bronze);">Pairs with</span>
-                        <span style="font-family:var(--font-display);font-size:calc(18px * var(--text-scale));line-height:1.08;color:var(--ns-arctic);">{{ s.songTitle }}</span>
-                        <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:rgba(245,244,225,0.66);">{{ s.songArtist }}</span>
-                      </span>
-                    </div>
-                    <div style="display:flex;gap:8px;margin-top:14px;">
-                      <a href="{{ s.spotifyUrl }}" target="_blank" rel="noopener" style="flex:1;text-align:center;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.06em;color:var(--ns-midnight);background:var(--ns-bronze);border-radius:5px;padding:11px 8px;text-decoration:none;">Spotify ↗</a>
-                      <a href="{{ s.ytUrl }}" target="_blank" rel="noopener" style="flex:1;text-align:center;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.06em;color:var(--ns-arctic);border:1px solid rgba(183,149,80,0.55);border-radius:5px;padding:11px 8px;text-decoration:none;">YouTube ↗</a>
-                    </div>
-                  </div>
-                </sc-if>
-                <a href="{{ productsUrl }}" target="_blank" rel="noopener" style="margin-top:16px;display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:52px;background:var(--ns-bronze);color:var(--ns-midnight);border-radius:6px;text-decoration:none;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;letter-spacing:0.06em;box-shadow:var(--shadow-bronze);">Find our products <span style="font-size:calc(15px * var(--text-scale));">↗</span></a>
-              </div>
+            </span>
+            <span style="display:flex;align-items:center;gap:6px;min-width:0;">
+              <img loading="lazy" decoding="async" data-src="{{ s.leafSrc }}" alt="" style="width:13px;height:12px;object-fit:contain;flex:none;">
+              <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ s.typeShort }}</span>
+            </span>
+            <span style="font-family:var(--font-display);font-weight:400;font-size:calc(20px * var(--text-scale));line-height:1.04;letter-spacing:-0.01em;">{{ s.dispName }}</span>
+            <sc-if value="{{ s.hasCardFacts }}" hint-placeholder-val="{{ true }}">
+              <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:var(--text-body);font-variant-numeric:tabular-nums;">{{ s.cardFacts }}</span>
             </sc-if>
-          </div>
+          </button>
         </sc-for>
       </div>
       <sc-if value="{{ strainsEmpty }}" hint-placeholder-val="{{ false }}">
@@ -842,25 +866,25 @@
     <div style="position:relative;max-width:560px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--ns-bronze);padding-bottom:16px;">
-          <span style="font-family:var(--font-sans);font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">08</span>
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">08</span>
           <div>
-            <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase;">Five steps, harvest to jar</span>
+            <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase;">How it’s made, and what to choose</span>
             <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(36px * var(--text-scale));line-height:0.98;letter-spacing:-0.01em;color:var(--text-strong);">Plant to Product</h2>
           </div>
         </div>
         <p style="margin:22px 0 0;font-size:calc(16px * var(--text-scale));line-height:1.7;color:var(--text-body);">Every product on the shelf starts as the same thing: the sticky resin on the flower, where the cannabinoids and terpenes from earlier in the guide actually live. This chapter follows that resin from harvest day to the jar, one step at a time. By the end, you will be able to read a label and pick a format with confidence.</p>
       </div>
 
-      <nav aria-label="The five steps" data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;margin-top:24px;border:1px solid var(--border-hairline);background:var(--ns-cream);">
-        <sc-for list="{{ psteps }}" as="r" hint-placeholder-count="5">
-          <button onClick="{{ r.go }}" style="width:100%;display:grid;grid-template-columns:40px minmax(0,1fr) 20px;gap:10px;align-items:center;min-height:56px;padding:8px 14px;background:none;border:none;border-bottom:1px solid var(--border-hairline);cursor:pointer;text-align:left;" style-active="background:rgba(183,149,80,0.1);">
-            <span style="font-family:var(--font-display);font-weight:400;font-size:calc(22px * var(--text-scale));line-height:1;color:var(--ns-bronze);">{{ r.num }}</span>
-            <span style="display:flex;flex-direction:column;gap:2px;"><span style="font-family:var(--font-sans);font-size:calc(14.5px * var(--text-scale));font-weight:600;color:var(--text-strong);">{{ r.title }}</span><span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));color:var(--text-muted);">{{ r.sub }}</span></span>
-            <span aria-hidden="true" style="color:var(--ns-bronze);">&#8595;</span>
+      <div id="nsm-ptracks" data-reveal="" role="tablist" aria-label="Plant to Product" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;margin-top:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;scroll-margin-top:60px;">
+        <sc-for list="{{ ptracks }}" as="tk" hint-placeholder-count="2">
+          <button role="tab" aria-selected="{{ tk.on }}" onClick="{{ tk.go }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:96px;text-align:left;cursor:pointer;padding:14px 12px;border-radius:4px;border:1px solid {{ tk.border }};border-top:3px solid {{ tk.top }};background:{{ tk.bg }};color:{{ tk.ink }};">
+            <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:{{ tk.eyeInk }};">{{ tk.eyebrow }}</span>
+            <span style="font-family:var(--font-display);font-weight:400;font-size:calc(21px * var(--text-scale));line-height:1.05;letter-spacing:-0.01em;">{{ tk.title }}</span>
           </button>
         </sc-for>
-      </nav>
+      </div>
 
+      <div data-ptrack="made" style="display:{{ pMadeDisp }};flex-direction:column;">
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;margin:48px 0 18px;display:flex;flex-direction:column;gap:8px;">
         <div style="display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--ns-bronze);padding-bottom:10px;">
           <span aria-hidden="true" style="font-family:var(--font-display);font-weight:400;font-size:calc(44px * var(--text-scale));line-height:0.85;color:var(--ns-bronze);">01</span>
@@ -883,7 +907,7 @@
                   <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--ns-bronze);" data-lc-k="phase">{{ lc.phase }}</span>
                   <span data-lc-k="day" aria-live="polite" style="font-family:var(--font-display);font-weight:400;font-size:calc(30px * var(--text-scale));line-height:1;letter-spacing:-0.01em;color:var(--ns-arctic);">{{ lc.dayLabel }}</span>
                 </div>
-                <button onClick="{{ lc.replay }}" aria-label="Replay the 30 days" style="flex:none;display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid rgba(183,149,80,0.6);background:transparent;cursor:pointer;font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ns-arctic);" style-hover="background:rgba(183,149,80,0.18);"><span aria-hidden="true" style="color:var(--ns-bronze);font-size:calc(14px * var(--text-scale));line-height:1;">&#8635;</span>Replay</button>
+                <button onClick="{{ lc.replay }}" aria-label="Replay the 30 days" style="flex:none;display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 14px;border-radius:4px;border:1px solid rgba(183,149,80,0.6);background:transparent;cursor:pointer;font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ns-arctic);" style-hover="background:rgba(183,149,80,0.18);"><span aria-hidden="true" style="color:var(--ns-bronze);font-size:calc(14px * var(--text-scale));line-height:1;">&#8635;</span>Replay</button>
               </div>
               <div>
                 <span aria-hidden="true" style="position:relative;display:block;height:6px;border-radius:999px;background:rgba(245,244,225,0.1);overflow:hidden;"><span data-lc-k="bar" style="position:absolute;left:0;top:0;bottom:0;width:{{ lc.dayPct }};background:var(--ns-bronze);border-radius:999px;"></span></span>
@@ -954,7 +978,7 @@
                 <div style="display:flex;flex-direction:column;gap:10px;">
                   <span style="font-family:var(--font-display);font-weight:400;font-size:calc(26px * var(--text-scale));line-height:1;letter-spacing:-0.01em;color:var(--ns-arctic);">{{ lc.d.name }}</span>
                   <span style="font-family:var(--font-sans);font-size:calc(14px * var(--text-scale));line-height:1.6;color:rgba(245,244,225,0.8);">{{ lc.d.how }}</span>
-                  <button onClick="{{ lc.d.onSwap }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:4px;padding:0 18px;border-radius:999px;border:1px solid var(--ns-bronze);background:transparent;cursor:pointer;font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ns-arctic);transition:background .22s ease;" style-hover="background:rgba(183,149,80,0.18);">{{ lc.d.swapLabel }} <span aria-hidden="true" style="color:var(--ns-bronze);">&#8644;</span></button>
+                  <button onClick="{{ lc.d.onSwap }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:4px;padding:0 18px;border-radius:4px;border:1px solid var(--ns-bronze);background:transparent;cursor:pointer;font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ns-arctic);transition:background .22s ease;" style-hover="background:rgba(183,149,80,0.18);">{{ lc.d.swapLabel }} <span aria-hidden="true" style="color:var(--ns-bronze);">&#8644;</span></button>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:12px;">
                   <sc-for list="{{ lc.d.rows }}" as="r" hint-placeholder-count="3">
@@ -1071,7 +1095,7 @@
         <div style="margin-top:26px;border-top:1px solid var(--border-on-dark);padding-top:22px;">
           <div style="display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:12px;">
             <span style="font-family:var(--font-display);font-weight:400;font-size:calc(30px * var(--text-scale));line-height:1;color:var(--ns-arctic);">{{ conc.cur.name }}</span>
-            <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.05em;color:var(--ns-bronze);border:1px solid var(--border-on-dark);border-radius:999px;padding:3px 11px;">{{ conc.cur.tag }}</span>
+            <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.05em;color:var(--ns-bronze);border:1px solid var(--border-on-dark);border-radius:4px;padding:3px 11px;">{{ conc.cur.tag }}</span>
           </div>
           <p style="margin:0;font-family:var(--font-sans);font-size:calc(14.5px * var(--text-scale));line-height:1.68;color:rgba(245,244,225,0.82);">{{ conc.cur.description }}</p>
           <div style="margin-top:18px;">
@@ -1095,7 +1119,7 @@
         <p style="margin:0;font-size:calc(14.5px * var(--text-scale));line-height:1.62;color:var(--text-body);">From the harvest room to the label, these four steps stand behind every jar we send out.</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:14px;">
-        <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease 0ms,transform .6s ease 0ms;border:1px solid var(--border-hairline);background:var(--ns-cream);padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;">
+        <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease 0ms,transform .6s ease 0ms;border:1px solid var(--border-hairline);background:var(--ns-arctic);padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;">
           <span aria-hidden="true" style="font-family:var(--font-display);font-weight:400;font-size:calc(22px * var(--text-scale));line-height:1;color:var(--ns-bronze);">01</span>
           <span style="display:flex;flex-direction:column;gap:4px;">
             <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#7A5F28;">Within hours</span>
@@ -1103,7 +1127,7 @@
             <span style="font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));line-height:1.55;color:var(--text-body);">Live material is cut by hand, frozen within hours, and kept frozen until extraction. It is never dried.</span>
           </span>
         </div>
-        <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease 80ms,transform .6s ease 80ms;border:1px solid var(--border-hairline);background:var(--ns-cream);padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;">
+        <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease 80ms,transform .6s ease 80ms;border:1px solid var(--border-hairline);background:var(--ns-arctic);padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;">
           <span aria-hidden="true" style="font-family:var(--font-display);font-weight:400;font-size:calc(22px * var(--text-scale));line-height:1;color:var(--ns-bronze);">02</span>
           <span style="display:flex;flex-direction:column;gap:4px;">
             <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#7A5F28;">Under vacuum</span>
@@ -1111,7 +1135,7 @@
             <span style="font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));line-height:1.55;color:var(--text-body);">Every solvent-extracted batch is gently heated under vacuum until the solvent is gone. Our CO<sub style="font-size:0.7em;line-height:0;vertical-align:-0.22em;">2</sub> is beverage-grade at 99.9% purity, the same technology used to decaffeinate coffee.</span>
           </span>
         </div>
-        <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease 160ms,transform .6s ease 160ms;border:1px solid var(--border-hairline);background:var(--ns-cream);padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;">
+        <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease 160ms,transform .6s ease 160ms;border:1px solid var(--border-hairline);background:var(--ns-arctic);padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;">
           <span aria-hidden="true" style="font-family:var(--font-display);font-weight:400;font-size:calc(22px * var(--text-scale));line-height:1;color:var(--ns-bronze);">03</span>
           <span style="display:flex;flex-direction:column;gap:4px;">
             <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#7A5F28;">Residual solvents</span>
@@ -1119,7 +1143,7 @@
             <span style="font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));line-height:1.55;color:var(--text-body);">Every solvent-extracted batch is purged, and every batch is lab-tested before it ships.</span>
           </span>
         </div>
-        <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease 240ms,transform .6s ease 240ms;border:1px solid var(--border-hairline);background:var(--ns-cream);padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;">
+        <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease 240ms,transform .6s ease 240ms;border:1px solid var(--border-hairline);background:var(--ns-arctic);padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;">
           <span aria-hidden="true" style="font-family:var(--font-display);font-weight:400;font-size:calc(22px * var(--text-scale));line-height:1;color:var(--ns-bronze);">04</span>
           <span style="display:flex;flex-direction:column;gap:4px;">
             <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#7A5F28;">On every product</span>
@@ -1131,10 +1155,13 @@
       <p style="margin:12px 0 0;font-size:calc(12.5px * var(--text-scale));line-height:1.6;color:var(--text-muted);">Our carts run on CCell EVO MAX full-ceramic hardware, so no metal wick or cotton ever touches the oil.</p>
       <button onClick="{{ goHands }}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:4px;padding:0;background:none;border:none;cursor:pointer;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#7A5F28;">Chapter Seven · The hands behind it <span aria-hidden="true">&#8593;</span></button>
 
+      <button onClick="{{ pToChoose }}" style="align-self:flex-end;margin-top:32px;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 18px;border-radius:4px;border:1px solid var(--ns-midnight);background:none;color:var(--text-strong);cursor:pointer;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));font-weight:600;letter-spacing:0.06em;">Now, what to choose →</button>
+      </div>
+      <div data-ptrack="choose" style="display:{{ pChooseDisp }};flex-direction:column;">
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;margin:48px 0 18px;display:flex;flex-direction:column;gap:8px;">
         <div style="display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--ns-bronze);padding-bottom:10px;">
-          <span aria-hidden="true" style="font-family:var(--font-display);font-weight:400;font-size:calc(44px * var(--text-scale));line-height:0.85;color:var(--ns-bronze);">04</span>
-          <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#7A5F28;">Step four · Formats</span>
+          <span aria-hidden="true" style="font-family:var(--font-display);font-weight:400;font-size:calc(44px * var(--text-scale));line-height:0.85;color:var(--ns-bronze);">05</span>
+          <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#7A5F28;">Step five · Formats</span>
         </div>
         <h3 id="sec-formats" style="margin:6px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(30px * var(--text-scale));line-height:1.04;letter-spacing:-0.01em;color:var(--text-strong);">Choose how you take it</h3>
         <p style="margin:0;font-size:calc(15px * var(--text-scale));line-height:1.68;color:var(--text-body);">Concentrates are one way in. The same resin also goes into vapes, syringes, troches, tinctures, edibles, and topicals. What really separates them is the route: how it enters your body, and so how soon you feel it and how long it stays.</p>
@@ -1142,7 +1169,7 @@
 
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;margin-bottom:16px;">
         <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#7A5F28;">Why ours</span>
-        <div style="margin-top:10px;border:1px solid var(--border-hairline);background:var(--ns-cream);">
+        <div style="margin-top:10px;border:1px solid var(--border-hairline);background:var(--ns-arctic);">
           <div style="padding:13px 14px;display:flex;flex-direction:column;gap:4px;">
             <span style="font-family:var(--font-display);font-weight:400;font-size:calc(18px * var(--text-scale));line-height:1.1;color:var(--text-strong);">Arkansas’s first troche</span>
             <span style="font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));line-height:1.5;color:var(--text-body);">We were the first in the state to bring a sublingual troche to market.</span>
@@ -1155,7 +1182,7 @@
       </div>
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
         <sc-for list="{{ routes }}" as="r" hint-placeholder-count="4">
-          <button onClick="{{ r.go }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:7px;text-align:left;cursor:pointer;padding:13px 12px;min-height:44px;border-radius:4px;border:1px solid var(--border-hairline);background:var(--ns-cream);" style-active="border-color:var(--ns-bronze);">
+          <button onClick="{{ r.go }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:7px;text-align:left;cursor:pointer;padding:13px 12px;min-height:44px;border-radius:4px;border:1px solid var(--border-hairline);background:var(--ns-arctic);" style-active="border-color:var(--ns-bronze);">
             <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#7A5F28;">{{ r.tag }}</span>
             <span style="font-family:var(--font-display);font-weight:400;font-size:calc(18px * var(--text-scale));line-height:1.05;color:var(--text-strong);">{{ r.title }}</span>
             <span aria-hidden="true" style="position:relative;display:block;width:100%;height:5px;border-radius:999px;background:rgba(32,37,58,0.1);"><span style="position:absolute;top:-3px;left:{{ r.pos }};width:11px;height:11px;border-radius:50%;background:var(--ns-bronze);transform:translateX(-50%);display:{{ r.dotDisp }};"></span></span>
@@ -1176,7 +1203,7 @@
       </div>
         <div class="nsm-pf-grid" style="margin-top:0;">
           <sc-for list="{{ pf.inhaled }}" as="f" hint-placeholder-count="2">
-            <article class="nsm-pf-card" data-pf-key="{{ f.key }}" data-open="{{ f.openFlag }}" style="display:{{ f.disp }};flex-direction:column;border:1px solid var(--border-hairline);background:var(--ns-cream);box-shadow:var(--shadow-sm);overflow:hidden;">
+            <article class="nsm-pf-card" data-pf-key="{{ f.key }}" data-open="{{ f.openFlag }}" style="display:{{ f.disp }};flex-direction:column;border:1px solid var(--border-hairline);background:transparent;overflow:hidden;">
               <button class="nsm-pf-hit" onClick="{{ f.onToggle }}" aria-expanded="{{ f.isOpen }}" aria-controls="{{ f.panelId }}" style="display:flex;align-items:stretch;gap:0;width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:0;">
                 <sc-if value="{{ f.hasPhoto }}" hint-placeholder-val="{{ false }}">
                   <img decoding="async" data-src="{{ f.img }}" alt="{{ f.name }}" loading="lazy" style="width:88px;height:88px;object-fit:cover;flex:none;">
@@ -1186,9 +1213,9 @@
                 </sc-if>
                 <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:13px 14px;">
                   <span style="font-family:var(--font-display);font-size:calc(20px * var(--text-scale));line-height:1;color:var(--text-strong);">{{ f.name }}</span>
-                  <span style="font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));line-height:1.4;color:var(--text-muted);">{{ f.kicker }}</span>
+                  <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;line-height:1.4;color:var(--text-muted);">{{ f.kicker }}</span>
                   <sc-if value="{{ f.showView }}" hint-placeholder-val="{{ true }}">
-                    <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.08em;color:var(--ns-bronze);">View types &amp; dosages</span>
+                    <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;color:var(--text-strong);text-decoration:underline;text-decoration-color:var(--ns-bronze);text-underline-offset:4px;">Types and dosages</span>
                   </sc-if>
                 </span>
                 <span aria-hidden="true" style="flex:none;display:grid;place-items:center;width:44px;color:var(--ns-bronze);font-size:calc(19px * var(--text-scale));">{{ f.pfCaret }}</span>
@@ -1197,7 +1224,7 @@
                 <div id="{{ f.panelId }}" class="nsm-pf-panel" role="region" aria-label="{{ f.name }}" style="display:flex;flex-direction:column;gap:14px;padding:4px 16px 18px;">
                   <p style="margin:0;font-size:calc(14px * var(--text-scale));line-height:1.65;color:var(--text-body);">{{ f.description }}</p>
                   <sc-if value="{{ f.hasLc }}" hint-placeholder-val="{{ false }}">
-                    <button onClick="{{ f.onLc }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--ns-bronze);background:rgba(183,149,80,0.1);color:var(--text-strong);cursor:pointer;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.12em;" style-active="background:var(--ns-bronze);">Live vs. Cured <span aria-hidden="true" style="color:#7A5F28;">&#8595;</span></button>
+                    <button onClick="{{ f.onLc }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0;border:none;background:none;color:var(--text-strong);cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;text-decoration:underline;text-decoration-color:var(--ns-bronze);text-underline-offset:4px;" style-active="background:var(--ns-bronze);">Live vs. Cured <span aria-hidden="true" style="color:#7A5F28;">&#8595;</span></button>
                   </sc-if>
                   <sc-if value="{{ f.hasFormRows }}" hint-placeholder-val="{{ false }}">
                     <div style="border-top:1px solid var(--border-hairline);padding-top:13px;">
@@ -1215,11 +1242,11 @@
                   <sc-if value="{{ f.hasFormChips }}" hint-placeholder-val="{{ false }}">
                     <div style="border-top:1px solid var(--border-hairline);padding-top:13px;">
                       <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ns-bronze);">Types &amp; dosages</span>
-                      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">
-                        <sc-for list="{{ f.forms }}" as="fm" hint-placeholder-count="4">
-                          <span style="font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));color:var(--text-strong);background:var(--ns-haze);border-radius:999px;padding:5px 12px;">{{ fm }}</span>
-                        </sc-for>
-                      </div>
+                      <div style="display:flex;flex-direction:column;margin-top:8px;border-bottom:1px solid var(--border-hairline);">
+                          <sc-for list="{{ f.forms }}" as="fm" hint-placeholder-count="4">
+                            <span style="font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));font-weight:500;color:var(--text-strong);padding:9px 0;border-top:1px solid var(--border-hairline);">{{ fm }}</span>
+                          </sc-for>
+                        </div>
                     </div>
                   </sc-if>
                   <sc-if value="{{ f.hasTypeDetail }}" hint-placeholder-val="{{ false }}">
@@ -1257,7 +1284,7 @@
       </div>
         <div class="nsm-pf-grid" style="margin-top:0;">
           <sc-for list="{{ pf.tongue }}" as="f" hint-placeholder-count="2">
-            <article class="nsm-pf-card" data-pf-key="{{ f.key }}" data-open="{{ f.openFlag }}" style="display:{{ f.disp }};flex-direction:column;border:1px solid var(--border-hairline);background:var(--ns-cream);box-shadow:var(--shadow-sm);overflow:hidden;">
+            <article class="nsm-pf-card" data-pf-key="{{ f.key }}" data-open="{{ f.openFlag }}" style="display:{{ f.disp }};flex-direction:column;border:1px solid var(--border-hairline);background:transparent;overflow:hidden;">
               <button class="nsm-pf-hit" onClick="{{ f.onToggle }}" aria-expanded="{{ f.isOpen }}" aria-controls="{{ f.panelId }}" style="display:flex;align-items:stretch;gap:0;width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:0;">
                 <sc-if value="{{ f.hasPhoto }}" hint-placeholder-val="{{ false }}">
                   <img decoding="async" data-src="{{ f.img }}" alt="{{ f.name }}" loading="lazy" style="width:88px;height:88px;object-fit:cover;flex:none;">
@@ -1267,9 +1294,9 @@
                 </sc-if>
                 <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:13px 14px;">
                   <span style="font-family:var(--font-display);font-size:calc(20px * var(--text-scale));line-height:1;color:var(--text-strong);">{{ f.name }}</span>
-                  <span style="font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));line-height:1.4;color:var(--text-muted);">{{ f.kicker }}</span>
+                  <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;line-height:1.4;color:var(--text-muted);">{{ f.kicker }}</span>
                   <sc-if value="{{ f.showView }}" hint-placeholder-val="{{ true }}">
-                    <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.08em;color:var(--ns-bronze);">View types &amp; dosages</span>
+                    <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;color:var(--text-strong);text-decoration:underline;text-decoration-color:var(--ns-bronze);text-underline-offset:4px;">Types and dosages</span>
                   </sc-if>
                 </span>
                 <span aria-hidden="true" style="flex:none;display:grid;place-items:center;width:44px;color:var(--ns-bronze);font-size:calc(19px * var(--text-scale));">{{ f.pfCaret }}</span>
@@ -1278,7 +1305,7 @@
                 <div id="{{ f.panelId }}" class="nsm-pf-panel" role="region" aria-label="{{ f.name }}" style="display:flex;flex-direction:column;gap:14px;padding:4px 16px 18px;">
                   <p style="margin:0;font-size:calc(14px * var(--text-scale));line-height:1.65;color:var(--text-body);">{{ f.description }}</p>
                   <sc-if value="{{ f.hasLc }}" hint-placeholder-val="{{ false }}">
-                    <button onClick="{{ f.onLc }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--ns-bronze);background:rgba(183,149,80,0.1);color:var(--text-strong);cursor:pointer;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.12em;" style-active="background:var(--ns-bronze);">Live vs. Cured <span aria-hidden="true" style="color:#7A5F28;">&#8595;</span></button>
+                    <button onClick="{{ f.onLc }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0;border:none;background:none;color:var(--text-strong);cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;text-decoration:underline;text-decoration-color:var(--ns-bronze);text-underline-offset:4px;" style-active="background:var(--ns-bronze);">Live vs. Cured <span aria-hidden="true" style="color:#7A5F28;">&#8595;</span></button>
                   </sc-if>
                   <sc-if value="{{ f.hasFormRows }}" hint-placeholder-val="{{ false }}">
                     <div style="border-top:1px solid var(--border-hairline);padding-top:13px;">
@@ -1296,11 +1323,11 @@
                   <sc-if value="{{ f.hasFormChips }}" hint-placeholder-val="{{ false }}">
                     <div style="border-top:1px solid var(--border-hairline);padding-top:13px;">
                       <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ns-bronze);">Types &amp; dosages</span>
-                      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">
-                        <sc-for list="{{ f.forms }}" as="fm" hint-placeholder-count="4">
-                          <span style="font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));color:var(--text-strong);background:var(--ns-haze);border-radius:999px;padding:5px 12px;">{{ fm }}</span>
-                        </sc-for>
-                      </div>
+                      <div style="display:flex;flex-direction:column;margin-top:8px;border-bottom:1px solid var(--border-hairline);">
+                          <sc-for list="{{ f.forms }}" as="fm" hint-placeholder-count="4">
+                            <span style="font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));font-weight:500;color:var(--text-strong);padding:9px 0;border-top:1px solid var(--border-hairline);">{{ fm }}</span>
+                          </sc-for>
+                        </div>
                     </div>
                   </sc-if>
                   <sc-if value="{{ f.hasTypeDetail }}" hint-placeholder-val="{{ false }}">
@@ -1340,7 +1367,7 @@
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;">
         <div style="display:flex;flex-direction:column;gap:9px;">
           <sc-for list="{{ edibles }}" as="k" hint-placeholder-count="5">
-            <div style="border:1px solid var(--border-hairline);background:var(--ns-cream);box-shadow:var(--shadow-sm);overflow:hidden;">
+            <div style="border:1px solid var(--border-hairline);background:transparent;overflow:hidden;">
               <button onClick="{{ k.onToggle }}" style="display:flex;align-items:stretch;gap:0;width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:0;">
                 <sc-if value="{{ k.hasPhoto }}" hint-placeholder-val="{{ false }}">
                   <img decoding="async" data-src="{{ k.img }}" alt="{{ k.name }}" loading="lazy" style="width:88px;height:88px;object-fit:cover;flex:none;">
@@ -1374,7 +1401,7 @@
       </div>
         <div class="nsm-pf-grid" style="margin-top:0;">
           <sc-for list="{{ pf.body }}" as="f" hint-placeholder-count="2">
-            <article class="nsm-pf-card" data-pf-key="{{ f.key }}" data-open="{{ f.openFlag }}" style="display:{{ f.disp }};flex-direction:column;border:1px solid var(--border-hairline);background:var(--ns-cream);box-shadow:var(--shadow-sm);overflow:hidden;">
+            <article class="nsm-pf-card" data-pf-key="{{ f.key }}" data-open="{{ f.openFlag }}" style="display:{{ f.disp }};flex-direction:column;border:1px solid var(--border-hairline);background:transparent;overflow:hidden;">
               <button class="nsm-pf-hit" onClick="{{ f.onToggle }}" aria-expanded="{{ f.isOpen }}" aria-controls="{{ f.panelId }}" style="display:flex;align-items:stretch;gap:0;width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:0;">
                 <sc-if value="{{ f.hasPhoto }}" hint-placeholder-val="{{ false }}">
                   <img decoding="async" data-src="{{ f.img }}" alt="{{ f.name }}" loading="lazy" style="width:88px;height:88px;object-fit:cover;flex:none;">
@@ -1384,9 +1411,9 @@
                 </sc-if>
                 <span style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:4px;padding:13px 14px;">
                   <span style="font-family:var(--font-display);font-size:calc(20px * var(--text-scale));line-height:1;color:var(--text-strong);">{{ f.name }}</span>
-                  <span style="font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));line-height:1.4;color:var(--text-muted);">{{ f.kicker }}</span>
+                  <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;line-height:1.4;color:var(--text-muted);">{{ f.kicker }}</span>
                   <sc-if value="{{ f.showView }}" hint-placeholder-val="{{ true }}">
-                    <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.08em;color:var(--ns-bronze);">View types &amp; dosages</span>
+                    <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;color:var(--text-strong);text-decoration:underline;text-decoration-color:var(--ns-bronze);text-underline-offset:4px;">Types and dosages</span>
                   </sc-if>
                 </span>
                 <span aria-hidden="true" style="flex:none;display:grid;place-items:center;width:44px;color:var(--ns-bronze);font-size:calc(19px * var(--text-scale));">{{ f.pfCaret }}</span>
@@ -1395,7 +1422,7 @@
                 <div id="{{ f.panelId }}" class="nsm-pf-panel" role="region" aria-label="{{ f.name }}" style="display:flex;flex-direction:column;gap:14px;padding:4px 16px 18px;">
                   <p style="margin:0;font-size:calc(14px * var(--text-scale));line-height:1.65;color:var(--text-body);">{{ f.description }}</p>
                   <sc-if value="{{ f.hasLc }}" hint-placeholder-val="{{ false }}">
-                    <button onClick="{{ f.onLc }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--ns-bronze);background:rgba(183,149,80,0.1);color:var(--text-strong);cursor:pointer;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.12em;" style-active="background:var(--ns-bronze);">Live vs. Cured <span aria-hidden="true" style="color:#7A5F28;">&#8595;</span></button>
+                    <button onClick="{{ f.onLc }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0;border:none;background:none;color:var(--text-strong);cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;text-decoration:underline;text-decoration-color:var(--ns-bronze);text-underline-offset:4px;" style-active="background:var(--ns-bronze);">Live vs. Cured <span aria-hidden="true" style="color:#7A5F28;">&#8595;</span></button>
                   </sc-if>
                   <sc-if value="{{ f.hasFormRows }}" hint-placeholder-val="{{ false }}">
                     <div style="border-top:1px solid var(--border-hairline);padding-top:13px;">
@@ -1413,11 +1440,11 @@
                   <sc-if value="{{ f.hasFormChips }}" hint-placeholder-val="{{ false }}">
                     <div style="border-top:1px solid var(--border-hairline);padding-top:13px;">
                       <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ns-bronze);">Types &amp; dosages</span>
-                      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">
-                        <sc-for list="{{ f.forms }}" as="fm" hint-placeholder-count="4">
-                          <span style="font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));color:var(--text-strong);background:var(--ns-haze);border-radius:999px;padding:5px 12px;">{{ fm }}</span>
-                        </sc-for>
-                      </div>
+                      <div style="display:flex;flex-direction:column;margin-top:8px;border-bottom:1px solid var(--border-hairline);">
+                          <sc-for list="{{ f.forms }}" as="fm" hint-placeholder-count="4">
+                            <span style="font-family:var(--font-sans);font-size:calc(13.5px * var(--text-scale));font-weight:500;color:var(--text-strong);padding:9px 0;border-top:1px solid var(--border-hairline);">{{ fm }}</span>
+                          </sc-for>
+                        </div>
                     </div>
                   </sc-if>
                   <sc-if value="{{ f.hasTypeDetail }}" hint-placeholder-val="{{ false }}">
@@ -1443,13 +1470,14 @@
           </sc-for>
         </div>
 
+      <div style="order:-1;display:flex;flex-direction:column;">
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;margin:48px 0 18px;display:flex;flex-direction:column;gap:8px;">
         <div style="display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--ns-bronze);padding-bottom:10px;">
-          <span aria-hidden="true" style="font-family:var(--font-display);font-weight:400;font-size:calc(44px * var(--text-scale));line-height:0.85;color:var(--ns-bronze);">05</span>
-          <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#7A5F28;">Step five · Your pick</span>
+          <span aria-hidden="true" style="font-family:var(--font-display);font-weight:400;font-size:calc(44px * var(--text-scale));line-height:0.85;color:var(--ns-bronze);">04</span>
+          <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:#7A5F28;">Step four · Your pick</span>
         </div>
         <h3 id="sec-pick" style="margin:6px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(30px * var(--text-scale));line-height:1.04;letter-spacing:-0.01em;color:var(--text-strong);">Build your pick</h3>
-        <p style="margin:0;font-size:calc(15px * var(--text-scale));line-height:1.68;color:var(--text-body);">Put it all together. Each question comes from a step above. Answer as many as you like, skip the rest, and the formats re-rank as you go.</p>
+        <p style="margin:0;font-size:calc(15px * var(--text-scale));line-height:1.68;color:var(--text-body);">Start here if you know what you need. Each question ties back to a step in this chapter. Answer as many as you like, skip the rest, and the formats re-rank as you go.</p>
       </div>
 
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;background:var(--ns-midnight);padding:20px 16px 22px;">
@@ -1461,7 +1489,7 @@
             </div>
             <div role="group" aria-label="{{ q.title }}" style="display:flex;flex-wrap:wrap;gap:7px;">
               <sc-for list="{{ q.opts }}" as="o" hint-placeholder-count="3">
-                <button onClick="{{ o.onClick }}" aria-pressed="{{ o.on }}" style="min-height:44px;padding:0 14px;border-radius:999px;border:1px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.color }};cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;">{{ o.label }}</button>
+                <button onClick="{{ o.onClick }}" aria-pressed="{{ o.on }}" style="min-height:44px;padding:0 14px;border-radius:4px;border:1px solid {{ o.bd }};background:{{ o.bg }};color:{{ o.color }};cursor:pointer;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;">{{ o.label }}</button>
               </sc-for>
             </div>
             <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));line-height:1.45;color:var(--text-on-dark-mut);">{{ q.hint }}</span>
@@ -1503,22 +1531,24 @@
           <p style="margin:4px 0 0;font-family:var(--font-sans);font-size:calc(11.5px * var(--text-scale));line-height:1.6;color:rgba(245,244,225,0.55);">A starting point for a conversation, not medical advice. Your doctor and your dispensary pharmacist can help you choose.</p>
         </div>
       </div>
+      </div>
       <div data-reveal="" style="opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;margin-top:30px;border-top:1px solid var(--ns-bronze);padding-top:22px;">
         <span style="display:block;font-family:var(--font-display);font-weight:400;font-size:calc(28px * var(--text-scale));line-height:1.04;color:var(--text-strong);">Ready when you are.</span>
         <p style="margin:10px 0 16px;font-size:calc(15px * var(--text-scale));line-height:1.65;color:var(--text-body);">Take what you learned to your dispensary, or see what is on the shelf near you today.</p>
         <a href="{{ productsUrl }}" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;border-radius:4px;background:var(--ns-bronze);color:var(--ns-midnight);text-decoration:none;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;">Find Our Flower <span aria-hidden="true">&#8594;</span></a>
+      </div>
       </div>
 
     </div>
   </section>
 
   <!-- ============ 08 · USING IT WELL ============ -->
-  <section id="chap-practice" data-cnum="09" data-clabel="Using It Well" style="position:relative;background:var(--ns-cream);padding:64px 22px 68px;overflow:hidden;">
+  <section id="chap-practice" data-cnum="09" data-clabel="Using It Well" style="position:relative;background:var(--ns-arctic);border-top:1px solid var(--border-hairline);padding:64px 22px 68px;overflow:hidden;">
     <div data-para="1.2" data-base="rotate(-20deg)" aria-hidden="true" style="position:absolute;top:20px;right:-64px;width:180px;height:180px;background:radial-gradient(closest-side,rgba(183,149,80,0.16),rgba(183,149,80,0));transform:rotate(-20deg);"></div>
     <div style="position:relative;max-width:560px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--ns-bronze);padding-bottom:16px;">
-          <span style="font-family:var(--font-sans);font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">09</span>
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">09</span>
           <div>
             <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase;">Dosing, onset, tolerance, care</span>
             <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(38px * var(--text-scale));line-height:0.98;letter-spacing:-0.01em;color:var(--text-strong);">Using It Well</h2>
@@ -1586,7 +1616,7 @@
               <p style="margin:0;font-family:var(--font-sans);font-size:calc(15px * var(--text-scale));line-height:1.66;color:var(--text-body);">{{ c.body }}</p>
             </div>
             <sc-if value="{{ c.hasSections }}" hint-placeholder-val="{{ false }}">
-              <button onClick="{{ c.onToggle }}" style="margin:14px 18px 0;display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(183,149,80,0.5);border-radius:999px;padding:9px 16px;cursor:pointer;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ns-bronze-dark);">{{ c.discLabel }} <span style="font-size:calc(15px * var(--text-scale));line-height:1;">{{ c.caret }}</span></button>
+              <button onClick="{{ c.onToggle }}" style="margin:14px 18px 0;display:inline-flex;align-items:center;gap:9px;background:none;border:1px solid rgba(183,149,80,0.5);border-radius:4px;padding:9px 16px;cursor:pointer;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ns-bronze-dark);">{{ c.discLabel }} <span style="font-size:calc(15px * var(--text-scale));line-height:1;">{{ c.caret }}</span></button>
               <sc-if value="{{ c.open }}" hint-placeholder-val="{{ false }}">
                 <div class="nsm-exp" style="margin-top:16px;padding:16px 18px 20px;border-top:1px solid var(--border-hairline);display:flex;flex-direction:column;gap:14px;">
                   <sc-for list="{{ c.sections }}" as="sec" hint-placeholder-count="3">
@@ -1632,7 +1662,7 @@
     <div style="position:relative;max-width:560px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--border-on-dark);padding-bottom:16px;">
-          <span style="font-family:var(--font-sans);font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">10</span>
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">10</span>
           <div>
             <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--ns-bronze);text-transform:uppercase;">Track what works for you</span>
             <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(34px * var(--text-scale));line-height:1.0;letter-spacing:-0.01em;color:var(--ns-arctic);">The Joint Journal</h2>
@@ -1654,7 +1684,7 @@
             </button>
             <div style="overflow:hidden;transition:max-height .36s ease,opacity .3s ease;max-height:{{ j.maxH }};opacity:{{ j.op }};">
               <div style="padding:0 14px 16px;">
-                <button onClick="{{ j.onToggleAll }}" style="margin-bottom:10px;background:none;border:1px solid rgba(183,149,80,0.4);border-radius:999px;padding:6px 13px;cursor:pointer;font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ns-bronze);">{{ j.allLabel }}</button>
+                <button onClick="{{ j.onToggleAll }}" style="margin-bottom:10px;background:none;border:1px solid rgba(183,149,80,0.4);border-radius:4px;padding:6px 13px;cursor:pointer;font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ns-bronze);">{{ j.allLabel }}</button>
                 <div style="display:flex;flex-direction:column;gap:3px;">
                   <sc-for list="{{ j.fields }}" as="f" hint-placeholder-count="6">
                     <button onClick="{{ f.onToggle }}" style="display:flex;align-items:center;gap:11px;width:100%;background:none;border:none;padding:8px 4px;cursor:pointer;text-align:left;">
@@ -1668,7 +1698,7 @@
           </div>
         </sc-for>
       </div>
-      <div data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.25,1);margin-top:30px;position:relative;background:var(--ns-cream);border:1px solid var(--ns-bronze);padding:9px;">
+      <div data-reveal="" style="opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.25,1);margin-top:30px;position:relative;background:var(--ns-arctic);border:1px solid var(--ns-bronze);padding:9px;">
         <div style="position:relative;border:1px solid rgba(183,149,80,0.45);padding:30px 20px 24px;text-align:center;">
           <span aria-hidden="true" style="position:absolute;top:-1px;left:-1px;width:14px;height:14px;border-top:2px solid var(--ns-bronze);border-left:2px solid var(--ns-bronze);"></span>
           <span aria-hidden="true" style="position:absolute;top:-1px;right:-1px;width:14px;height:14px;border-top:2px solid var(--ns-bronze);border-right:2px solid var(--ns-bronze);"></span>
@@ -1693,7 +1723,7 @@
     <div style="position:relative;max-width:560px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--ns-bronze);padding-bottom:16px;">
-          <span style="font-family:var(--font-sans);font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">11</span>
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">11</span>
           <div>
             <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase;">Cook with NSM</span>
             <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(38px * var(--text-scale));line-height:0.98;letter-spacing:-0.01em;color:var(--text-strong);">Recipes</h2>
@@ -1705,7 +1735,7 @@
       <!-- recipe index -->
       <div id="sec-decarb" style="margin-top:18px;display:flex;flex-direction:column;gap:9px;">
         <sc-for list="{{ recipeGroups }}" as="g" hint-placeholder-count="6">
-          <div data-reveal="" style="opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.25,1);border:1px solid var(--border-hairline);background:var(--ns-cream);overflow:hidden;">
+          <div data-reveal="" style="opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.25,1);border:1px solid var(--border-hairline);background:var(--ns-arctic);overflow:hidden;">
             <button onClick="{{ g.onToggle }}" style="display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:15px 16px;min-height:48px;">
               <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
                 <span style="font-family:var(--font-display);font-weight:400;font-size:calc(21px * var(--text-scale));line-height:1.02;color:var(--text-strong);">{{ g.name }}</span>
@@ -1743,7 +1773,7 @@
           <h3 id="sec-calculator" style="margin:8px 0 6px;font-family:var(--font-display);font-weight:400;font-size:calc(30px * var(--text-scale));line-height:1.0;color:var(--ns-arctic);">Edibles calculator</h3>
           <p style="margin:0;font-family:var(--font-sans);font-size:calc(14px * var(--text-scale));line-height:1.6;color:rgba(245,244,225,0.8);">Two steps: the infusion you cook, then the dish you make with it. Figures are a theoretical maximum, real potency runs lower.</p>
         </div>
-        <div style="background:var(--ns-cream);padding:22px 18px;">
+        <div style="background:var(--ns-arctic);padding:22px 18px;">
           <div style="display:flex;align-items:center;gap:10px;">
             <span style="flex:none;display:grid;place-items:center;width:26px;height:26px;background:var(--ns-bronze);color:var(--ns-midnight);border-radius:50%;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:700;">1</span>
             <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;letter-spacing:0.14em;color:var(--text-strong);text-transform:uppercase;">Your infusion</span>
@@ -1807,7 +1837,7 @@
   <!-- ============ RECIPE SHEET ============ -->
   <sc-if value="{{ sheet.open }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;z-index:98;background:var(--ns-arctic);display:flex;flex-direction:column;">
-      <div style="flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 14px) 18px 14px;border-bottom:1px solid var(--border-hairline);background:var(--ns-cream);">
+      <div style="flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 14px) 18px 14px;border-bottom:1px solid var(--border-hairline);background:var(--ns-arctic);">
         <span style="min-width:0;display:flex;flex-direction:column;gap:2px;">
           <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--ns-bronze);text-transform:uppercase;">{{ sheet.kicker }}</span>
           <span style="font-family:var(--font-display);font-weight:400;font-size:calc(24px * var(--text-scale));line-height:1.05;color:var(--text-strong);">{{ sheet.name }}</span>
@@ -1846,13 +1876,13 @@
           </ol>
         </div>
         <sc-if value="{{ sheet.hasTip }}" hint-placeholder-val="{{ false }}">
-          <div style="margin-top:22px;background:var(--ns-cream);border-left:3px solid var(--ns-bronze);padding:15px 16px;">
+          <div style="margin-top:22px;background:var(--ns-arctic);border-top:2px solid var(--ns-midnight);border-bottom:1px solid var(--border-hairline);padding:15px 2px;">
             <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ns-bronze);">Worth knowing</span>
             <p style="margin:7px 0 0;font-family:var(--font-sans);font-size:calc(14.5px * var(--text-scale));line-height:1.62;color:var(--text-body);">{{ sheet.tip }}</p>
           </div>
         </sc-if>
       </div>
-      <div style="flex:none;display:flex;gap:10px;padding:14px 18px calc(env(safe-area-inset-bottom,0px) + 16px);border-top:1px solid var(--border-hairline);background:var(--ns-cream);">
+      <div style="flex:none;display:flex;gap:10px;padding:14px 18px calc(env(safe-area-inset-bottom,0px) + 16px);border-top:1px solid var(--border-hairline);background:var(--ns-arctic);">
         <button onClick="{{ sheet.onCopy }}" style="flex:1;min-height:50px;background:var(--ns-midnight);color:var(--ns-arctic);border:none;border-radius:4px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">{{ sheet.copyLabel }}</button>
         <button onClick="{{ sheet.onShare }}" style="flex:1;min-height:50px;background:none;color:var(--text-strong);border:1px solid rgba(32,37,58,0.24);border-radius:4px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">Share</button>
       </div>
@@ -1860,11 +1890,11 @@
   </sc-if>
 
   <!-- ============ 11 · GLOSSARY ============ -->
-  <section id="chap-glossary" data-cnum="12" data-clabel="Glossary" style="position:relative;background:var(--ns-cream);padding:64px 22px 68px;overflow:hidden;">
+  <section id="chap-glossary" data-cnum="12" data-clabel="Glossary" style="position:relative;background:var(--ns-arctic);border-top:1px solid var(--border-hairline);padding:64px 22px 68px;overflow:hidden;">
     <div style="position:relative;max-width:560px;margin:0 auto;">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);">
         <button onClick="{{ toggleGlossSection }}" style="display:flex;align-items:flex-end;gap:16px;width:100%;border:none;border-bottom:1px solid var(--ns-bronze);background:none;cursor:pointer;text-align:left;padding:0 0 16px;">
-          <span style="font-family:var(--font-sans);font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">12</span>
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">12</span>
           <div style="flex:1;">
             <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase;">{{ glossCount }} terms, plainly put</span>
             <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(38px * var(--text-scale));line-height:0.98;letter-spacing:-0.01em;color:var(--text-strong);">Glossary</h2>
@@ -1878,23 +1908,23 @@
       </div>
       <sc-if value="{{ glossSectionOpen }}" hint-placeholder-val="{{ false }}">
       <div class="nsm-exp">
-      <div style="position:sticky;top:46px;z-index:20;background:var(--ns-cream);padding:14px 0 10px;margin-top:8px;">
-        <div style="display:flex;align-items:center;gap:10px;background:var(--ns-arctic);border:1px solid var(--border-hairline);border-radius:8px;padding:11px 14px;">
+      <div style="position:sticky;top:46px;z-index:20;background:var(--ns-arctic);padding:12px 0 0;margin-top:8px;border-bottom:1px solid var(--border-hairline);">
+        <div style="display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--ns-midnight);padding:10px 2px;">
           <span style="color:var(--ns-bronze);font-size:calc(17px * var(--text-scale));">⌕</span>
           <input value="{{ glQuery }}" onInput="{{ onGl }}" placeholder="Search terms" style="flex:1;border:none;background:none;outline:none;font-family:var(--font-sans);font-size:calc(15px * var(--text-scale));color:var(--text-strong);min-width:0;">
         </div>
-        <div style="display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-top:10px;">
-          <sc-for list="{{ glossLetters }}" as="l" hint-placeholder-count="12">
-            <button onClick="{{ l.onClick }}" style="flex:none;min-width:34px;background:{{ l.chipBg }};box-shadow:0 1px 2px rgba(32,37,58,0.08), 0 3px 8px rgba(32,37,58,0.07);color:{{ l.chipColor }};border:1px solid {{ l.chipBorder }};border-radius:999px;padding:7px 11px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;">{{ l.label }}</button>
-          </sc-for>
-        </div>
+        <nav aria-label="Glossary index" style="display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:6px;">
+            <sc-for list="{{ glossLetters }}" as="l" hint-placeholder-count="12">
+              <button onClick="{{ l.onClick }}" aria-pressed="{{ l.active }}" style="flex:none;min-width:30px;height:44px;padding:0 5px;background:none;border:none;border-bottom:2px solid {{ l.line }};cursor:pointer;font-family:var(--font-display);font-weight:400;font-size:calc(18px * var(--text-scale));line-height:1;color:{{ l.chipColor }};">{{ l.label }}</button>
+            </sc-for>
+          </nav>
       </div>
       <div style="margin-top:6px;display:flex;flex-direction:column;">
         <sc-for list="{{ glossary }}" as="g" hint-placeholder-count="8">
           <div style="border-top:1px solid var(--border-hairline);">
             <button onClick="{{ g.onToggle }}" style="display:flex;align-items:center;gap:10px;width:100%;background:none;border:none;cursor:pointer;text-align:left;padding:10px 2px;">
               <span style="flex:1;display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 8px;">
-                <span style="font-family:var(--font-display);font-size:calc(16px * var(--text-scale));line-height:1.1;color:var(--text-strong);">{{ g.term }}</span>
+                <span style="font-family:var(--font-display);font-size:calc(19px * var(--text-scale));line-height:1.1;letter-spacing:-0.01em;color:var(--text-strong);">{{ g.term }}</span>
                 <sc-if value="{{ g.hasPron }}" hint-placeholder-val="{{ false }}"><span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-style:italic;color:var(--text-faint);">{{ g.pron }}</span></sc-if>
               </span>
               <span style="flex:none;display:grid;place-items:center;width:22px;height:22px;color:var(--ns-bronze);font-size:calc(15px * var(--text-scale));">{{ g.caret }}</span>
@@ -1905,14 +1935,14 @@
                 <sc-if value="{{ g.hasImg }}" hint-placeholder-val="{{ false }}">
                   <figure style="margin:14px 0 0;position:relative;border-radius:10px;overflow:hidden;box-shadow:var(--shadow-md);max-width:320px;">
                     <img decoding="async" data-src="{{ g.img }}" alt="Shake" loading="lazy" style="width:100%;aspect-ratio:5/4;object-fit:cover;display:block;filter:sepia(0.2) saturate(1.08);">
-                    <figcaption style="position:absolute;left:12px;bottom:10px;display:inline-flex;align-items:center;gap:7px;background:rgba(22,26,43,0.84);border:1px solid rgba(183,149,80,0.4);border-radius:999px;padding:6px 13px;">
+                    <figcaption style="position:absolute;left:12px;bottom:10px;display:inline-flex;align-items:center;gap:7px;background:rgba(22,26,43,0.84);border:1px solid rgba(183,149,80,0.4);border-radius:4px;padding:6px 13px;">
                       <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ns-bronze);">Chief Mousing Officer</span>
                     </figcaption>
                   </figure>
                   <sc-if value="{{ g.hasBubbles }}" hint-placeholder-val="{{ false }}">
-                    <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;">
+                    <div style="display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;">
                       <sc-for list="{{ g.bubbles }}" as="b" hint-placeholder-count="3">
-                        <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));color:var(--ns-bronze-dark);border:1px solid rgba(183,149,80,0.5);border-radius:999px;padding:5px 12px;">{{ b }}</span>
+                        <span style="display:inline-flex;align-items:center;gap:7px;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));color:var(--text-strong);" style-before="content:'';width:5px;height:5px;background:var(--ns-bronze);flex:none;">{{ b }}</span>
                       </sc-for>
                     </div>
                   </sc-if>
@@ -2072,9 +2102,9 @@ class Component extends DCLogic {
       if (n.dab !== 'yes') delete n.tex; return { pk: n }; });
     const conc = inhOk(a.route);
     const Q = [
-      { k: 'route', show: true, title: 'How would you like to take it?', from: 'Step 04', back: 'sec-formats', hint: 'The biggest choice. It decides how soon you feel it and how long it lasts.',
+      { k: 'route', show: true, title: 'How would you like to take it?', from: 'Step 05', back: 'sec-formats', hint: 'The biggest choice. It decides how soon you feel it and how long it lasts.',
         opts: [['inhale', 'Breathe it in'], ['tongue', 'Under the tongue'], ['eat', 'Eat it'], ['body', 'On the skin or body'], ['x', 'Not sure']] },
-      { k: 'speed', show: true, title: 'How soon do you want to feel it?', from: 'Step 04', back: 'sec-formats', hint: 'Faster usually means shorter. Slower usually means longer.',
+      { k: 'speed', show: true, title: 'How soon do you want to feel it?', from: 'Step 05', back: 'sec-formats', hint: 'Faster usually means shorter. Slower usually means longer.',
         opts: [['fast', 'Within minutes'], ['mid', 'Within an hour'], ['slow', 'I can wait, I want it to last'], ['x', 'Not sure']] },
       { k: 'matter', show: conc, title: 'What matters most?', from: 'Step 01', back: 'sec-livecured', hint: 'Live is frozen at harvest and keeps the brightest aroma. Cured is dried first, for a warmer, familiar taste.',
         opts: [['live', 'Flavor and aroma'], ['cured', 'Classic and familiar'], ['x', 'Not sure']] },
@@ -2088,7 +2118,7 @@ class Component extends DCLogic {
         bg: on ? 'var(--ns-bronze)' : 'transparent', color: on ? 'var(--ns-midnight)' : 'var(--ns-arctic)', bd: on ? 'var(--ns-bronze)' : 'var(--border-on-dark)',
         onClick: () => set(q.k, v) }; }) }));
     const F = [
-      { k: 'Carts', name: 'Cartridges', route: 'inhale', speed: 'fast', oil: 1, what: 'A cartridge on a battery. CO\u2082 oil in 0.5g and 1g, on full-ceramic hardware.' },
+      { k: 'Carts', name: 'Cartridges', route: 'inhale', speed: 'fast', oil: 1, what: 'A cartridge on a battery. Sauce, HTFS raw, or distillate in 0.5g and 1g, on full-ceramic hardware.' },
       { k: 'Disposables', name: 'Disposables', route: 'inhale', speed: 'fast', oil: 1, what: 'All in one, ready to draw. No battery or kit.' },
       { k: 'Concentrates', name: 'Concentrates', route: 'inhale', speed: 'fast', conc: 1, what: 'Dabbed or added to a bowl. Badder, sugar, sauce, wax, crumble, and more.' },
       { k: 'Syringes', name: 'Syringes', route: 'inhale', speed: 'fast', oral: 1, what: 'Oil in a 1g syringe. Dab it, add it to a bowl, or take it by mouth.' },
@@ -2467,10 +2497,12 @@ class Component extends DCLogic {
   bumpScale(d){ this.setScale((this.state.textScale||1)+d); }
   goHome(){ this.setState({navOpen:false}); window.scrollTo({top:0, behavior:this.reduced?'auto':'smooth'}); }
   toggleNavExpand(id){ this.setState(p=>({navExpand:Object.assign({},p.navExpand,{[id]:!(p.navExpand||{})[id]})})); }
-  _scrollToEl(id,off){ const el=document.getElementById(id); if(el){ const y=el.getBoundingClientRect().top+window.scrollY-(off||70); window.scrollTo({top:y, behavior:this.reduced?'auto':'smooth'}); } }
+  _scrollToEl(id,off){ const el=document.getElementById(id); const t=this._trackFor(el); if(t){ this.setState({pTrack:t},()=>setTimeout(()=>this._scrollToEl(id,off),40)); return; } if(el){ const y=el.getBoundingClientRect().top+window.scrollY-(off||70); window.scrollTo({top:y, behavior:this.reduced?'auto':'smooth'}); } }
   toggleNav(){ this.setState(p=>({navOpen:!p.navOpen})); }
   closeNav(){ this.setState({navOpen:false}); }
-  scrollTo(id){ this.setState({navOpen:false}); setTimeout(()=>{ const el=document.getElementById('chap-'+id)||document.getElementById(id); if(el){ const y=el.getBoundingClientRect().top+window.scrollY-42; window.scrollTo({top:y, behavior:this.reduced?'auto':'smooth'}); } }, 70); }
+  _pTrack(t){ if((this.state.pTrack||'made')===t) return; this.setState({pTrack:t},()=>{ const sw=document.getElementById('nsm-ptracks'); if(sw&&sw.getBoundingClientRect().top<0){ window.scrollTo({top:sw.getBoundingClientRect().top+window.scrollY-60, behavior:'auto'}); } }); }
+  _trackFor(el){ const tr=el&&el.closest&&el.closest('[data-ptrack]'); return tr&&tr.getAttribute('data-ptrack')!==(this.state.pTrack||'made')?tr.getAttribute('data-ptrack'):null; }
+  scrollTo(id){ { const el0=document.getElementById('chap-'+id)||document.getElementById(id), t=this._trackFor(el0); if(t){ this.setState({pTrack:t}); } } this.setState({navOpen:false}); setTimeout(()=>{ const el=document.getElementById('chap-'+id)||document.getElementById(id); if(el){ const y=el.getBoundingClientRect().top+window.scrollY-42; window.scrollTo({top:y, behavior:this.reduced?'auto':'smooth'}); } }, 70); }
   goFlower(){ this.scrollTo('flower'); }
   toggleExp(id){ this.setState(p=>({expanders:Object.assign({},p.expanders,{[id]:!p.expanders[id]})})); }
   toggleTopic(i){ this.setState(p=>({openTopic:p.openTopic===i?null:i})); }
@@ -2483,11 +2515,29 @@ class Component extends DCLogic {
   toggleRecipe(i){ this.setState(p=>({openRecipe:p.openRecipe===i?null:i})); }
   copyRecipe(i,txt){ try{ navigator.clipboard.writeText(txt); }catch(e){} this.setState({recipeCopied:i}); clearTimeout(this._rct); this._rct=setTimeout(()=>this.setState({recipeCopied:null}),1800); }
   shareRecipe(i,name,txt){ if(navigator.share){ navigator.share({title:name+' · Natural State Medicinals', text:txt}).catch(()=>{}); } else { this.copyRecipe(i,txt); } }
-  toggleStrain(name){ this.setState(p=>({expandedStrain:p.expandedStrain===name?null:name})); }
+  toggleStrain(name){ this._sheetGo(this.state.expandedStrain===name?null:name); }
+  _sheetGo(name){
+    const D=this.D||{}, s=name&&(D.strains||[]).find(x=>x.name===name), st=this.state;
+    const fits=!s||((st.strainFilter||'All')==='All'||s.cat===st.strainFilter)&&(!st.strainEffect||(s.effects||[]).includes(st.strainEffect));
+    this.setState(fits?{expandedStrain:name}:{expandedStrain:name, strainFilter:'All', strainEffect:''});
+    try{ document.documentElement.style.overflow = name ? 'hidden' : ''; document.body.style.overflow = name ? 'hidden' : ''; }catch(e){}
+    setTimeout(()=>{ const b=document.getElementById('nsm-sheet-body'); if(b) b.scrollTop=0; }, 20);
+  }
+  _sheetExtras(s){
+    const D=this.D, info=D.terpeneInfo||{}, prof=s.terpProfile||[];
+    const ACC={ myrcene:'#8A6A2E', caryophyllene:'#8C3F3F', limonene:'#9A7326', terpinolene:'#63702F', ocimene:'#2F6E5E', pinene:'#3A5F45', humulene:'#6E4E36', linalool:'#5E4380' };
+    const rng=t=>(t||'').replace(/\s*[\u2013\u2014-]\s*/g,' to ');
+    const facts=[['Type',s.type],['Ratio',(s.ratio||'').replace(/\s*\/\s*/,', ')],['THC average',s.thcAvg],['THC range',rng(s.thcRange)],['Terpenes average',s.terpAvg?s.terpAvg+'%':''],['Terpene range',(s.terpMin&&s.terpMax)?s.terpMin+'% to '+s.terpMax+'%':''],['Lead terpenes',prof.slice(0,3).map(t=>t.name).join(', ')],['Lineage',(s.parents||[]).join(' \u00d7 ')],['Breeder',s.breeder]].filter(x=>x[1]).map(x=>({k:x[0],v:x[1]}));
+    const terpNotes=prof.slice(0,3).map(t=>{ const ti=info[t.name]||{}; return { name:t.name, pct:t.pct+'%', flavor:ti.flavor||'', medical:ti.medical||'', accent:ACC[t.name.toLowerCase()]||'var(--ns-bronze)', onClick:()=>{ this._sheetGo(null); this.goTerp(t.name); } }; }).filter(x=>x.flavor||x.medical);
+    const lead=prof[0]?prof[0].name:null, second=prof[1]?prof[1].name:null;
+    const score=x=>{ const p=x.terpProfile||[]; let v=0; if(p[0]&&p[0].name===lead) v+=3; if(p.slice(0,3).some(t=>t.name===second)) v+=1; if(x.cat===s.cat) v+=1; if(x.photo) v+=0.5; return v; };
+    const similar=lead?(D.strains||[]).filter(x=>x.name!==s.name&&(x.terpProfile||[]).length).map(x=>({x,v:score(x)})).filter(o=>o.v>=3).sort((a,b)=>b.v-a.v).slice(0,3).map(({x})=>({ name:x.name, hasPhoto:!!x.photo, photo:x.photo||'', onClick:()=>this._sheetGo(x.name) })):[];
+    return { drFacts:facts, terpNotes, hasTerpNotes:terpNotes.length>0, similar, hasSimilar:similar.length>0, effectsLine:(s.effects||[]).join('  /  '), genome:s.genome||'', hasGenome:!!s.genome };
+  }
   toggleGl(term){ this.setState(p=>({glOpen:Object.assign({},p.glOpen,{[term]:!p.glOpen[term]})})); }
   toggleJField(k){ this.setState(p=>{ const j=Object.assign({},p.jSel); j[k]=(j[k]===false); return {jSel:j}; }); }
   toggleJGroup(title,fields,allOn){ this.setState(p=>{ const j=Object.assign({},p.jSel); fields.forEach(f=>{ j[title+'||'+f]=allOn?false:true; }); return {jSel:j}; }); }
-  goStrain(name){ this.setState({strainFilter:'All', expandedStrain:name, navOpen:false}); setTimeout(()=>{ const el=document.getElementById('strain-'+this._slug(name)); if(el){ const y=el.getBoundingClientRect().top+window.scrollY-64; window.scrollTo({top:y, behavior:this.reduced?'auto':'smooth'}); } }, 90); }
+  goStrain(name){ this.setState({strainFilter:'All', strainEffect:'', navOpen:false}); const el=document.getElementById('chap-flower'); if(el){ const y=el.getBoundingClientRect().top+window.scrollY-42; window.scrollTo({top:y, behavior:'auto'}); } setTimeout(()=>this._sheetGo(name), 60); }
   // deep links: the hash is saved at page start and applied once data and layout are ready
   _shareBase(){ try{ return new URL('index.html', window.location.href).href.split('#')[0].split('?')[0]; }catch(e){ return 'index.html'; } }
   _initDeepLinks(){
@@ -2578,7 +2628,7 @@ class Component extends DCLogic {
       terpenes:[['The terpene explorer','chap-terpenes'],['Found in these strains','sec-terp-strains']],
       flower:[['The strain library','chap-flower']],
       grow:[['It starts with a cutting','sec-grow-clone'],['Harvest, by hand','sec-grow-harvest'],['Tested, then finished','sec-grow-finished']],
-      process:[['It all starts as resin','chap-process'],['Start with the plant','sec-livecured'],['Get the resin out','sec-extract'],['See what it becomes','sec-texture'],['Choose how you take it','sec-formats'],['Build your pick','sec-pick']],
+      process:[['It all starts as resin','chap-process'],['How it\u2019s made: start with the plant','sec-livecured'],['Get the resin out','sec-extract'],['See what it becomes','sec-texture'],['What to choose: build your pick','sec-pick'],['Every format, fastest to slowest','sec-formats']],
       practice:[['Onset explorer','sec-onset'],['Good to know','sec-goodtoknow']],
       journal:[['Choose what you track','sec-journal-fields']],
       recipes:[['Before you cook','sec-decarb'],['Edible milligram calculator','sec-calculator']]
@@ -2682,6 +2732,7 @@ class Component extends DCLogic {
       chipBg: st.strainFilter===f?'var(--ns-midnight)':'var(--ns-arctic)',
       chipColor: st.strainFilter===f?'var(--ns-arctic)':'var(--text-strong)',
       chipBorder: st.strainFilter===f?'var(--ns-midnight)':'rgba(32,37,58,0.22)',
+      active: st.strainFilter===f, tabInk: st.strainFilter===f?'var(--text-strong)':'var(--text-muted)', tabLine: st.strainFilter===f?'var(--ns-midnight)':'transparent', tabWeight: st.strainFilter===f?'600':'500', leafOp: st.strainFilter===f?'1':'0.6',
       onClick:()=>this.setState({strainFilter:f, expandedStrain:null}) }));
     // effect filter
     const effOrder=['Relaxed','Happy','Uplifted','Euphoric','Energetic','Creative','Focused','Sleepy','Hungry','Talkative','Tingly'];
@@ -2691,6 +2742,7 @@ class Component extends DCLogic {
       chipBg: activeEff===f.val?'var(--ns-bronze)':'var(--ns-arctic)',
       chipColor: activeEff===f.val?'var(--ns-midnight)':'var(--text-body)',
       chipBorder: activeEff===f.val?'var(--ns-bronze)':'rgba(32,37,58,0.18)',
+      on: activeEff===f.val, tabInk: activeEff===f.val?'var(--text-strong)':'var(--text-muted)', tabLine: activeEff===f.val?'var(--ns-bronze)':'transparent', tabWeight: activeEff===f.val?'600':'500',
       onClick:()=>this.setState({strainEffect:f.val, expandedStrain:null}) }));
     const songLink=(kind,s)=>{ const q=encodeURIComponent(((s.song&&s.song.title)||'')+' '+((s.song&&s.song.artist)||'')); return kind==='spotify'?('https://open.spotify.com/search/'+q):('https://music.youtube.com/search?q='+q); };
     const RADAR_AXES=[['Myrcene','Myr'],['Caryophyllene','Car'],['Limonene','Lim'],['Terpinolene','Terp'],['Pinene','Pin'],['Ocimene','Oci']];
@@ -2721,7 +2773,10 @@ class Component extends DCLogic {
         parentsText:(s.parents||[]).join('  \u00d7  '), hasLineage:(s.parents||[]).length>0,
         songTitle:(s.song&&s.song.title)||'', songArtist:(s.song&&s.song.artist)||'', hasSong: !!(s.song&&s.song.title),
         spotifyUrl:songLink('spotify',s), ytUrl:songLink('yt',s),
-        expanded:ex, caret: ex?'\u2212':'+',
+        expanded:ex, caret: ex?'\u2212':'+', leafSrc:this._leaf(s.cat),
+        typeShort:(s.type||s.cat||'').replace(/[- ]dominant hybrid/i,'-dom.'),
+        cardFacts:[(()=>{ const m=(s.ratio||'').match(/(\d+)%[^\d]+(\d+)%/); return m?m[1]+' / '+m[2]:''; })(), s.thcAvg?s.thcAvg+' THC':''].filter(Boolean).join(' \u00b7 '), hasCardFacts: !!(s.thcAvg||s.ratio),
+        ...(ex?this._sheetExtras(s):{}),
         onToggle:()=>this.toggleStrain(s.name)
       };
     });
@@ -2864,7 +2919,7 @@ class Component extends DCLogic {
           'Troches': ['10mg per quarter tablet', 'Stevia-sweetened, sugar-free'],
           'Tinctures': ['500mg · 30mL', '1000mg · 30mL', '2500mg · 30mL', 'Indica or Sativa'],
           'Topicals': ['1:1 Anti-Inflammatory · 50mL', '3:1 Anti-Inflammatory · 50mL'],
-          'Concentrates': ['Badder', 'Crumble', 'Wax', 'Sugar', 'Sauce', 'HTFS Raw', 'CO\u2082 oil', 'RSO'],
+          'Concentrates': ['Badder', 'Crumble', 'Wax', 'Sugar', 'Sauce', 'HTFS Raw', 'RSO'],
           'Syringes': ['Full-spectrum · 1g', 'RSO 2.0 · 1g'],
           'Suppositories': ['2:1 CBD:THC · 5 ct']
         };
@@ -2889,8 +2944,8 @@ class Component extends DCLogic {
           'Syringes': 'Press out a portion the size of a grain of rice. Dab it on a properly heated rig, add it to a bowl, or take it by mouth. By mouth it acts like an edible: slower to arrive and longer to stay, so wait a full two hours before taking more.',
           'Suppositories': 'Insert as directed for high, localized absorption with little to no head effect. A good option when inhaling or eating is not.'
         };
-      const FORM_ROWS = { 'Concentrates': [['Badder', '1g jar'], ['Crumble', '1g jar'], ['Wax', '1g jar'], ['Sugar', '1g jar'], ['Sauce', '1g jar'], ['HTFS Raw', '1g jar'], ['CO\u2082 oil', '1g syringe, or 0.5g and 1g carts'], ['RSO', '1g syringe']] };
-      return (D.lab||[]).map(l=>{ const img=lImg[l.name]||''; const forms=formMap[l.name]||[]; const formRows=(FORM_ROWS[l.name]||[]).map(r=>({ name:r[0], dose:r[1] })); const typeDetail=typeDetailMap[l.name]||[];
+      const FORM_ROWS = { 'Concentrates': [['Badder', '1g jar'], ['Crumble', '1g jar'], ['Wax', '1g jar'], ['Sugar', '1g jar'], ['Sauce', '1g jar'], ['HTFS Raw', '1g jar'], ['Sauce', 'Carts and disposables'], ['HTFS Raw', 'Carts and disposables'], ['HTFS Raw', '1g syringe'], ['RSO', '1g syringe']] };
+      return (D.lab||[]).map(l=>{ const img=lImg[l.name]||''; const forms=formMap[l.name]||[]; const formRows=(FORM_ROWS[l.name]||[]).reduce((g,r)=>{ const hit=g.find(x=>x.dose===r[1]); if(hit) hit.names.push(r[0]); else g.push({dose:r[1],names:[r[0]]}); return g; },[]).map(x=>({ name:x.names.join(', '), dose:x.dose })); const typeDetail=typeDetailMap[l.name]||[];
         return { raw:l.name, name:l.name==='Carts'?'Cartridges':l.name, kicker:kick[l.name]||'', description:l.description||'', img, hasPhoto:!!img, noPhoto:!img,
           forms, hasForms:forms.length>0, formRows, hasFormRows:formRows.length>0, hasFormChips:forms.length>0&&!formRows.length, typeDetail, hasTypeDetail:typeDetail.length>0, howTo:howToMap[l.name]||'' }; });
     })();
@@ -2997,7 +3052,7 @@ class Component extends DCLogic {
     const gq=(st.glQuery||'').trim().toLowerCase();
     const lettersSet=Array.from(new Set((D.glossary||[]).map(g=>{ const c=(g.term[0]||'').toUpperCase(); return /[A-Z]/.test(c)?c:'#'; }))).sort();
     const glossLetters=['All',...lettersSet].map(l=>({ label:l, active: st.glLetter===l,
-      chipBg: st.glLetter===l?'var(--ns-bronze)':'var(--ns-arctic)', chipColor: st.glLetter===l?'#fff':'var(--text-muted)',
+      chipBg: st.glLetter===l?'var(--ns-bronze)':'var(--ns-arctic)', chipColor: st.glLetter===l?'var(--text-strong)':'rgba(32,37,58,0.62)', line: st.glLetter===l?'var(--ns-bronze)':'transparent',
       chipBorder: st.glLetter===l?'var(--ns-bronze)':'rgba(32,37,58,0.18)', onClick:()=>this.setState({glLetter:l}) }));
     const glossary=(D.glossary||[]).filter(g=>{ const t0=(g.term[0]||'').toUpperCase(); const lk=/[A-Z]/.test(t0)?t0:'#'; const okL=st.glLetter==='All'||lk===st.glLetter; const okQ=!gq||g.term.toLowerCase().includes(gq)||g.def.toLowerCase().includes(gq); return okL&&okQ; }).map(g=>({ term:g.term, def:g.def, pron:g.pron||'', hasPron:!!g.pron,
       img:g.img||'', hasImg:!!g.img, bubbles:g.bubbles||[], hasBubbles:(g.bubbles||[]).length>0,
@@ -3040,13 +3095,19 @@ class Component extends DCLogic {
       goHome:()=>this.goHome(), toggleNav:()=>this.toggleNav(), closeNav:()=>this.closeNav(), navOpen:st.navOpen, goFlower:()=>this.goFlower(),
       kSystem:this._k('The Endocannabinoid System'), kEntourage:this._k('The Entourage Effect'), kCannabinoids:this._k('Minor cannabinoids, CBD, CBG, CBN, CBC'),
       cannabinoids, types, terpTabs, activeTerp,
-      strainCount:D.strains.length, strainFilters, effectFilters, shownCount:strains.length, strains, strainsEmpty:strains.length===0, productsUrl,
+      strainCount:D.strains.length, strainFilters, effectFilters, shownCount:strains.length, strains, strainsEmpty:strains.length===0,
+      ...(()=>{ const ix=strains.findIndex(x=>x.expanded); if(ix<0) return { sheetOpen:false, sheetList:[] }; const n=strains.length, pv=strains[(ix-1+n)%n], nx=strains[(ix+1)%n];
+        return { sheetOpen:true, sheetList:[Object.assign({}, strains[ix], { prevName:pv.dispName, nextName:nx.dispName, onPrev:()=>this._sheetGo(pv.name), onNext:()=>this._sheetGo(nx.name) })] }; })(),
+      closeSheetStrain:()=>this._sheetGo(null), productsUrl,
       practiceTopics, onsetRows, onset, practiceCards, growSteps, conc,
       extraction, extractionExp, pf, edibles, ediblesExp, journalGroups,
       lc:this._lcVals(),
       pk: this._pickVals(),
-      psteps: [['01', 'The plant', 'Start with the plant', 'Live or cured', 'sec-livecured'], ['02', 'Extraction', 'Get the resin out', 'Resin or rosin', 'sec-extract'], ['03', 'Texture', 'See what it becomes', 'Sauce to crumble', 'sec-texture'], ['04', 'Formats', 'Choose how you take it', 'Four routes', 'sec-formats'], ['05', 'Your pick', 'Build your pick', 'Put it together', 'sec-pick']]
+      psteps: [['01', 'The plant', 'Start with the plant', 'Live or cured', 'sec-livecured'], ['02', 'Extraction', 'Get the resin out', 'Resin or rosin', 'sec-extract'], ['03', 'Texture', 'See what it becomes', 'Sauce to crumble', 'sec-texture'], ['05', 'Formats', 'Choose how you take it', 'Four routes', 'sec-formats'], ['04', 'Your pick', 'Build your pick', 'Put it together', 'sec-pick']]
         .map((r, i) => ({ i: String(i), num: r[0], label: r[1], title: r[2], sub: r[3], aria: 'Step ' + r[0] + ', ' + r[1], go: () => this._scrollToEl(r[4], 70) })),
+      pMadeDisp: (st.pTrack || 'made') === 'made' ? 'flex' : 'none', pChooseDisp: (st.pTrack || 'made') === 'choose' ? 'flex' : 'none',
+      pToChoose: () => this._pTrack('choose'),
+      ptracks: [['made', 'Steps 01 to 03', 'How it\u2019s made'], ['choose', 'Steps 04 to 05', 'What to choose']].map(t => { const on = (st.pTrack || 'made') === t[0]; return { on, eyebrow: t[1], title: t[2], bg: on ? 'var(--ns-midnight)' : 'transparent', ink: on ? 'var(--ns-arctic)' : 'var(--text-strong)', eyeInk: on ? '#D8BD82' : '#7A5F28', border: on ? 'var(--ns-midnight)' : 'var(--border-hairline)', top: on ? 'var(--ns-bronze)' : 'transparent', go: () => this._pTrack(t[0]) }; }),
       pgo: { extract: () => this._scrollToEl('sec-extract', 70), texture: () => this._scrollToEl('sec-texture', 70), format: () => this._scrollToEl('sec-formats', 70), pick: () => this._scrollToEl('sec-pick', 70) },
       goHands: () => this._scrollToEl('chap-grow', 70),
       routes: [['Fastest', 'Breathe it in', '12%', 'block', 'Within minutes', 'grp-inhaled'], ['Steady', 'Under the tongue', '34%', 'block', '15 to 45 minutes', 'grp-tongue'], ['Slowest', 'Eat it', '72%', 'block', '30 to 90 minutes', 'grp-eat'], ['Targeted', 'On the body', '0%', 'none', 'Works where it is used', 'grp-body']]

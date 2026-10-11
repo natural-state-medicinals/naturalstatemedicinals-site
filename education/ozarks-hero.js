@@ -426,6 +426,8 @@
         document.documentElement.style.setProperty('--nsm-hero-tuck', Math.round(M) + 'px');
       }
     }
+    // zoom pivots on the near ridge's valley line; it starts as the last plant leaves
+    { const nr = this.layers[this.layers.length - 1]; if (geo.valley == null) geo.valley = this.valley(nr, heroTop, vw, vh); this.layers.forEach(l => { const pt = l.el.style.transform; l.el.style.transform = 'none'; const ly = geo.valley - (l.el.getBoundingClientRect().top - heroTop); l.el.style.transform = pt; l.el.style.transformOrigin = '50% ' + ly.toFixed(1) + 'px'; }); this.z0 = Math.min(0.75, Math.max(0.4, ...this.brs.map(b => b.t1))); }
     this.hero.style.setProperty('--pa', vw / vh < 0.8 ? '35%' : '29%');
     const hd = this.hero.querySelector('[data-head]'); let txt = null;
     if (hd) { const rg = document.createRange(); rg.selectNodeContents(hd); const rr = rg.getBoundingClientRect(), ht = this.hero.getBoundingClientRect().top; const hl = hd.closest('[data-layer]'), pv = hl ? hl.style.transform : ''; if (hl) hl.style.transform = 'none'; const r2 = rg.getBoundingClientRect(); if (hl) hl.style.transform = pv; txt = { left: r2.left, right: r2.right, bottom: r2.bottom - ht }; }
@@ -468,7 +470,7 @@
       if (this.cvFade) this.cvFade.forEach(c => { const o = Math.max(0, Math.min(1, (this.gapAt(c, p) - 10) / c.w)); const s = o.toFixed(3); if (c.o !== s) { c.o = s; c.el.style.opacity = s; } });
     }
     const cue = this.hero.querySelector('[data-cue]'); if (cue) cue.style.opacity = p > 0.01 ? '0' : '0.7';
-    const k = this.props.parallax ?? 1, ox = -this.mx * 18 * k, oy = -this.my * 8 * k;
+    const k = this.props.parallax ?? 1, ox = -this.mx * 4 * k, oy = -this.my * 1.5 * k;
     this.brs.forEach(b => {
       const q = Math.min(1, Math.max(0, (p - b.t0) / (b.t1 - b.t0))), e = q * q * (3 - 2 * q);
       const r = (b.L ? -1 : 1) * b.rmax * e, sc = 1 + (b.smax - 1) * e;
@@ -480,7 +482,9 @@
     });
     // camera lowers from the hilltop: nearer layers climb faster and swallow the base of Pinnacle
     const lift = this.lift * p;
-    this.layers.forEach(l => { const d = Math.max(0, l.z - 0.05) / 0.19; l.el.style.transform = `translate3d(${(ox * d).toFixed(2)}px,${(oy * d - l.f * lift).toFixed(1)}px,0)`; });
+    // once the plants have parted and the treelines settle, walk a few steps in: nearer layers grow more, pinned at the valley line so the next section still meets it
+    const zq = Math.min(1, Math.max(0, (p - (this.z0 ?? 0.55)) / (1 - (this.z0 ?? 0.55)))), ze = zq * zq * (3 - 2 * zq);
+    this.layers.forEach(l => { const d = Math.max(0, l.z - 0.05) / 0.19, zs = 1 + 0.09 * Math.min(1, d) * ze; l.el.style.transform = `translate3d(${(ox * d).toFixed(2)}px,${(oy * d - l.f * lift).toFixed(1)}px,0) scale(${zs.toFixed(4)})`; });
   }
   }
   customElements.define('nsm-ozarks-hero', Hero);
