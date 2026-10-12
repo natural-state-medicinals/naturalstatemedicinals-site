@@ -946,8 +946,8 @@
   <div style="position:sticky;top:0;height:100vh;background:var(--ns-midnight);display:flex;align-items:center;justify-content:center;text-align:center;padding:clamp(40px,8vh,110px) clamp(20px,6vw,80px);overflow:hidden;">
     <div aria-hidden="true" style="position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:90%;height:70%;background:radial-gradient(closest-side, rgba(183,149,80,0.05), rgba(32,37,58,0) 72%);pointer-events:none;"></div>
     <div style="position:relative;max-width:820px;margin:0 auto;">
-      <span style="display:block;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.3em;color:#d8bd82;margin-bottom:clamp(18px,3vh,30px);">Chapter Four &nbsp;·&nbsp; That was the theory</span>
-      <p style="margin:0;font-family:var(--font-display);font-weight:400;font-size:clamp(calc(28px * var(--text-scale)), calc(5vw * var(--text-scale)), calc(64px * var(--text-scale)));line-height:1.08;letter-spacing:0.005em;color:var(--ns-arctic);text-wrap:balance;">Before the catalog, a quick orientation.</p>
+      <span style="display:block;font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.3em;color:#d8bd82;margin-bottom:clamp(18px,3vh,30px);">Chapter Four</span>
+      <p style="margin:0;font-family:var(--font-display);font-weight:400;font-size:clamp(calc(28px * var(--text-scale)), calc(5vw * var(--text-scale)), calc(64px * var(--text-scale)));line-height:1.08;letter-spacing:0.005em;color:var(--ns-arctic);text-wrap:balance;">Sativa, hybrid, indica. Three familiar words, and what they actually tell you.</p>
     </div>
   </div>
 
@@ -2542,7 +2542,7 @@
             <div style="margin-top:16px;border-top:1px solid var(--border-hairline);padding-top:16px;display:flex;flex-direction:column;gap:15px;">
               <div>
                 <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;color:var(--ns-bronze);">What Amendment 98 is</span>
-                <p style="margin:8px 0 0;font-size:calc(14px * var(--text-scale));line-height:1.66;color:var(--text-body);">In November 2016, Arkansas voters passed Amendment 98. It is not a plain law that one legislature can undo on a bad afternoon. It sits in the state constitution. It says this: if you have a qualifying condition and a doctor signs off on it, you can register with the Arkansas Department of Health, get a card, and buy cannabis from a licensed dispensary. The card is good for a year. Then you renew it. Growers like us are licensed and inspected, and the plant is tracked from the room it grew in to the jar in your hand. That is the whole shape of it.</p>
+                <p style="margin:8px 0 0;font-size:calc(14px * var(--text-scale));line-height:1.66;color:var(--text-body);">In November 2016, Arkansas voters passed Amendment 98. It sits in the state constitution. Since a December 2025 Arkansas Supreme Court ruling, lawmakers can adjust its rules with a two-thirds vote, so the details can change. The Arkansas Department of Health keeps the current version. It says this: if you have a qualifying condition and a doctor signs off on it, you can register with the Arkansas Department of Health, get a card, and buy cannabis from a licensed dispensary. The card is good for a year. Then you renew it. Growers like us are licensed and inspected, and the plant is tracked from the room it grew in to the jar in your hand. That is the whole shape of it.</p>
               </div>
               <div>
                 <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.16em;color:var(--ns-bronze);">Who can qualify</span>
@@ -4365,8 +4365,8 @@ class Component extends DCLogic {
     const raw = (span.textContent || '').trim();
     if (!/^\d{2}$/.test(raw)) return;
     if (parseFloat(getComputedStyle(span).fontSize) < 28) return;
-    const target = parseInt(raw, 10);
     span.setAttribute('data-cu', '1');
+    return;
     const dur = 440, t0 = performance.now();
     const tick = (t) => {
       const p = Math.min(1, (t - t0) / dur);
@@ -4374,7 +4374,7 @@ class Component extends DCLogic {
       span.textContent = String(Math.round(e * target)).padStart(2, '0');
       if (p < 1) requestAnimationFrame(tick); else span.textContent = String(target).padStart(2, '0');
     };
-    span.textContent = '00'; requestAnimationFrame(tick);
+    span.style.opacity = '1';
   }
 
   _initScroll() {
@@ -4414,18 +4414,16 @@ class Component extends DCLogic {
 
     const secs = [...document.querySelectorAll('[data-chapter]')];
     let active = secs.length ? secs[0].getAttribute('data-chapter') : 'welcome';
-    const probe = sy + window.innerHeight * 0.34;
-    for (const s of secs) { if (s.getBoundingClientRect().top + window.scrollY <= probe) active = s.getAttribute('data-chapter'); }
+    const probe = window.innerHeight / 3;
+    for (const s of secs) { const hd = s.querySelector('h2') || s; if (hd.getBoundingClientRect().top <= probe) active = s.getAttribute('data-chapter'); }
     const cur = document.getElementById('nsm-current');
     if (cur && this._chapMap) {
       const next = this._chapMap[active] || '';
       if (cur.textContent !== next) {
         if (this.reduced) { cur.textContent = next; }
         else {
-          cur.style.transition = 'opacity .15s ease';
-          cur.style.opacity = '0';
-          clearTimeout(this._navLabelT);
-          this._navLabelT = setTimeout(() => { cur.textContent = next; cur.style.opacity = '1'; }, 150);
+          cur.style.transition = 'none'; cur.style.opacity = '0.35'; cur.textContent = next;
+          void cur.offsetWidth; cur.style.transition = 'opacity .2s ease'; cur.style.opacity = '1';
         }
       }
     }
@@ -4924,9 +4922,8 @@ class Component extends DCLogic {
         const mx = Math.max.apply(null, prof.map(t => t.pct).concat(0.01));
         const totalTerps = Math.round(prof.reduce((a, t) => a + t.pct, 0) * 100) / 100;
         const dom = prof.slice(0, 3).map(t => t.name);
-        const dt = s.recentCoaDate ? new Date(s.recentCoaDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
         lab = {
-          dateText: dt, coaCount: s.coaCount || 0, totalTerps: totalTerps + '%',
+          totalTerps: totalTerps + '%',
           dominantText: dom.join('  ·  '),
           terps: prof.map(t => ({ name: t.name, pctText: t.pct + '%', width: Math.max(4, Math.round(t.pct / mx * 100)) + '%', linkable: (this._terps || []).some(x => x.name.toLowerCase() === t.name.toLowerCase()), onClick: () => this.goTerp(t.name) }))
         };

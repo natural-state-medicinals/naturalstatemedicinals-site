@@ -214,9 +214,11 @@ posture for a site about to move.
 
 ## Last sync
 
-date: 2026-09-03T00:00:00Z
+date: 2026-10-12
 
 ### Updated in this project
+- Guide: COA data refreshed from the quarterly sheet (THC and terpene averages, ranges, top terpenes, terpene explorer); COA counts, dates, sample counts and the old per-COA list removed
+- Guide: Chapter Four line, Amendment 98 wording, chapter numbers no longer count up, Contents label switches at the top third
 - Guide: Live vs. Cured section in Plant to Product (fork, comparison switch, four combinations), live framed as the premium path
 - Guide: product family is a filterable grid with in-place expansion, no carousel
 - Guide: Gas / Fuel quiz answer, 19 strains mapped
