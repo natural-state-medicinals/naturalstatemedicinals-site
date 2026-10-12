@@ -38,6 +38,8 @@
 <style>
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
   :root { color-scheme: light only; --text-scale: 1; }
+  .nsm-pf-card, .nsm-pf-card * { overflow-wrap:anywhere; min-width:0; }
+  @media (max-width:760px){ .nsm-calc-grid { grid-template-columns:minmax(0,1fr) !important; } .nsm-calc-grid > label, .nsm-calc-grid input { min-width:0; max-width:100%; box-sizing:border-box; } }
   html { forced-color-adjust: none; -webkit-forced-color-adjust: none; }
   /* Stop Android Chrome auto-dark from re-tinting the palette */
   @media (prefers-color-scheme: dark) {
@@ -295,7 +297,7 @@
         <div style="flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;height:54px;padding:0 8px 0 18px;border-bottom:1px solid var(--border-hairline);">
           <span style="display:flex;align-items:center;gap:8px;min-width:0;">
             <img loading="lazy" decoding="async" src="{{ s.leafSrc }}" alt="" style="width:15px;height:14px;object-fit:contain;flex:none;">
-            <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ s.typeText }}</span>
+            <span style="font-family:var(--font-sans);font-size:calc(10px * var(--text-scale));font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);overflow-wrap:anywhere;min-width:0;">{{ s.typeText }}</span>
           </span>
           <button onClick="{{ closeSheetStrain }}" aria-label="Close" style="flex:none;width:44px;height:44px;border:none;background:none;cursor:pointer;font-size:calc(19px * var(--text-scale));color:var(--text-strong);">✕</button>
         </div>
@@ -400,8 +402,8 @@
           </div>
         </div>
         <div style="flex:none;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border-hairline);padding-bottom:env(safe-area-inset-bottom);">
-          <button onClick="{{ s.onPrev }}" style="min-height:54px;padding:0 16px;background:none;border:none;border-right:1px solid var(--border-hairline);cursor:pointer;text-align:left;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">← {{ s.prevName }}</button>
-          <button onClick="{{ s.onNext }}" style="min-height:54px;padding:0 16px;background:none;border:none;cursor:pointer;text-align:right;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;color:var(--text-strong);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ s.nextName }} →</button>
+          <button onClick="{{ s.onPrev }}" style="min-height:54px;padding:0 16px;background:none;border:none;border-right:1px solid var(--border-hairline);cursor:pointer;text-align:left;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;color:var(--text-strong);overflow-wrap:anywhere;min-width:0;">← {{ s.prevName }}</button>
+          <button onClick="{{ s.onNext }}" style="min-height:54px;padding:0 16px;background:none;border:none;cursor:pointer;text-align:right;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:600;color:var(--text-strong);overflow-wrap:anywhere;min-width:0;">{{ s.nextName }} →</button>
         </div>
       </div>
     </sc-for>
@@ -657,8 +659,14 @@
     <div style="position:relative;background:var(--ns-arctic);padding:64px 22px 54px;overflow:hidden;">
       <img width="648" height="583" loading="lazy" decoding="async" data-para="1.3" data-base="rotate(-14deg)" src="../assets/brand/leaf-glyph-bronze.png" alt="" aria-hidden="true" style="position:absolute;top:-20px;right:-46px;width:150px;opacity:0.12;transform:rotate(-14deg);height:auto">
       <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);position:relative;max-width:560px;margin:0 auto;text-align:center;">
-        <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.24em;color:var(--ns-bronze);text-transform:uppercase;">The three words</span>
-        <h2 style="margin:14px 0 0;font-family:var(--font-display);font-weight:400;font-size:clamp(calc(34px * var(--text-scale)), calc(9vw * var(--text-scale)), calc(50px * var(--text-scale)));line-height:1.0;letter-spacing:-0.01em;color:var(--text-strong);">Sativa, Hybrid, Indica</h2>
+        <div style="display:flex;align-items:flex-end;gap:16px;border-bottom:1px solid var(--ns-bronze);padding-bottom:16px;text-align:left;">
+          <span style="font-family:var(--font-display);font-weight:400;font-size:calc(46px * var(--text-scale));line-height:0.8;color:var(--ns-bronze);">04</span>
+          <div style="min-width:0;">
+            <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.2em;color:var(--text-muted);text-transform:uppercase;">Chapter Four</span>
+            <h2 style="margin:4px 0 0;font-family:var(--font-display);font-weight:400;font-size:calc(38px * var(--text-scale));line-height:0.98;letter-spacing:-0.01em;color:var(--text-strong);">Sativa, Hybrid, Indica</h2>
+          </div>
+        </div>
+        <p style="margin:24px 0 0;font-family:var(--font-sans);font-size:calc(17px * var(--text-scale));line-height:1.6;color:var(--text-strong);text-align:left;">Three familiar words, and what they actually tell you.</p>
         <p style="margin:20px 0 0;font-family:var(--font-sans);font-size:calc(16px * var(--text-scale));line-height:1.7;color:var(--text-body);text-align:left;">Every conversation about cannabis starts here. These three words are shorthand, not science, a way to set expectations before the terpenes and cannabinoids tell the real story. Modern genetics have made the lines blurry enough that most researchers have moved on from the taxonomy entirely. But the categories stick because they are useful, the same way cardinal directions are useful even though the world is more complicated than north and south.</p>
         <div style="margin-top:24px;display:flex;flex-direction:column;align-items:center;gap:12px;border-top:1px solid rgba(183,149,80,0.4);border-bottom:1px solid rgba(183,149,80,0.4);padding:18px 12px;">
           <span style="font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:700;letter-spacing:0.1em;line-height:1.5;color:var(--text-strong);text-transform:uppercase;text-align:center;">You will see these colors again<br>throughout the flower library</span>
@@ -674,7 +682,7 @@
     <sc-for list="{{ types }}" as="t" hint-placeholder-count="3">
       <div style="position:relative;background:{{ t.bg }};padding:60px 24px;overflow:hidden;">
         <div data-reveal="" style="opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.25,1);max-width:560px;margin:0 auto;text-align:center;">
-          <sc-if value="{{ t.icon }}" hint-placeholder-val="{{ false }}"><img loading="lazy" decoding="async" data-src="{{ t.icon }}" alt="{{ t.name }}" style="width:72px;height:auto;margin:0 auto 16px;display:block;filter:drop-shadow(0 10px 24px rgba(0,0,0,0.28));"></sc-if>
+          <sc-if value="{{ t.icon }}" hint-placeholder-val="{{ false }}"><img loading="lazy" decoding="async" data-src="{{ t.icon }}" alt="{{ t.name }}" style="width:72px;height:72px;object-fit:contain;margin:0 auto 16px;display:block;filter:drop-shadow(0 10px 24px rgba(0,0,0,0.28));"></sc-if>
           <div style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:{{ t.sub }};">{{ t.word }}</div>
           <div style="margin-top:6px;font-family:var(--font-display);font-size:clamp(calc(58px * var(--text-scale)), calc(19vw * var(--text-scale)), calc(96px * var(--text-scale)));line-height:0.88;letter-spacing:-0.02em;color:{{ t.ink }};">{{ t.name }}</div>
           <p style="margin:20px 0 0;font-family:var(--font-sans);font-size:calc(15px * var(--text-scale));line-height:1.72;color:{{ t.body }};text-align:left;">{{ t.assoc }}</p>
@@ -749,7 +757,7 @@
                   <button onClick="{{ f.onClick }}" style="display:grid;grid-template-columns:16px 1fr 46px;align-items:center;gap:10px;width:100%;background:none;border:none;border-top:1px solid var(--border-hairline);padding:11px 2px;cursor:pointer;text-align:left;">
                     <span style="width:9px;height:9px;border-radius:50%;background:{{ f.catColor }};"></span>
                     <span style="min-width:0;display:flex;flex-direction:column;gap:5px;">
-                      <span style="font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));line-height:1.15;color:var(--text-strong);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ f.strain }}</span>
+                      <span style="font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));line-height:1.15;color:var(--text-strong);overflow-wrap:anywhere;min-width:0;">{{ f.strain }}</span>
                       <span style="height:5px;background:rgba(32,37,58,0.1);border-radius:999px;overflow:hidden;position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ f.width }};background:var(--ns-bronze);border-radius:999px;"></span></span>
                     </span>
                     <span style="text-align:right;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));font-weight:600;color:var(--ns-bronze);">{{ f.pctText }}</span>
@@ -816,7 +824,7 @@
             </span>
             <span style="display:flex;align-items:center;gap:6px;min-width:0;">
               <img loading="lazy" decoding="async" data-src="{{ s.leafSrc }}" alt="" style="width:13px;height:12px;object-fit:contain;flex:none;">
-              <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ s.typeShort }}</span>
+              <span style="font-family:var(--font-sans);font-size:calc(9.5px * var(--text-scale));font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted);overflow-wrap:anywhere;min-width:0;">{{ s.typeShort }}</span>
             </span>
             <span style="font-family:var(--font-display);font-weight:400;font-size:calc(20px * var(--text-scale));line-height:1.04;letter-spacing:-0.01em;">{{ s.dispName }}</span>
             <sc-if value="{{ s.hasCardFacts }}" hint-placeholder-val="{{ true }}">
@@ -1707,7 +1715,15 @@
           <img width="648" height="583" loading="lazy" decoding="async" src="../assets/brand/leaf-glyph-bronze.png" alt="" aria-hidden="true" style="display:none;height:auto">
           <h3 style="margin:0;font-family:var(--font-display);font-weight:400;font-size:clamp(calc(26px * var(--text-scale)), calc(8vw * var(--text-scale)), calc(36px * var(--text-scale)));line-height:1.18;letter-spacing:0.04em;color:var(--text-strong);text-wrap:balance;">The Session Journal</h3>
           <p style="margin:14px auto 0;max-width:42ch;font-family:var(--font-sans);font-size:calc(15px * var(--text-scale));line-height:1.68;color:var(--text-body);">Assembled from the fields you chose above, <strong style="font-weight:600;color:var(--text-strong);">{{ journalFieldCount }}</strong> in all. Keep it in your notes app, or print it and set it by the jar.</p>
-          <textarea id="nsm-journal-text" value="{{ journalText }}" readOnly="" spellcheck="false" aria-label="Session journal template" style="width:100%;box-sizing:border-box;margin-top:18px;min-height:190px;resize:vertical;background:var(--ns-arctic);border:1px solid rgba(183,149,80,0.3);border-radius:0;padding:14px;text-align:left;font-family:ui-monospace,Menlo,monospace;font-size:calc(12px * var(--text-scale));line-height:1.6;color:var(--text-strong);"></textarea>
+          <div style="position:relative;overflow:hidden;margin-top:18px;max-height:{{ jWrapMax }};">
+          <textarea id="nsm-journal-text" value="{{ journalText }}" readOnly="" spellcheck="false" aria-label="Session journal template" style="display:block;width:100%;box-sizing:border-box;min-height:0;resize:none;overflow:hidden;background:var(--ns-arctic);border:1px solid rgba(183,149,80,0.3);border-radius:0;padding:14px;text-align:left;font-family:ui-monospace,Menlo,monospace;font-size:calc(12px * var(--text-scale));line-height:1.6;color:var(--text-strong);"></textarea>
+            <sc-if value="{{ jCollapsed }}" hint-placeholder-val="{{ true }}">
+              <div aria-hidden="true" style="position:absolute;left:1px;right:1px;bottom:1px;height:80px;background:linear-gradient(rgba(245,244,225,0), var(--ns-arctic));pointer-events:none;"></div>
+            </sc-if>
+          </div>
+          <sc-if value="{{ jLong }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ jToggleFull }}" aria-expanded="{{ jFull }}" style="display:flex;align-items:center;justify-content:center;width:100%;margin-top:10px;min-height:44px;padding:0 16px;border-radius:4px;border:1px solid var(--ns-bronze);background:transparent;color:var(--text-strong);cursor:pointer;font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;letter-spacing:0.1em;">{{ jToggleLabel }}</button>
+          </sc-if>
           <div style="display:flex;gap:10px;margin-top:14px;">
             <button onClick="{{ copyJournal }}" style="flex:1;min-height:48px;background:var(--ns-bronze);color:var(--ns-midnight);border:none;border-radius:4px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));font-weight:600;letter-spacing:0.1em;text-transform:uppercase;box-shadow:var(--shadow-bronze);">{{ journalCopyLabel }}</button>
             <button onClick="{{ downloadJournal }}" style="flex:1;min-height:48px;background:var(--ns-midnight);color:var(--ns-arctic);border:none;border-radius:4px;cursor:pointer;font-family:var(--font-sans);font-size:calc(12.5px * var(--text-scale));font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">Download .txt</button>
@@ -1751,7 +1767,7 @@
                     <span style="flex:none;min-width:20px;font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));color:var(--ns-bronze);">{{ r.num }}</span>
                     <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;">
                       <span style="font-family:var(--font-sans);font-weight:600;font-size:calc(14.5px * var(--text-scale));line-height:1.25;color:var(--text-strong);">{{ r.name }}</span>
-                      <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));line-height:1.3;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ r.meta }}</span>
+                      <span style="font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));line-height:1.3;color:var(--text-muted);overflow-wrap:anywhere;min-width:0;">{{ r.meta }}</span>
                     </span>
                     <span style="flex:none;color:var(--ns-bronze);font-size:calc(13px * var(--text-scale));">→</span>
                   </button>
@@ -1778,8 +1794,8 @@
             <span style="flex:none;display:grid;place-items:center;width:26px;height:26px;background:var(--ns-bronze);color:var(--ns-midnight);border-radius:50%;font-family:var(--font-sans);font-size:calc(13px * var(--text-scale));font-weight:700;">1</span>
             <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;letter-spacing:0.14em;color:var(--text-strong);text-transform:uppercase;">Your infusion</span>
           </div>
-          <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <label style="display:flex;flex-direction:column;gap:5px;">
+          <div class="nsm-calc-grid" style="margin-top:14px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;">
+            <label style="display:flex;flex-direction:column;gap:5px;min-width:0;">
               <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));letter-spacing:0.04em;color:var(--text-muted);">Flower (grams)</span>
               <input type="number" min="0" step="0.5" inputmode="decimal" value="{{ calc.grams }}" onInput="{{ calc.setGrams }}" placeholder="7" style="font-family:var(--font-display);font-size:calc(20px * var(--text-scale));color:var(--text-strong);background:var(--ns-arctic);border:1px solid var(--border-hairline);border-radius:7px;padding:12px 13px;min-width:0;">
             </label>
@@ -1808,7 +1824,7 @@
             <span style="font-family:var(--font-sans);font-size:calc(12px * var(--text-scale));font-weight:600;letter-spacing:0.14em;color:var(--text-strong);text-transform:uppercase;">Your dish</span>
             <span style="flex:1;height:1px;background:var(--border-hairline);"></span>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="nsm-calc-grid" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;">
             <label style="display:flex;flex-direction:column;gap:5px;">
               <span style="font-family:var(--font-sans);font-size:calc(11px * var(--text-scale));letter-spacing:0.04em;color:var(--text-muted);">Infusion used (tsp)</span>
               <input type="number" min="0" step="0.5" inputmode="decimal" value="{{ calc.tsp }}" onInput="{{ calc.setTsp }}" placeholder="12" style="font-family:var(--font-display);font-size:calc(20px * var(--text-scale));color:var(--text-strong);background:var(--ns-arctic);border:1px solid var(--border-hairline);border-radius:7px;padding:12px 13px;min-width:0;">
@@ -2075,7 +2091,7 @@ class Component extends DCLogic {
     document.querySelectorAll('[data-ent-tick]').forEach((t,i)=>{ t.style.background=(active>=0&&i<=active)?'var(--ns-bronze)':'rgba(245,244,225,0.16)'; });
     const cnt=document.querySelector('[data-ent-count]'); if(cnt&&active>=0&&cnt.textContent!==labels[active]){ cnt.style.opacity='0'; setTimeout(()=>{ cnt.textContent=labels[active]; cnt.style.opacity='1'; },140); }
   }
-  componentDidUpdate(){ this._lcObserve(); this._pfFlipPlay(); this._hydrateImgs(); if(this._io){ document.querySelectorAll('[data-reveal]').forEach(el=>{ if(!el._obs && !el._rev){ el._obs=1; this._io.observe(el); } }); } }
+  componentDidUpdate(){ { const ta=document.getElementById('nsm-journal-text'); if(ta){ ta.style.height='auto'; ta.style.height=(ta.scrollHeight+2)+'px'; } } this._lcObserve(); this._pfFlipPlay(); this._hydrateImgs(); if(this._io){ document.querySelectorAll('[data-reveal]').forEach(el=>{ if(!el._obs && !el._rev){ el._obs=1; this._io.observe(el); } }); } }
   componentWillUnmount(){ if(this._pfKey) document.removeEventListener('keydown',this._pfKey); if(this._lcIO) this._lcIO.disconnect(); if(this._onScroll) window.removeEventListener('scroll',this._onScroll); if(this._io) this._io.disconnect(); if(this._eio) this._eio.disconnect(); if(this._revealSafety) clearTimeout(this._revealSafety); if(this._introT) clearTimeout(this._introT); if(this._haptic) document.removeEventListener('click',this._haptic); }
 
 
@@ -2497,12 +2513,14 @@ class Component extends DCLogic {
   bumpScale(d){ this.setScale((this.state.textScale||1)+d); }
   goHome(){ this.setState({navOpen:false}); window.scrollTo({top:0, behavior:this.reduced?'auto':'smooth'}); }
   toggleNavExpand(id){ this.setState(p=>({navExpand:Object.assign({},p.navExpand,{[id]:!(p.navExpand||{})[id]})})); }
-  _scrollToEl(id,off){ const el=document.getElementById(id); const t=this._trackFor(el); if(t){ this.setState({pTrack:t},()=>setTimeout(()=>this._scrollToEl(id,off),40)); return; } if(el){ const y=el.getBoundingClientRect().top+window.scrollY-(off||70); window.scrollTo({top:y, behavior:this.reduced?'auto':'smooth'}); } }
+  _scrollToEl(id,off){ const el=document.getElementById(id); const t=this._trackFor(el); if(t){ this.setState({pTrack:t},()=>setTimeout(()=>this._scrollToEl(id,off),40)); return; } if(el) this._jump(el, off||70, !this.reduced); }
   toggleNav(){ this.setState(p=>({navOpen:!p.navOpen})); }
   closeNav(){ this.setState({navOpen:false}); }
   _pTrack(t){ if((this.state.pTrack||'made')===t) return; this.setState({pTrack:t},()=>{ const sw=document.getElementById('nsm-ptracks'); if(sw&&sw.getBoundingClientRect().top<0){ window.scrollTo({top:sw.getBoundingClientRect().top+window.scrollY-60, behavior:'auto'}); } }); }
   _trackFor(el){ const tr=el&&el.closest&&el.closest('[data-ptrack]'); return tr&&tr.getAttribute('data-ptrack')!==(this.state.pTrack||'made')?tr.getAttribute('data-ptrack'):null; }
-  scrollTo(id){ { const el0=document.getElementById('chap-'+id)||document.getElementById(id), t=this._trackFor(el0); if(t){ this.setState({pTrack:t}); } } this.setState({navOpen:false}); setTimeout(()=>{ const el=document.getElementById('chap-'+id)||document.getElementById(id); if(el){ const y=el.getBoundingClientRect().top+window.scrollY-42; window.scrollTo({top:y, behavior:this.reduced?'auto':'smooth'}); } }, 70); }
+  // jump, then re-check the target as images above it load; correct once scrolling settles; stop if the reader takes over
+  _jump(el,offset,smooth){ if(!el) return; const want=()=>Math.max(0, el.getBoundingClientRect().top+window.scrollY-offset); window.scrollTo({top:want(), behavior:smooth?'smooth':'instant'}); if(this._jumpStop) this._jumpStop(); let n=0,last=-1,t=0,quiet=0; const onLoad=e=>{ if(e.target&&e.target.tagName==='IMG') quiet=0; }; const evs=['wheel','touchstart','keydown']; const stop=()=>{ clearTimeout(t); evs.forEach(ev=>window.removeEventListener(ev,stop)); document.removeEventListener('load',onLoad,true); if(this._jumpStop===stop) this._jumpStop=null; }; this._jumpStop=stop; evs.forEach(ev=>window.addEventListener(ev,stop,{passive:true})); document.addEventListener('load',onLoad,true); const tick=()=>{ const cur=window.scrollY, y=want(); if(Math.abs(cur-last)<1){ if(Math.abs(cur-y)>2){ window.scrollTo({top:y, behavior:'instant'}); quiet=0; } else quiet++; } last=window.scrollY; if(++n<40 && quiet<6) t=setTimeout(tick,150); else stop(); }; t=setTimeout(tick,150); }
+  scrollTo(id){ { const el0=document.getElementById('chap-'+id)||document.getElementById(id), t=this._trackFor(el0); if(t){ this.setState({pTrack:t}); } } this.setState({navOpen:false}); setTimeout(()=>{ const el=document.getElementById('chap-'+id)||document.getElementById(id); if(el) this._jump(el,42,!this.reduced); }, 70); }
   goFlower(){ this.scrollTo('flower'); }
   toggleExp(id){ this.setState(p=>({expanders:Object.assign({},p.expanders,{[id]:!p.expanders[id]})})); }
   toggleTopic(i){ this.setState(p=>({openTopic:p.openTopic===i?null:i})); }
@@ -2527,7 +2545,7 @@ class Component extends DCLogic {
     const D=this.D, info=D.terpeneInfo||{}, prof=s.terpProfile||[];
     const ACC={ myrcene:'#8A6A2E', caryophyllene:'#8C3F3F', limonene:'#9A7326', terpinolene:'#63702F', ocimene:'#2F6E5E', pinene:'#3A5F45', humulene:'#6E4E36', linalool:'#5E4380' };
     const rng=t=>(t||'').replace(/\s*[\u2013\u2014-]\s*/g,' to ');
-    const facts=[['Type',s.type],['Ratio',(s.ratio||'').replace(/\s*\/\s*/,', ')],['THC average',s.thcAvg],['THC range',rng(s.thcRange)],['Terpenes average',s.terpAvg?s.terpAvg+'%':''],['Terpene range',(s.terpMin&&s.terpMax)?s.terpMin+'% to '+s.terpMax+'%':''],['Lead terpenes',prof.slice(0,3).map(t=>t.name).join(', ')],['Lineage',(s.parents||[]).join(' \u00d7 ')],['Breeder',s.breeder]].filter(x=>x[1]).map(x=>({k:x[0],v:x[1]}));
+    const facts=[['Type',s.type],['Ratio',(s.ratio||'').replace(/\s*\/\s*/,', ')||s.type],['THC average',s.thcAvg],['THC range',rng(s.thcRange)],['Terpenes average',s.terpAvg?s.terpAvg+'%':''],['Terpene range',(s.terpMin&&s.terpMax)?s.terpMin+'% to '+s.terpMax+'%':''],['Lead terpenes',prof.slice(0,3).map(t=>t.name).join(', ')],['Lineage',(s.parents||[]).join(' \u00d7 ')],['Breeder',s.breeder]].filter(x=>x[1]).map(x=>({k:x[0],v:x[1]}));
     const terpNotes=prof.slice(0,3).map(t=>{ const ti=info[t.name]||{}; return { name:t.name, pct:t.pct+'%', flavor:ti.flavor||'', medical:ti.medical||'', accent:ACC[t.name.toLowerCase()]||'var(--ns-bronze)', onClick:()=>{ this._sheetGo(null); this.goTerp(t.name); } }; }).filter(x=>x.flavor||x.medical);
     const lead=prof[0]?prof[0].name:null, second=prof[1]?prof[1].name:null;
     const score=x=>{ const p=x.terpProfile||[]; let v=0; if(p[0]&&p[0].name===lead) v+=3; if(p.slice(0,3).some(t=>t.name===second)) v+=1; if(x.cat===s.cat) v+=1; if(x.photo) v+=0.5; return v; };
@@ -2775,7 +2793,7 @@ class Component extends DCLogic {
         spotifyUrl:songLink('spotify',s), ytUrl:songLink('yt',s),
         expanded:ex, caret: ex?'\u2212':'+', leafSrc:this._leaf(s.cat),
         typeShort:(s.type||s.cat||'').replace(/[- ]dominant hybrid/i,'-dom.'),
-        cardFacts:[(()=>{ const m=(s.ratio||'').match(/(\d+)%[^\d]+(\d+)%/); return m?m[1]+' / '+m[2]:''; })(), s.thcAvg?s.thcAvg+' THC':''].filter(Boolean).join(' \u00b7 '), hasCardFacts: !!(s.thcAvg||s.ratio),
+        cardFacts:[(()=>{ const m=(s.ratio||'').match(/(\d+)%[^\d]+(\d+)%/); return m?m[1]+' / '+m[2]:(s.type||''); })(), s.thcAvg?s.thcAvg+' THC':''].filter(Boolean).join(' \u00b7 '), hasCardFacts: !!(s.thcAvg||s.ratio||s.type),
         ...(ex?this._sheetExtras(s):{}),
         onToggle:()=>this.toggleStrain(s.name)
       };
@@ -3089,7 +3107,11 @@ class Component extends DCLogic {
 
     return {
       quiz, openQuiz:()=>this.openQuiz(), stopProp:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); },
-      journalText, journalFieldCount, copyJournal:()=>this.copyJournal(), downloadJournal:()=>this.downloadJournal(), journalCopyLabel: st.journalCopied?'Copied \u2713':'Copy template',
+      journalText, journalFieldCount,
+      jLong: jLines.length > 12, jFull: !!st.jFull, jCollapsed: jLines.length > 12 && !st.jFull,
+      jWrapMax: (jLines.length > 12 && !st.jFull) ? '260px' : 'none',
+      jToggleLabel: st.jFull ? 'Show less' : 'Show full template',
+      jToggleFull: () => this.setState(p => ({ jFull: !p.jFull })), copyJournal:()=>this.copyJournal(), downloadJournal:()=>this.downloadJournal(), journalCopyLabel: st.journalCopied?'Copied \u2713':'Copy template',
       est:meta.est||2018, place:meta.place||'Arkansas',
       chapters,
       goHome:()=>this.goHome(), toggleNav:()=>this.toggleNav(), closeNav:()=>this.closeNav(), navOpen:st.navOpen, goFlower:()=>this.goFlower(),
