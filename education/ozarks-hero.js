@@ -166,9 +166,11 @@
   raster() {
     if (!this.shadowRoot || !window.Blob || !window.URL) return;
     const gen = this._rgen = (this._rgen || 0) + 1, root = this.shadowRoot;
-    root.querySelectorAll('svg').forEach(v => { if (v._cv) { v._cv.remove(); v._cv = null; v.style.visibility = ''; } });
+    root.querySelectorAll('svg').forEach(v => { if (v._cv) { v._cv.width = v._cv.height = 0; v._cv.remove(); v._cv = null; v.style.visibility = ''; } });
     const defsEl = [...root.querySelectorAll('svg')].find(v => v.querySelector('defs')), defs = defsEl ? defsEl.innerHTML : '';
-    const ds = Math.min(window.devicePixelRatio || 1, 1.5), hr = this.hero.getBoundingClientRect(), jobs = [];
+    // phones: 1x bitmaps and a tight per-plane budget. iOS Safari kills the tab once canvas memory runs past its ceiling
+    const phone = this.mob || innerWidth < 760, cap = phone ? 1.6e6 : 7e6;
+    const ds = phone ? 1 : Math.min(window.devicePixelRatio || 1, 1.5), hr = this.hero.getBoundingClientRect(), jobs = [];
     const finish = el => { const an = el.getAnimations ? el.getAnimations() : [], held = an.map(a => a.currentTime); an.forEach(a => { a.currentTime = a.effect.getComputedTiming().endTime; }); return () => an.forEach((a, i) => { a.currentTime = held[i]; }); };
     this.layers.forEach(l => {
       if (l.f < 0.2) return;
@@ -179,14 +181,14 @@
         back(); l.el.style.transform = prev;
         const s = sr.width / vb.width; if (!s) return;
         const y0 = Math.min(vb.y, bb.y) - 4, yLow = vb.y + (hr.height + l.f * this.lift + 120 - (sr.top - hr.top)) / s, y1 = Math.max(y0 + 10, Math.min(bb.y + bb.height + 4, yLow));
-        let cw = sr.width * ds, ch = (y1 - y0) * s * ds; const k = Math.min(1, Math.sqrt(7e6 / (cw * ch))); cw = Math.round(cw * k); ch = Math.round(ch * k);
+        let cw = sr.width * ds, ch = (y1 - y0) * s * ds; const k = Math.min(1, Math.sqrt(cap / (cw * ch))); cw = Math.round(cw * k); ch = Math.round(ch * k);
         jobs.push({ svg, vb: [vb.x, y0, vb.width, y1 - y0], cw, ch, defs: svg.querySelector('use') ? defs : '', css: 'position:absolute;display:block;pointer-events:none;left:' + (sr.left - lr.left).toFixed(1) + 'px;top:' + (sr.top - lr.top + (y0 - vb.y) * s).toFixed(1) + 'px;width:' + sr.width.toFixed(1) + 'px;height:' + ((y1 - y0) * s).toFixed(1) + 'px;' });
       });
     });
     this.brs.forEach(b => [b.el.querySelector('svg'), b.blur].forEach((svg, i) => {
       if (!svg) return; const vb = svg.viewBox && svg.viewBox.baseVal; if (!vb || !vb.width) return;
       const cs = getComputedStyle(svg), w = parseFloat(cs.width), h = parseFloat(cs.height); if (!w || !h) return;
-      const sc = i ? 0.5 : 1;
+      const sc = i ? (phone ? 0.35 : 0.5) : (phone ? Math.min(1, Math.sqrt(cap / (w * h))) : 1);
       jobs.push({ svg, vb: [vb.x, vb.y, vb.width, vb.height], cw: Math.round(w * sc), ch: Math.round(h * sc), defs, css: svg.style.cssText + ';display:block;pointer-events:none;' });
     }));
     jobs.forEach(j => {

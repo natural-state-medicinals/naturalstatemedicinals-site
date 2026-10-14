@@ -2050,10 +2050,10 @@ class Component extends DCLogic {
       const p=im.parentElement; if(!p) return;
       const cs=getComputedStyle(p);
       if((cs.overflow+cs.overflowY+cs.overflowX).indexOf('hidden')<0) return;
-      im.setAttribute('data-kb','1'); im.style.transformOrigin='center center'; im.style.willChange='transform';
+      im.setAttribute('data-kb','1'); im.style.transformOrigin='center center';
     });
     const shapes = Array.from(new Set(Array.from(document.querySelectorAll('[data-para],[data-kb]'))));
-    shapes.forEach(el=>{ el.style.willChange='transform'; el.style.backfaceVisibility='hidden'; });
+    shapes.forEach(el=>{ if(el.hasAttribute('data-kb')) return; el.style.willChange='transform'; el.style.backfaceVisibility='hidden'; });
     let ticking=false;
     const onScroll=()=>{
       if(ticking) return; ticking=true;
