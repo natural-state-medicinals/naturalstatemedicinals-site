@@ -13,7 +13,7 @@
  * untouched. Add data-topo-skip to any element to keep it plain.
  */
 (function () {
-  if (window.__nsmTopoPaper) return;
+  if (window.__nsmTopoPaper || (window.__nsmOff && window.__nsmOff.topo)) return;
   window.__nsmTopoPaper = true;
 
   var SELF = document.currentScript;

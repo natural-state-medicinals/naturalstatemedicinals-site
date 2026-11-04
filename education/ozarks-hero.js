@@ -10,6 +10,7 @@
     connectedCallback() {
       // the page runtime keeps an unrendered copy of its template inside <x-dc>; only the live copy builds
       if (this._built || this.closest('x-dc') || this.closest('template')) return; this._built = true;
+      if (window.__nsmOff && window.__nsmOff.hero) { this.plain(); return; }
       this.props = { parallax: 1, idle: true };
       // shadow root: the page's template runtime reads light-DOM children, so the scene must live where it cannot be re-parsed
       const sr = this.shadowRoot || this.attachShadow({ mode: 'open' });
@@ -22,6 +23,19 @@
         else this.dispatchEvent(new CustomEvent('nsm-hero', { bubbles: true, detail: act }));
       });
       setTimeout(() => this.mount(), 0);
+    }
+    // simplified cover: same words and links, no scene. used by ?off=hero and the crash guard
+    plain() {
+      const sr = this.shadowRoot || this.attachShadow({ mode: 'open' });
+      const lk = "display:flex;align-items:center;gap:5px;min-height:52px;padding:0 2px;background:none;border:none;cursor:pointer;font-family:'Work Sans',system-ui,sans-serif;font-size:14.5px;font-weight:700;color:#20253A;";
+      sr.innerHTML = '<style>:host{display:block;background:#F6E7D7}button:focus-visible{outline:2px solid #20253A;outline-offset:3px}</style>'
+        + '<section data-hero="" style="min-height:88svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:96px 24px 56px;box-sizing:border-box;text-align:center;">'
+        + '<img src="../assets/brand/flower-stamp.png" alt="" width="96" height="96" style="display:block;width:96px;height:auto;margin-bottom:16px;">'
+        + '<h1 style="margin:0 0 12px;font-family:\'Burford\',Georgia,serif;font-weight:400;font-size:clamp(38px,11vw,64px);line-height:0.9;letter-spacing:0.13em;padding-left:0.13em;color:#20253A;">Education<br>Guide</h1>'
+        + '<p style="margin:0;font-family:\'Libre Caslon Text\',Georgia,serif;font-style:italic;font-size:16px;line-height:1.45;color:#262A3F;max-width:30ch;">A patient\'s field guide to the plant, the practice, and the products.</p>'
+        + '<div style="display:flex;align-items:center;gap:10px;margin-top:8px;"><button type="button" data-act="quiz" style="' + lk + '">Take the Quiz</button><span aria-hidden="true" style="color:#20253A;">/</span><button type="button" data-act="flower" style="' + lk + '">Strain Guide</button></div>'
+        + '</section>';
+      sr.addEventListener('click', e => { const btn = e.target.closest('[data-act]'); if (btn) this.dispatchEvent(new CustomEvent('nsm-hero', { bubbles: true, detail: btn.dataset.act })); });
     }
     disconnectedCallback() {
       if (this.onScroll) removeEventListener('scroll', this.onScroll);

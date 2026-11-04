@@ -15,6 +15,20 @@
 <meta property="og:image" content="https://naturalstatemedicinals.com/assets/brand/primary-lockup-dark.png">
 <meta name="twitter:card" content="summary_large_image">
 <script>window.__nsmDeepLink=window.location.hash||"";</script>
+<script>/* test switches + crash guard. ?off=hero,topo,motion,photos (or ?off=all) turns parts off. Crash guard is per tab: if this same tab's last load never closed cleanly (iOS crash reload), it loads the simplified page for the rest of the tab's session */
+(function(){var q=new URLSearchParams(location.search),o={},S=sessionStorage,K='nsm-guard',g={};
+(q.get('off')||'').split(',').forEach(function(k){k=k.trim();if(k==='all'){o.hero=o.topo=o.motion=o.photos=1}else if(k)o[k]=1});
+try{g=JSON.parse(S.getItem(K)||'{}')||{}}catch(e){}
+if(q.get('guard')==='reset')g={};
+var auto=q.get('guard')!=='off'&&(g.lite||(g.open&&Date.now()-g.t<9e4));
+if(auto){o.hero=o.topo=o.motion=1;g.lite=1}
+function save(open){g.open=open;g.t=Date.now();try{S.setItem(K,JSON.stringify(g))}catch(e){}}
+save(1);setInterval(function(){if(!document.hidden)save(1)},5e3);
+addEventListener('pagehide',function(){save(0)});addEventListener('beforeunload',function(){save(0)});document.addEventListener('visibilitychange',function(){save(document.hidden?0:1)});
+window.__nsmOff=o;window.__nsmAuto=auto;
+if(o.photos)document.write('<style>img:not([src*="brand/"]):not([src*="icon"]){display:none!important}</style>');
+var keys=Object.keys(o);if(keys.length&&(q.has('off')||q.has('debug')))addEventListener('DOMContentLoaded',function(){var b=document.createElement('div');b.textContent='Test: '+keys.join(', ')+' off'+(auto?' (auto)':'');b.style.cssText='position:fixed;left:10px;bottom:10px;z-index:99999;padding:6px 10px;border-radius:999px;background:#20253A;color:#F5F4E1;font:600 11px/1 system-ui;letter-spacing:.08em;text-transform:uppercase;pointer-events:none';document.body.appendChild(b)});
+})();</script>
 <script src="../vendor/react.production.min.js"></script>
 <script src="../vendor/react-dom.production.min.js"></script>
 <script src="../assets/img-manifest.js"></script>
@@ -1981,7 +1995,7 @@
     <a href="../index.html#doors" title="Back to naturalstatemedicinals.com" style="display:block;text-decoration:none;"><img width="200" height="195" loading="lazy" decoding="async" src="../assets/brand/ns-monogram-gold.png" alt="Natural State Medicinals" style="width:52px;height:auto;object-fit:contain;margin:0 auto 16px;display:block;"></a>
     <p style="margin:0;font-family:var(--font-display);font-size:calc(26px * var(--text-scale));line-height:1.1;color:var(--ns-arctic);">Find your natural state.</p>
     
-    <p style="margin:18px auto 0;max-width:44ch;font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));line-height:1.6;color:rgba(245,244,225,0.42);">For use by qualifying patients only. Keep out of reach of children. This product is not approved by the FDA to treat, cure, or prevent any disease. Marijuana use during pregnancy or breastfeeding poses potential harms. This guide is education, not medical advice.</p>
+    <p style="margin:18px auto 0;max-width:44ch;font-family:var(--font-sans);font-size:calc(10.5px * var(--text-scale));line-height:1.6;color:rgba(245,244,225,0.42);">For use by qualifying patients only. Keep out of reach of children. This product is not approved by the FDA to treat, cure, or prevent any disease. Marijuana use during pregnancy or breastfeeding poses potential harms. This guide is education, not medical advice.<span style="display:block; margin-top:6px"><span style="white-space:nowrap">Arkansas Cultivation Permit No. 00088C ·</span> <span style="white-space:nowrap">DEA Registration: Manufacturer W26093652E ·</span> <span style="white-space:nowrap">Distributor W26093702F</span></span></p>
   </footer>
 
 </div>
@@ -2053,9 +2067,10 @@ class Component extends DCLogic {
       im.setAttribute('data-kb','1'); im.style.transformOrigin='center center';
     });
     const shapes = Array.from(new Set(Array.from(document.querySelectorAll('[data-para],[data-kb]'))));
-    shapes.forEach(el=>{ if(el.hasAttribute('data-kb')) return; el.style.willChange='transform'; el.style.backfaceVisibility='hidden'; });
+    shapes.forEach(el=>{ if(el.hasAttribute('data-kb')||(window.__nsmOff||{}).motion) return; el.style.willChange='transform'; el.style.backfaceVisibility='hidden'; });
     let ticking=false;
     const onScroll=()=>{
+      if((window.__nsmOff||{}).motion) return;
       if(ticking) return; ticking=true;
       requestAnimationFrame(()=>{
         const doc=document.documentElement;
